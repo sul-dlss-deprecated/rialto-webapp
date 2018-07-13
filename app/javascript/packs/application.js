@@ -9,3 +9,4 @@
 
 require('blacklight-frontend/app/assets/javascripts/blacklight/blacklight')
 require('typeahead.js')
+import 'bootstrap/dist/js/bootstrap';
