@@ -12,6 +12,7 @@ environment.plugins.prepend(
     jquery: 'jquery',
     'window.jQuery': 'jquery',
     Popper: ['popper.js', 'default'],
+    Bloodhound: 'bloodhound-js'
   })
 )
 

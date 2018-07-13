@@ -8,3 +8,4 @@
 // layout file, like app/views/layouts/application.html.erb
 
 require('blacklight-frontend/app/assets/javascripts/blacklight/blacklight')
+require('typeahead.js')
