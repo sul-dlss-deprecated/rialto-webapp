@@ -19,4 +19,8 @@ p {
   font-size: 2em;
   text-align: center;
 }
+
+@import 'bootstrap';
+
+@import 'blacklight/blacklight';
 </style>
