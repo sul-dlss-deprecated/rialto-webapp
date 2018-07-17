@@ -1,24 +1,22 @@
-# README
+# Rialto Webapp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the Blacklight frontend for Rialto.
 
-Things you may want to cover:
 
-* Ruby version
+## Dependencies
 
-* System dependencies
+1. A database (RDS)
+1. A Solr index
 
-* Configuration
 
-* Database creation
+## Deployment
 
-* Database initialization
+```
+docker build -t suldlss/rialto-webapp:latest .
+```
 
-* How to run the test suite
+## Run
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+docker run -p 3000:3000 suldlss/rialto-webapp:latest -e SOLR_URL=http://50.16.181.132/solr/rialto-dev
+```
