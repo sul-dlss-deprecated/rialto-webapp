@@ -7,15 +7,22 @@
 
 import Vue from 'vue'
 import App from '../app.vue'
+import VueResource from  'vue-resource'
+
+Vue.use(VueResource)
 
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.body.appendChild(document.createElement('hello'))
   const app = new Vue({
     el,
-    render: h => h(App)
+    render: h => h(App),
+    http: {
+      root: 'http://localhost:3000',
+      headers: {
+        Accept: 'application/json'
+      }
+    }
   })
-
-  console.log(app)
 })
 
 

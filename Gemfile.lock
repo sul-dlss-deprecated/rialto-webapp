@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: cd944c6f4de16316efaa6a1d337bbdced788acaa
+  revision: fed468512829c7790740d60347df7f9e21361ac6
   specs:
     blacklight (7.0.0.rc1)
       deprecation
