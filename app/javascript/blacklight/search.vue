@@ -1,8 +1,13 @@
 <template>
   <div>
     <SearchControl />
-    <p>{{ message }}</p>
-    <ResultList v-bind:results="result.data" />
+    <div class="container">
+      <p>{{ message }}</p>
+      <div class="row">
+        <ResultList v-bind:results="result.data" />
+        <FacetList v-bind:facets="result.included" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,11 +16,13 @@
 import SearchControl from 'blacklight/searchControl.vue'
 import Result from 'blacklight/result'
 import ResultList from 'blacklight/resultList.vue'
+import FacetList from 'blacklight/facetList.vue'
 
 export default {
   components: {
     SearchControl,
-    ResultList
+    ResultList,
+    FacetList
   },
   data: function () {
     return {
@@ -39,6 +46,7 @@ export default {
       this.message = 'searching...';
       this.retrieveResults(text)
     })
+    this.retrieveResults('')
   }
 }
 </script>
