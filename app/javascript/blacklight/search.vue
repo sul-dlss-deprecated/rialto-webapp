@@ -49,13 +49,15 @@ export default {
     }
   },
   created() {
+    // Triggered when "search" is pressed
     this.$on('send', (text) => {
       this.endpoint = '/catalog?q=' + text
       this.message = 'searching...';
       this.retrieveResults()
     })
+
+    // Triggered when "next" or "previous" page is pressed
     this.$on('endpoint', (url) => {
-      console.log("ENDPOINT")
       this.endpoint = url
       this.retrieveResults()
     })
