@@ -5,16 +5,19 @@
         v-on:click.stop="toggle"><a v-bind:href="'#' + item.id">{{item.id}}</a></h3>
     <div class="card-body" v-bind:class="{ collapse: !isActive }">
       <ul class="list-unstyled">
-        <li v-for="item in item.attributes.items">
-          {{item.attributes.label}} {{item.attributes.hits}}
-        </li>
+        <FacetValue v-for="value in item.attributes.items" v-bind:value="value" />
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import FacetValue from 'blacklight/facetValue.vue'
+
 export default {
+  components: {
+    FacetValue
+  },
   props: ['item'],
   data: function() {
     return {
