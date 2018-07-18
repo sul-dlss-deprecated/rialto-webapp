@@ -1,9 +1,7 @@
 <template>
-  <section class="col-md-3">
-    <div>
-      <FacetItem v-for="facet in facets" v-bind:item="facet" />
-    </div>
-  </section>
+  <div>
+    <FacetItem v-for="facet in facets" v-bind:item="facet" />
+  </div>
 </template>
 
 <script>

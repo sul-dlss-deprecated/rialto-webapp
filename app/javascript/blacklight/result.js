@@ -1,7 +1,7 @@
 export default class {
   constructor(json) {
     if (typeof(json) === 'undefined')
-      json = {}
+      json = {meta: {pages: {}}, links: {}}
     this.json = json
     // console.log(json)
   }

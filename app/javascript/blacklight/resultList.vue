@@ -1,11 +1,9 @@
 <template>
-  <section class="col-md-9 order-last">
-    <ul>
-      <li v-for="result in results">
-        <ResultItem v-bind:item="result" />
-      </li>
-    </ul>
-  </section>
+  <ul>
+    <li v-for="result in results">
+      <ResultItem v-bind:item="result" />
+    </li>
+  </ul>
 </template>
 
 <script>
