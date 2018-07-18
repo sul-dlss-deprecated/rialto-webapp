@@ -1,9 +1,8 @@
 export default class {
   constructor(json) {
     if (typeof(json) === 'undefined')
-      json = {meta: {pages: {}}, links: {}}
+      json = {meta: {pages: {}}, links: {}, included: []}
     this.json = json
-    // console.log(json)
   }
 
   get links() {
@@ -18,7 +17,7 @@ export default class {
     return this.json.data
   }
 
-  get included() {
-    return this.json.included
+  get facets() {
+    return this.json.included.filter(item => item.type == 'facet')
   }
 }

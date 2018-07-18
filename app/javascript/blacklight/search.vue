@@ -9,7 +9,7 @@
           <ResultList v-bind:results="result.data" />
         </section>
         <section class="col-md-3">
-          <FacetList v-bind:facets="result.included" />
+          <FacetList v-bind:facets="result.facets" />
         </section>
       </div>
     </div>
