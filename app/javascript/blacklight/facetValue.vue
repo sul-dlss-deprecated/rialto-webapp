@@ -10,7 +10,7 @@ export default {
   props: ['value'],
   methods: {
     setURL: function() {
-      this.$parent.$parent.$parent.$emit('endpoint', this.url())
+      this.$parent.$parent.$parent.$emit('facet', this.url())
     },
     url: function() {
       return this.value.links.self

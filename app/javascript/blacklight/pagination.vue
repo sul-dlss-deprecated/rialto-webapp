@@ -1,14 +1,14 @@
 <template>
   <div class="sort-pagination">
-    <template v-if="links.prev != null">
-      <a href="#next" v-on:click="previousPage" :disabled="!links.prev">Previous</a>
+    <template v-if="pages.prev_page != null">
+      <router-link :to="{ name: 'search', query: { page: pages.prev_page } }">Previous</router-link>
     </template>
     <template v-else>
       Previous
     </template>
     | {{start}} - {{end}} of {{totalCount}} |
-    <template v-if="links.next != null">
-      <a href="#next" v-on:click="nextPage" :disabled="!links.next">Next</a>
+    <template v-if="pages.next_page != null">
+      <router-link :to="{ name: 'search', query: { page: pages.next_page } }">Next</router-link>
     </template>
     <template v-else>
       Next
@@ -19,20 +19,7 @@
 <script>
 export default {
   props: ['result'],
-  methods: {
-    nextPage: function() {
-      history.pushState(history.state, "Rialto", this.links.next)
-      this.$parent.$emit('endpoint', this.links.next)
-    },
-    previousPage: function() {
-      history.pushState(history.state, "Rialto", this.links.prev)
-      this.$parent.$emit('endpoint', this.links.prev)
-    }
-  },
   computed: {
-    links: function() {
-      return this.result.links
-    },
     pages: function() {
       return this.result.meta.pages
     },
@@ -45,7 +32,12 @@ export default {
     totalCount: function() {
       return this.pages.total_count
     }
-
+  },
+  watch: {
+    '$route': function(to, from) {
+      // react to route changes...
+      this.$parent.$emit('page')
+    }
   }
 }
 </script>

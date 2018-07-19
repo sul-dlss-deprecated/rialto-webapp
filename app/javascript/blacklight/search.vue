@@ -35,7 +35,7 @@ export default {
     return {
       message: "No results",
       result: new Result(),
-      endpoint: '/catalog?q='
+      endpoint: `/catalog?q=&page=${this.$route.query.page || 1}`
     }
   },
   methods: {
@@ -48,6 +48,11 @@ export default {
       });
     }
   },
+  computed: {
+    links: function() {
+      return this.result.links
+    }
+  },
   created() {
     // Triggered when "search" is pressed
     this.$on('send', (text) => {
@@ -57,10 +62,22 @@ export default {
     })
 
     // Triggered when "next" or "previous" page is pressed
-    this.$on('endpoint', (url) => {
+    this.$on('page', () => {
+      if (this.links.self.match(/page=\d+/)) {
+        this.endpoint = this.links.self.replace(/page=\d+/, `page=${this.$route.query.page}`)
+      } else {
+        this.endpoint = `${this.links.self}&page=${this.$route.query.page}`
+      }
+      this.retrieveResults()
+    })
+
+    // Triggered when a facet value is pressed
+    this.$on('facet', (url) => {
       this.endpoint = url
       this.retrieveResults()
     })
+
+    // Triggered when loaded
     this.retrieveResults()
   }
 }

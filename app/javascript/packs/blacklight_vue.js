@@ -18,7 +18,7 @@ import Search from '../blacklight/search.vue'
 
 const routes = [
   { path: '/catalog/:id', component: Show },
-  { path: '/', component: Search }
+  { path: '/', name: 'search', component: Search }
 ]
 
 const router = new VueRouter({
