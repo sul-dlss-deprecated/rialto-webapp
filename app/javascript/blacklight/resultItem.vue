@@ -1,9 +1,10 @@
 <template>
   <div>
-    <h3><a v-bind:href="url" v-html="item.attributes['title_tsim']"></a></h3>
+    <h3><a v-bind:href="url" v-html="title"></a></h3>
     <dl>
-      <template v-for="(attribute, index) in item.attributes">
-        <dt>{{index}}</dt><dd v-html="attribute"></dd>
+      <template v-for="(property, index) in item.attributes">
+        <dt v-html="property.attributes.label"></dt>
+        <dd v-html="property.attributes.value"></dd>
       </template>
     </dl>
   </div>
@@ -17,7 +18,7 @@ export default {
       return this.item.links.self
     },
     title: function () {
-      return this.item.id
+      return this.item.attributes['title_tsim'].attributes.value
     }
   }
 }

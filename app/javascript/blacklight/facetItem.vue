@@ -2,7 +2,7 @@
   <div class="card">
     <h3 class="card-header collapse-toggle"
         v-bind:class="{ collapsed: !isActive }"
-        v-on:click.stop="toggle"><a v-bind:href="'#' + item.id">{{item.id}}</a></h3>
+        v-on:click.stop="toggle"><a v-bind:href="'#' + item.id">{{item.attributes.label}}</a></h3>
     <div class="card-body" v-bind:class="{ collapse: !isActive }">
       <ul class="list-unstyled">
         <FacetValue v-for="value in item.attributes.items" v-bind:value="value" />
