@@ -1,26 +1,24 @@
 <template>
+
   <div id="app">
-    <p>{{ message }}</p>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark topbar" role="navigation">
+        <a href="/" class="navbar-brand">Rialto</a>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+import Search from 'blacklight/search.vue'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
+  components: {
+    Search
   }
 }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
+<style>
 
-@import 'bootstrap';
-
-@import 'blacklight/blacklight';
 </style>
