@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: fed468512829c7790740d60347df7f9e21361ac6
+  revision: 99878d412c85c8225d6a1cb4a64f3ccb49fa2fe3
   specs:
     blacklight (7.0.0.rc1)
       deprecation
@@ -108,11 +108,11 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
-    puma (3.11.4)
+    puma (3.12.0)
     rack (2.0.5)
     rack-proxy (0.6.4)
       rack
-    rack-test (1.0.0)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.0)
       actioncable (= 5.2.0)
