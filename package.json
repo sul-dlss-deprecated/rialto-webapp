@@ -6,6 +6,7 @@
     "blacklight-frontend": "^7.0.0-alpha.1",
     "bloodhound-js": "^1.2.2",
     "jquery": "^3.3.1",
+    "plotly.js": "^1.39.3",
     "popper.js": "^1.14.3",
     "typeahead.js": "^0.11.1",
     "vue": "^2.5.16",

@@ -20,7 +20,7 @@
           <div class="card-body">
             <h5 class="card-title">Visualizations</h5>
             <p class="card-text">See how Stanford researchers connect with the world</p>
-            <a href="#" class="btn btn-primary">Visualize</a>
+            <router-link :to="{ name: 'visualizations'}" class="btn btn-primary">Visualize</router-link>
           </div>
         </div>
       </div>
