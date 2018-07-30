@@ -10,7 +10,7 @@ gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 
-gem 'blacklight', github: 'projectblacklight/blacklight'
+gem 'blacklight', github: 'projectblacklight/blacklight', branch: 'remove-link'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'

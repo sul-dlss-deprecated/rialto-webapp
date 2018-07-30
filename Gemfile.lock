@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: 99878d412c85c8225d6a1cb4a64f3ccb49fa2fe3
+  revision: 4ebf76b740a091e438db9dd86b8b50fc570f9aaf
+  branch: remove-link
   specs:
     blacklight (7.0.0.rc1)
       deprecation
@@ -201,4 +202,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.16.3
