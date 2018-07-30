@@ -20,8 +20,8 @@
 
 import SearchControl from 'blacklight/searchControl.vue'
 import Result from 'blacklight/result'
-import ResultList from 'blacklight/resultList.vue'
-import FacetList from 'blacklight/facetList.vue'
+import ResultList from 'blacklight/result/list.vue'
+import FacetList from 'blacklight/facet/list.vue'
 import Pagination from 'blacklight/pagination.vue'
 
 export default {
