@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3><a v-bind:href="url" v-html="title"></a></h3>
+    <h3><router-link :to="{ name: 'show', params: { id: this.item.id } }" v-html="title"></router-link></h3>
     <dl>
       <template v-for="(property, index) in item.attributes">
         <dt v-html="property.attributes.label"></dt>

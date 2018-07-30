@@ -17,7 +17,7 @@ import Show from '../blacklight/showPage.vue'
 import Search from '../blacklight/search.vue'
 
 const routes = [
-  { path: '/catalog/:id', component: Show },
+  { path: '/catalog/:id', name: 'show', component: Show },
   { path: '/', name: 'search', component: Search }
 ]
 
