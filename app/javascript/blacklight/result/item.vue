@@ -18,6 +18,9 @@ export default {
       return this.item.links.self
     },
     title: function () {
+      if (this.item.attributes === undefined) {
+        return this.item.id
+      }
       return this.item.attributes['title_tsim'].attributes.value
     }
   }
