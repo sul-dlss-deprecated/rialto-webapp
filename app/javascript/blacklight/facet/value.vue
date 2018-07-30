@@ -1,6 +1,12 @@
 <template>
   <li>
-    <a href="#" v-on:click="setURL">{{value.attributes.label}}</a>
+    <template v-if="removeUrl() !== undefined">
+      {{value.attributes.label}}
+      <a href="#" v-on:click="remove"><span class="remove-icon">X</span></a>
+    </template>
+    <template v-else>
+      <a href="#" v-on:click="setURL" v-html="value.attributes.label"></a>
+    </template>
     {{value.attributes.hits}}
   </li>
 </template>
@@ -14,6 +20,12 @@ export default {
     },
     url: function() {
       return this.value.links.self
+    },
+    removeUrl: function() {
+      return this.value.links.remove
+    },
+    remove: function() {
+      this.$parent.$parent.$parent.$emit('facet', this.removeUrl())
     }
   }
 }

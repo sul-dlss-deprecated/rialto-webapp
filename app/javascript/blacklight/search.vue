@@ -73,6 +73,7 @@ export default {
 
     // Triggered when a facet value is pressed
     this.$on('facet', (url) => {
+      console.log(`Update url to ${url}`)
       this.endpoint = url
       this.retrieveResults()
     })
