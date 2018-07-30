@@ -16,10 +16,12 @@ Vue.use(VueRouter)
 import Show from '../blacklight/layouts/showPage.vue'
 import Search from '../blacklight/layouts/search.vue'
 import Home from '../blacklight/layouts/home.vue'
+import Visualizations from '../blacklight/layouts/visualizations.vue'
 
 const routes = [
   { path: '/catalog/:id', name: 'show', component: Show },
   { path: '/catalog', name: 'search', component: Search },
+  { path: '/viz', name: 'visulizations', component: Visualizations },
   { path: '/', name: 'home', component: Home }
 ]
 
