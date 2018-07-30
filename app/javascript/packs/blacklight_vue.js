@@ -13,12 +13,14 @@ import VueRouter from  'vue-router'
 Vue.use(VueResource)
 Vue.use(VueRouter)
 
-import Show from '../blacklight/showPage.vue'
-import Search from '../blacklight/search.vue'
+import Show from '../blacklight/layouts/showPage.vue'
+import Search from '../blacklight/layouts/search.vue'
+import Home from '../blacklight/layouts/home.vue'
 
 const routes = [
   { path: '/catalog/:id', name: 'show', component: Show },
-  { path: '/', name: 'search', component: Search }
+  { path: '/catalog', name: 'search', component: Search },
+  { path: '/', name: 'home', component: Home }
 ]
 
 const router = new VueRouter({
