@@ -6,7 +6,7 @@
 
 <script>
 
-import FacetItem from 'blacklight/facetItem.vue'
+import FacetItem from 'blacklight/facet/item.vue'
 
 export default {
   components: {

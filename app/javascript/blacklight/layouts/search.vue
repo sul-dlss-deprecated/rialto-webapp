@@ -20,8 +20,8 @@
 
 import SearchControl from 'blacklight/searchControl.vue'
 import Result from 'blacklight/result'
-import ResultList from 'blacklight/resultList.vue'
-import FacetList from 'blacklight/facetList.vue'
+import ResultList from 'blacklight/result/list.vue'
+import FacetList from 'blacklight/facet/list.vue'
 import Pagination from 'blacklight/pagination.vue'
 
 export default {
@@ -73,6 +73,7 @@ export default {
 
     // Triggered when a facet value is pressed
     this.$on('facet', (url) => {
+      console.log(`Update url to ${url}`)
       this.endpoint = url
       this.retrieveResults()
     })

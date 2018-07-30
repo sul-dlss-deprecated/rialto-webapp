@@ -9,16 +9,7 @@
 </template>
 
 <script>
-
-import Search from 'blacklight/search.vue'
-
-export default {
-  components: {
-    Search
-  }
-}
 </script>
 
 <style>
-
 </style>
