@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class CatalogController < ApplicationController
 
+class CatalogController < ApplicationController
   include Blacklight::Catalog
 
   configure_blacklight do |config|
@@ -19,16 +19,16 @@ class CatalogController < ApplicationController
     }
 
     # solr path which will be added to solr base url before the other solr params.
-    #config.solr_path = 'select'
-    #config.document_solr_path = 'get'
+    # config.solr_path = 'select'
+    # config.document_solr_path = 'get'
 
     # items to show per page, each number in the array represent another option to choose from.
-    #config.per_page = [10,20,50,100]
+    # config.per_page = [10,20,50,100]
 
     # solr field configuration for search results/index views
     config.index.title_field = 'title_tsim'
     config.index.display_type_field = 'format'
-    #config.index.thumbnail_field = 'thumbnail_path_ss'
+    # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     config.add_results_document_tool(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
 
@@ -45,9 +45,9 @@ class CatalogController < ApplicationController
     config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
 
     # solr field configuration for document/show views
-    #config.show.title_field = 'title_tsim'
-    #config.show.display_type_field = 'format'
-    #config.show.thumbnail_field = 'thumbnail_path_ss'
+    # config.show.title_field = 'title_tsim'
+    # config.show.display_type_field = 'format'
+    # config.show.thumbnail_field = 'thumbnail_path_ss'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -138,7 +138,6 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
 
     config.add_search_field 'all_fields', label: 'All Fields'
-
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate

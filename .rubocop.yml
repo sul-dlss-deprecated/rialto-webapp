@@ -5,4 +5,5 @@ AllCops:
   DisplayCopNames: true
   TargetRubyVersion: 2.3
   Exclude:
-  - "node_modules/**/*"
+  - 'node_modules/**/*'
+  - 'db/schema.rb'
