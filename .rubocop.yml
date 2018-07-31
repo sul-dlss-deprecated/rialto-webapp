@@ -7,3 +7,7 @@ AllCops:
   Exclude:
   - 'node_modules/**/*'
   - 'db/schema.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
