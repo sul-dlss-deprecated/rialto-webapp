@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = true
@@ -30,7 +32,7 @@ Rails.application.configure do
   end
 
   # Make yarn avoid checking integrity because there is an ajv dependency on
-  # 5 and 6 
+  # 5 and 6
   config.webpacker.check_yarn_integrity = false
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
