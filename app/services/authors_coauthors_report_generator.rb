@@ -35,7 +35,8 @@ class AuthorsCoauthorsReportGenerator
     p2 = Person.find_by(uri: row['uri2'])
     [p1.name, p1.institution_name, p1.department_name,
      p2.name, p2.institution_name, p2.department_name,
-     row['count']]
+     row['count'],
+     p2.institution_country]
   end
 
   # @return [ActiveRecord::Result]

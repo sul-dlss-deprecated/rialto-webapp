@@ -16,22 +16,26 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
     before do
       Organization.create!(uri: 'http://example.com/institution1',
                            metadata: {
-                             name: 'Stanford'
+                             name: 'Stanford',
+                             country: 'USA'
                            })
 
       Organization.create!(uri: 'http://example.com/institution2',
                            metadata: {
-                             name: 'Harvard'
+                             name: 'Harvard',
+                             country: 'USA'
                            })
 
       Organization.create!(uri: 'http://example.com/institution3',
                            metadata: {
-                             name: 'Ghent'
+                             name: 'Ghent',
+                             country: 'Belgium'
                            })
 
       Organization.create!(uri: 'http://example.com/institution4',
                            metadata: {
-                             name: 'Brussels U'
+                             name: 'Brussels U',
+                             country: 'Belgium'
                            })
 
       Organization.create!(uri: 'http://example.com/department2',
@@ -115,10 +119,10 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
 
     it 'is a report' do
       expect(CSV.parse(report)).to eq [
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', '10']
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1', 'USA'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', '10', 'Belgium']
       ]
     end
   end
