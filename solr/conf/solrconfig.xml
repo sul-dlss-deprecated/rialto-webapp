@@ -43,13 +43,8 @@
        -->
         <str name="qf">
           id
-          full_title_tsim
-          short_title_tsim
-          alternative_title_tsim
-          active_fedora_model_ssi
-          title_tsim
-          author_tsimesim
-          subject_tsim
+          title_tesi
+          author_tsim
           all_text_timv
         </str>
         <str name="pf">
@@ -62,10 +57,8 @@
        <str name="author_pf">
        </str>
        <str name="title_qf">
-          title_tsim
-          full_title_tsim
-          short_title_tsim
-          alternative_title_tsim
+          title_tesi
+          alternative_title_tesim
        </str>
        <str name="title_pf">
        </str>
@@ -83,8 +76,7 @@
        <str name="facet">true</str>
        <str name="facet.mincount">1</str>
        <str name="facet.limit">10</str>
-       <str name="facet.field">active_fedora_model_ssi</str>
-       <str name="facet.field">subject_ssim</str>
+       <!-- <str name="facet.field">subject_ssim</str> -->
 
        <str name="spellcheck">true</str>
        <str name="spellcheck.dictionary">default</str>
