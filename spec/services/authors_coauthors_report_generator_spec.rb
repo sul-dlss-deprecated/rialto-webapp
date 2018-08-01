@@ -110,20 +110,19 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
     end
 
     it 'is a report' do
-      puts report.inspect
-      expect(report).to eq [
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', 1],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', 10],
-        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', 10],
-        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', 10],
-        ['Jane Smith', 'Harvard', 'Biochemistry', 'John Smith', 'Stanford', 'Chemistry', 1],
-        ['Jane Okoye', 'Ghent', 'Informatics', 'John Smith', 'Stanford', 'Chemistry', 10],
-        ['Jane Okoye', 'Ghent', 'Informatics', 'Patrick Hoch', 'Ghent', 'Computer Science', 10],
-        ['Jane Okoye', 'Ghent', 'Informatics', 'Lady Red', 'Stanford', 'Medicine', 10],
-        ['Patrick Hoch', 'Ghent', 'Computer Science', 'John Smith', 'Stanford', 'Chemistry', 10],
-        ['Patrick Hoch', 'Ghent', 'Computer Science', 'Jane Okoye', 'Ghent', 'Informatics', 10],
-        ['Peter Smith', 'Brussels U', 'Informatics', 'John Smith', 'Stanford', 'Chemistry', 10],
-        ['Lady Red', 'Stanford', 'Medicine', 'Jane Okoye', 'Ghent', 'Informatics', 10]
+      expect(CSV.parse(report)).to eq [
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', '10'],
+        ['Jane Smith', 'Harvard', 'Biochemistry', 'John Smith', 'Stanford', 'Chemistry', '1'],
+        ['Jane Okoye', 'Ghent', 'Informatics', 'John Smith', 'Stanford', 'Chemistry', '10'],
+        ['Jane Okoye', 'Ghent', 'Informatics', 'Patrick Hoch', 'Ghent', 'Computer Science', '10'],
+        ['Jane Okoye', 'Ghent', 'Informatics', 'Lady Red', 'Stanford', 'Medicine', '10'],
+        ['Patrick Hoch', 'Ghent', 'Computer Science', 'John Smith', 'Stanford', 'Chemistry', '10'],
+        ['Patrick Hoch', 'Ghent', 'Computer Science', 'Jane Okoye', 'Ghent', 'Informatics', '10'],
+        ['Peter Smith', 'Brussels U', 'Informatics', 'John Smith', 'Stanford', 'Chemistry', '10'],
+        ['Lady Red', 'Stanford', 'Medicine', 'Jane Okoye', 'Ghent', 'Informatics', '10']
       ]
     end
   end

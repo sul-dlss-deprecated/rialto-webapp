@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 # Generate a downloadable report consisting of a list of institutions the
 # authors in that department have collaborated with, along with number of collaborations
 class AuthorsCoauthorsReportGenerator
@@ -7,17 +9,24 @@ class AuthorsCoauthorsReportGenerator
     new.generate
   end
 
+  # @return [String] a csv report
   def generate
-    database_values.each_with_object([]) do |row, o|
-      p1 = Person.find_by(uri: row[0])
-      p2 = Person.find_by(uri: row[1])
-      o << [p1.name, p1.institution_name, p1.department_name,
-            p2.name, p2.institution_name, p2.department_name,
-            row[2]]
+    CSV.generate do |csv|
+      database_values.each do |row|
+        csv << expand_people(*row)
+      end
     end
   end
 
   private
+
+  def expand_people(uri1, uri2, count)
+    p1 = Person.find_by(uri: uri1)
+    p2 = Person.find_by(uri: uri2)
+    [p1.name, p1.institution_name, p1.department_name,
+     p2.name, p2.institution_name, p2.department_name,
+     count]
+  end
 
   def database_values
     ActiveRecord::Base.connection.execute(sql).values
