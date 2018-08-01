@@ -31,7 +31,7 @@
           <div class="card-body">
             <h5 class="card-title">Reports</h5>
             <p class="card-text">Download spreadsheets of the data.</p>
-            <a href="#" class="btn btn-primary">Download</a>
+            <router-link :to="{ name: 'reports'}" class="btn btn-primary">Download</router-link>
           </div>
         </div>
       </div>
