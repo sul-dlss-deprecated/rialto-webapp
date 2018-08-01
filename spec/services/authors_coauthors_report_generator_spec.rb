@@ -4,11 +4,12 @@ require 'rails_helper'
 
 RSpec.describe AuthorsCoauthorsReportGenerator do
   subject(:report) { described_class.generate(department.id) }
+
   let(:department) do
-          Organization.create!(uri: 'http://example.com/department1',
-                               metadata: {
-                                 name: 'Chemistry'
-                               })
+    Organization.create!(uri: 'http://example.com/department1',
+                         metadata: {
+                           name: 'Chemistry'
+                         })
   end
 
   context 'with some authors and publications' do
@@ -101,14 +102,15 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         Publication.create!(uri: "http://example.com/publication#{n}",
                             authors: [p1, p3, p4])
       end
+
       12.upto(21) do |n|
         Publication.create!(uri: "http://example.com/publication#{n}",
                             authors: [p1, p5])
       end
-      22.upto(31) do |n|
-        Publication.create!(uri: "http://example.com/publication#{n}",
-                            authors: [p6, p3])
-      end
+
+      # This publication shouldn't be included on the report:
+      Publication.create!(uri: 'http://example.com/publication22',
+                          authors: [p6, p3])
     end
 
     it 'is a report' do

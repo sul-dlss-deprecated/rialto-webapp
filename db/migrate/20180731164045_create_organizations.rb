@@ -10,5 +10,6 @@ class CreateOrganizations < ActiveRecord::Migration[5.2]
     end
     add_index :organizations, :uri, unique: true
     add_index :organizations, "(metadata->>'department')", using: 'HASH'
+    add_index :organizations, "(metadata->>'type')", using: 'HASH'
   end
 end

@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2018_07_31_164045) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index "((metadata ->> 'department'::text))", name: "index_organizations_on_metadata_department", using: :hash
+    t.index "((metadata ->> 'type'::text))", name: "index_organizations_on_metadata_type", using: :hash
     t.index ["uri"], name: "index_organizations_on_uri", unique: true
   end
 
