@@ -4,9 +4,12 @@
 class ReportsController < ApplicationController
   def show
     generator = AuthorsCoauthorsReportGenerator
+    data = generator.generate(params[:id])
 
     respond_to do |format|
-      format.csv { send_data generator.generate, type: Mime[:csv], disposition: 'attachment; filename=report.csv' }
+      format.csv do
+        send_data data, type: Mime[:csv], disposition: 'attachment; filename=report.csv'
+      end
     end
   end
 end

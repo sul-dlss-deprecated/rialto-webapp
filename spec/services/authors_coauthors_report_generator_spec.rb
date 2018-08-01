@@ -3,7 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe AuthorsCoauthorsReportGenerator do
-  subject(:report) { described_class.generate }
+  subject(:report) { described_class.generate(department.id) }
+  let(:department) do
+          Organization.create!(uri: 'http://example.com/department1',
+                               metadata: {
+                                 name: 'Chemistry'
+                               })
+  end
 
   context 'with some authors and publications' do
     before do
@@ -27,10 +33,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                              name: 'Brussels U'
                            })
 
-      Organization.create!(uri: 'http://example.com/department1',
-                           metadata: {
-                             name: 'Chemistry'
-                           })
       Organization.create!(uri: 'http://example.com/department2',
                            metadata: {
                              name: 'Biochemistry'
@@ -59,7 +61,7 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
       p1 = Person.create!(uri: 'http://example.com/person1',
                           metadata: {
                             name: 'John Smith',
-                            department: 'http://example.com/department1',
+                            department: department.uri,
                             institutionalAffiliation: 'http://example.com/institution1'
                           })
       p2 = Person.create!(uri: 'http://example.com/person2',
@@ -114,15 +116,7 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1'],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', '10'],
-        ['Jane Smith', 'Harvard', 'Biochemistry', 'John Smith', 'Stanford', 'Chemistry', '1'],
-        ['Jane Okoye', 'Ghent', 'Informatics', 'John Smith', 'Stanford', 'Chemistry', '10'],
-        ['Jane Okoye', 'Ghent', 'Informatics', 'Patrick Hoch', 'Ghent', 'Computer Science', '10'],
-        ['Jane Okoye', 'Ghent', 'Informatics', 'Lady Red', 'Stanford', 'Medicine', '10'],
-        ['Patrick Hoch', 'Ghent', 'Computer Science', 'John Smith', 'Stanford', 'Chemistry', '10'],
-        ['Patrick Hoch', 'Ghent', 'Computer Science', 'Jane Okoye', 'Ghent', 'Informatics', '10'],
-        ['Peter Smith', 'Brussels U', 'Informatics', 'John Smith', 'Stanford', 'Chemistry', '10'],
-        ['Lady Red', 'Stanford', 'Medicine', 'Jane Okoye', 'Ghent', 'Informatics', '10']
+        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', '10']
       ]
     end
   end
