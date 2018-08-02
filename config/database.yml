@@ -8,23 +8,18 @@ default: &default
   timeout: 5000
   <% unless local %>
   host: localhost
-  username: docker
-  password: d0ck3r
+  user: postgres
+  port: 5432
   <% end %>
 
 development:
   <<: *default
   database: rialto_development
-  <% unless local %>
-  port: 5433
-  <% end %>
+
 
 test:
   <<: *default
   database: rialto_test
-  <% unless local %>
-  port: 5434
-  <% end %>
 
 production:
   <<: *default
