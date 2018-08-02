@@ -17,10 +17,12 @@ import Show from '../blacklight/layouts/showPage.vue'
 import Search from '../blacklight/layouts/search.vue'
 import Home from '../blacklight/layouts/home.vue'
 import Visualizations from '../blacklight/layouts/visualizations.vue'
+import Reports from '../blacklight/layouts/reports.vue'
 
 const routes = [
   { path: '/catalog/:id', name: 'show', component: Show },
   { path: '/catalog', name: 'search', component: Search },
+  { path: '/reports', name: 'reports', component: Reports },
   { path: '/viz', name: 'visualizations', component: Visualizations },
   { path: '/', name: 'home', component: Home }
 ]

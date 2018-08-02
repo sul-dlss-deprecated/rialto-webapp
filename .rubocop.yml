@@ -7,3 +7,11 @@ AllCops:
   Exclude:
   - 'node_modules/**/*'
   - 'db/schema.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'app/controllers/catalog_controller.rb'
+
+RSpec/MultipleExpectations:
+  Enabled: false
