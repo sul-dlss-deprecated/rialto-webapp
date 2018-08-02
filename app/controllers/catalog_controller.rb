@@ -111,7 +111,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'title_tesi', label: 'Title'
     config.add_index_field 'alternative_title_tesim', label: 'Alternate Title'
 
-
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'abstract_tesim', label: 'Abstract'
