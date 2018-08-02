@@ -1,6 +1,6 @@
 FROM starefossen/ruby-node:alpine
 
-RUN apk update && apk add build-base sqlite-dev tzdata git
+RUN apk update && apk add build-base postgresql-dev tzdata git
 
 RUN mkdir /app
 WORKDIR /app
