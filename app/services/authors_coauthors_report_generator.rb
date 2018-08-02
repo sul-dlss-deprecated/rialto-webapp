@@ -20,6 +20,9 @@ class AuthorsCoauthorsReportGenerator
   # @return [String] a csv report
   def generate
     CSV.generate do |csv|
+      csv << ['Author', 'Institution', 'Department', 'Co-Author',
+              'Co-Author Institution', 'Co-Author Department',
+              'Number of Collaborations', 'Co-Author Country']
       database_values.each do |row|
         csv << expand_people(row)
       end
