@@ -119,6 +119,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
 
     it 'is a report' do
       expect(CSV.parse(report)).to eq [
+        ['Author', 'Institution', 'Department', 'Co-Author', 'Co-Author Institution',
+         'Co-Author Department', 'Number of Collaborations', 'Co-Author Country'],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1', 'USA'],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10', 'Belgium'],
