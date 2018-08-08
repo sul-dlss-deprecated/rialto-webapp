@@ -21,7 +21,7 @@ export default {
     }
   },
   created() {
-    const endpoint = `/catalog/${this.$route.params.id}`
+    const endpoint = `/catalog/${encodeURIComponent(this.$route.params.id)}`
     this.$http.get(endpoint).then(function(response){
         this.result = response.data
         this.message = null
