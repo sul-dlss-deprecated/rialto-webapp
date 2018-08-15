@@ -18,7 +18,10 @@ docker build -t suldlss/rialto-webapp:latest .
 ## Run
 
 ```
-docker run -p 3000:3000 -e SOLR_URL=http://50.16.181.132:8983/solr/rialto-dev suldlss/rialto-webapp:latest
+docker run -p 3000:3000 \
+-e SOLR_URL=http://50.16.181.132:8983/solr/rialto-dev \
+-e HONEYBADGER_API_KEY=<key> \
+suldlss/rialto-webapp:latest
 ```
 
 ## Deploy
