@@ -8,3 +8,13 @@ require_relative 'config/application'
 Rails.application.load_tasks
 
 require 'solr_wrapper/rake_task' unless Rails.env.production?
+
+desc 'Run CI'
+task ci: ['js:test'] do
+end
+
+namespace :js do
+  task :test do
+    sh 'npm run test'
+  end
+end

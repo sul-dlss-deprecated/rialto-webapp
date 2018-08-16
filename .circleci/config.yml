@@ -78,6 +78,11 @@ jobs:
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
+      # Run mocha
+      - run:
+          name: Run mocha
+          command: npm test
+
 
       # Save test results for timing analysis
       - store_test_results:
