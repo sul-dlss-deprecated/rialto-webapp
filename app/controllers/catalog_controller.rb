@@ -27,7 +27,7 @@ class CatalogController < ApplicationController
 
     # solr field configuration for search results/index views
     config.index.title_field = 'name_ssim'
-    config.index.display_type_field = 'format'
+    config.index.display_type_field = 'type_ssi'
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     config.add_results_document_tool(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
