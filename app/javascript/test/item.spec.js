@@ -46,12 +46,12 @@ describe('title', () => {
     expect(getTitle(document)).to.equal('Jim')
   })
 
-  it("renders title_tsim when the document is not an Agent", () => {
+  it("renders title_tesi when the document is not an Agent", () => {
     var document = {
       id: '123',
       type: 'http://vivoweb.org/ontology/core#Grant',
       attributes: {
-        title_tsim: {
+        title_tesi: {
           attributes: {
             value: 'Rialto'
           }
