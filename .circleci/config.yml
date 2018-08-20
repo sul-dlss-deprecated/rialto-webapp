@@ -1,3 +1,11 @@
+# define often used filter
+filter_on_master_ignore_tags: &filter_on_master_ignore_tags
+  filters:
+    branches:
+      only: master
+    tags:
+      ignore: /.*/
+
 version: 2
 jobs:
   build:
@@ -87,3 +95,27 @@ jobs:
       # Save test results for timing analysis
       - store_test_results:
           path: test_results
+
+register_image:
+    docker:
+      - image: circleci/ruby:2.5.1-stretch-node
+      - checkout
+      - run:
+          name: Build Image & Register Task
+          command: |
+            docker build -t suldlss/rialto-webapp:latest .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push suldlss/rialto-webapp:latest
+
+workflows:
+  version: 2
+
+  deploy_master_to_demo:
+    jobs:
+      - build:
+          <<: *filter_on_master_ignore_tags
+      - register_image:
+          requires:
+            - build
+          <<: *filter_on_master_ignore_tags
+
