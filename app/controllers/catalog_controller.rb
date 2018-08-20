@@ -15,7 +15,8 @@ class CatalogController < ApplicationController
 
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {
-      rows: 10
+      rows: 10,
+      qf: %(title_tesi name_ssim author_label_tsim abstract_tesim)
     }
 
     # solr path which will be added to solr base url before the other solr params.
@@ -163,8 +164,8 @@ class CatalogController < ApplicationController
       # solr_parameters hash are sent to Solr as ordinary url query params.
       field.solr_parameters = {
         'spellcheck.dictionary': 'title',
-        qf: '${title_qf}',
-        pf: '${title_pf}'
+        qf: 'title_tesi',
+        pf: 'title_tesi'
       }
     end
 
