@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <h1 v-html="result.data.attributes['title_tsim']"></h1>
+    <h1 v-html="result.data.attributes['title_tesi']"></h1>
     <dl>
     <template v-for="(attribute, index) in result.data.attributes">
       <dt>{{index}}</dt><dd v-html="attribute"></dd>

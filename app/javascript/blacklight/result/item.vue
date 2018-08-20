@@ -24,7 +24,7 @@ export default {
           this.item.type === 'http://xmlns.com/foaf/0.1/Person')
         return this.item.attributes['name_ssim'].attributes.value
 
-      return this.item.attributes['title_tsim'].attributes.value
+      return this.item.attributes['title_tesi'].attributes.value
     }
   }
 }
