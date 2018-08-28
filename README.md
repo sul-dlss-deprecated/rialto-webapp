@@ -8,7 +8,6 @@ This is the Blacklight frontend for Rialto.
 1. A database (RDS)
 1. A Solr index
 
-
 ## Build
 
 ```
@@ -27,4 +26,16 @@ suldlss/rialto-webapp:latest
 ## Deploy
 ```
 docker push suldlss/rialto-webapp:latest
+```
+
+## Run tests
+
+Frontend:
+```
+npm test
+```
+
+Backend:
+```
+rake spec
 ```

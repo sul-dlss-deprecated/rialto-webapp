@@ -19,7 +19,7 @@ describe('title', () => {
   it("renders name_ssim when the document is a person", () => {
     var document = {
       id: '123',
-      type: 'http://xmlns.com/foaf/0.1/Person',
+      type: 'Person',
       attributes: {
         name_ssim: {
           attributes: {
@@ -34,7 +34,7 @@ describe('title', () => {
   it("renders name_ssim when the document is an organization", () => {
     var document = {
       id: '123',
-      type: 'http://xmlns.com/foaf/0.1/Organization',
+      type: 'Organization',
       attributes: {
         name_ssim: {
           attributes: {
