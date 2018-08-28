@@ -20,8 +20,8 @@ export default {
     title: function () {
       if (this.item.attributes === undefined)
         return this.item.id
-      if (this.item.type === 'http://xmlns.com/foaf/0.1/Organization' ||
-          this.item.type === 'http://xmlns.com/foaf/0.1/Person')
+      if (this.item.type === 'Organization' ||
+          this.item.type === 'Person')
         return this.item.attributes['name_ssim'].attributes.value
 
       return this.item.attributes['title_tesi'].attributes.value
