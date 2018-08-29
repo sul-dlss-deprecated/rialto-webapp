@@ -31,19 +31,19 @@ describe('title', () => {
     expect(getTitle(document)).to.equal('Jim')
   })
 
-  it("renders name_ssim when the document is an organization", () => {
+  it("renders title_tesi when the document is an organization", () => {
     var document = {
       id: '123',
       type: 'Organization',
       attributes: {
-        name_ssim: {
+        title_tesi: {
           attributes: {
-            value: 'Jim'
+            value: 'Institute for Collaborative Computing'
           }
         }
       }
     }
-    expect(getTitle(document)).to.equal('Jim')
+    expect(getTitle(document)).to.equal('Institute for Collaborative Computing')
   })
 
   it("renders title_tesi when the document is not an Agent", () => {

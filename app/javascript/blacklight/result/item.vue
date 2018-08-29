@@ -20,8 +20,7 @@ export default {
     title: function () {
       if (this.item.attributes === undefined)
         return this.item.id
-      if (this.item.type === 'Organization' ||
-          this.item.type === 'Person')
+      if (this.item.type === 'Person')
         return this.item.attributes['name_ssim'].attributes.value
 
       return this.item.attributes['title_tesi'].attributes.value
