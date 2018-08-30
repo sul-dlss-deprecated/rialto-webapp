@@ -26,12 +26,9 @@ class ChoroplethReportGenerator
   # @return [String] a csv report
   def generate
     CSV.generate do |csv|
-      csv << ['Country', 'Number of collaborations', 'Code']
+      csv << ['Country', 'Number of collaborations']
       database_values.each do |row|
-        country = ISO3166::Country.find_country_by_alpha3(row['country'])
-        raise "Unable to find country #{row['country']}" unless country
-        country_name = country.name
-        csv << [country_name, row['count'], row['country']]
+        csv << [row['country'], row['count']]
       end
     end
   end

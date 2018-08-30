@@ -22,7 +22,8 @@ export default {
 
            var data = [{
                 type: 'choropleth',
-                locations: unpack(rows, 'Code'),
+                locationmode: 'country names', // default is ISO-3
+                locations: unpack(rows, 'Country'),
                 z: unpack(rows, 'Number of collaborations'),
                 text: unpack(rows, 'Country'),
                 colorscale: [

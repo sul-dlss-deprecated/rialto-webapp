@@ -17,25 +17,25 @@ RSpec.describe ChoroplethReportGenerator do
       Organization.create!(uri: 'http://example.com/institution1',
                            metadata: {
                              name: 'Stanford',
-                             country: 'USA'
+                             country: 'United States'
                            })
 
       Organization.create!(uri: 'http://example.com/institution2',
                            metadata: {
                              name: 'Harvard',
-                             country: 'USA'
+                             country: 'United States'
                            })
 
       Organization.create!(uri: 'http://example.com/institution3',
                            metadata: {
                              name: 'Ghent',
-                             country: 'BEL'
+                             country: 'Belgium'
                            })
 
       Organization.create!(uri: 'http://example.com/institution4',
                            metadata: {
                              name: 'Brussels U',
-                             country: 'BEL'
+                             country: 'Belgium'
                            })
 
       p1 = Person.create!(uri: 'http://example.com/person1',
@@ -89,9 +89,9 @@ RSpec.describe ChoroplethReportGenerator do
 
     it 'is a report' do
       expect(CSV.parse(report)).to eq [
-        ['Country', 'Number of collaborations', 'Code'],
-        %w[Belgium 30 BEL],
-        ['United States', '1', 'USA']
+        ['Country', 'Number of collaborations'],
+        %w[Belgium 30],
+        ['United States', '1']
       ]
     end
   end
