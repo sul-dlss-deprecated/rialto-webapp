@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AuthorsCoauthorsReportGenerator do
+RSpec.describe ChoroplethReportGenerator do
   subject(:report) { described_class.generate(department_id: department.id.to_s) }
 
   let(:department) do
@@ -38,31 +38,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                              country: 'Belgium'
                            })
 
-      Organization.create!(uri: 'http://example.com/department2',
-                           metadata: {
-                             name: 'Biochemistry'
-                           })
-
-      Organization.create!(uri: 'http://example.com/department3',
-                           metadata: {
-                             name: 'Informatics'
-                           })
-
-      Organization.create!(uri: 'http://example.com/department4',
-                           metadata: {
-                             name: 'Computer Science'
-                           })
-
-      Organization.create!(uri: 'http://example.com/department5',
-                           metadata: {
-                             name: 'Informatics'
-                           })
-
-      Organization.create!(uri: 'http://example.com/department6',
-                           metadata: {
-                             name: 'Medicine'
-                           })
-
       p1 = Person.create!(uri: 'http://example.com/person1',
                           metadata: {
                             name: 'John Smith',
@@ -72,32 +47,27 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
       p2 = Person.create!(uri: 'http://example.com/person2',
                           metadata: {
                             name: 'Jane Smith',
-                            department: 'http://example.com/department2',
                             institutionalAffiliation: 'http://example.com/institution2'
                           })
       p3 = Person.create!(uri: 'http://example.com/person3',
                           metadata: {
                             name: 'Jane Okoye',
-                            department: 'http://example.com/department3',
                             institutionalAffiliation: 'http://example.com/institution3'
                           })
       p4 = Person.create!(uri: 'http://example.com/person4',
                           metadata: {
                             name: 'Patrick Hoch',
-                            department: 'http://example.com/department4',
                             institutionalAffiliation: 'http://example.com/institution3'
                           })
 
       p5 = Person.create!(uri: 'http://example.com/person5',
                           metadata: {
                             name: 'Peter Smith',
-                            department: 'http://example.com/department5',
                             institutionalAffiliation: 'http://example.com/institution4'
                           })
       p6 = Person.create!(uri: 'http://example.com/person6',
                           metadata: {
                             name: 'Lady Red',
-                            department: 'http://example.com/department6',
                             institutionalAffiliation: 'http://example.com/institution1'
                           })
       Publication.create!(uri: 'http://example.com/publication1',
@@ -119,12 +89,9 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
 
     it 'is a report' do
       expect(CSV.parse(report)).to eq [
-        ['Author', 'Institution', 'Department', 'Co-Author', 'Co-Author Institution',
-         'Co-Author Department', 'Number of Collaborations', 'Co-Author Country'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1', 'United States'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U', 'Informatics', '10', 'Belgium']
+        ['Country', 'Number of collaborations'],
+        %w[Belgium 30],
+        ['United States', '1']
       ]
     end
   end

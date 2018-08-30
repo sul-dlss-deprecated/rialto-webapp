@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     download: function() {
-      window.location = `/reports/${this.selectedDepartment.id}.csv`
+      window.location = `/reports/coauthors.csv?department_id=${this.selectedDepartment.id}`
     }
   }
 }
