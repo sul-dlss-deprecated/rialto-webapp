@@ -9,16 +9,22 @@ import * as Plotly from 'plotly.js';
 export default {
   name: 'Choropleth',
   mounted(){
-    Plotly.d3.csv('/data.csv', function(err, rows){
+    var file = '/reports/choropleth.csv?department_id=9'
+    Plotly.d3.csv(file, function(err, rows){
+          if (err) {
+            alert("There was a problem completing this request.")
+            console.error(`Unable to retrieve ${file}: ${err.statusText}`)
+            return
+          }
           function unpack(rows, key) {
               return rows.map(function(row) { return row[key]; });
           }
 
            var data = [{
                 type: 'choropleth',
-                locations: unpack(rows, 'CODE'),
-                z: unpack(rows, 'GDP (BILLIONS)'),
-                text: unpack(rows, 'COUNTRY'),
+                locations: unpack(rows, 'Code'),
+                z: unpack(rows, 'Number of collaborations'),
+                text: unpack(rows, 'Country'),
                 colorscale: [
                     [0,'rgb(5, 10, 172)'],[0.35,'rgb(40, 60, 190)'],
                     [0.5,'rgb(70, 100, 245)'], [0.6,'rgb(90, 120, 245)'],
@@ -43,14 +49,17 @@ export default {
 
           var layout = {
               title: 'Collaborations',
+              height: 600,
+              width: 1000,
               geo:{
-                  showframe: false,
-                  showcoastlines: false,
+                  showframe: true,
+                  showcoastlines: true,
                   projection:{
-                      type: 'mercator'
+                      type: 'robinson'
                   }
               }
           };
+
           Plotly.plot('choropleth', data, layout, {showLink: false, displayModeBar: false});
     });
 

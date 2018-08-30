@@ -14,6 +14,7 @@ gem 'pg'
 gem 'puma', '~> 3.11'
 
 gem 'blacklight', github: 'projectblacklight/blacklight'
+gem 'countries'
 gem 'honeybadger'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
