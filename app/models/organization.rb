@@ -4,5 +4,5 @@
 class Organization < ApplicationRecord
   DEPARTMENT = 'http://vivoweb.org/ontology/core#Department'
   store_accessor :metadata, :name, :country
-  scope :departments, -> { where("metadata->>'type' = ?", DEPARTMENT) }
+  scope :departments, -> { where("metadata->>'type' = ?", DEPARTMENT).order("metadata->>'name'") }
 end
