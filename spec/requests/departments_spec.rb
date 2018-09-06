@@ -30,11 +30,12 @@ RSpec.describe 'Deparment list', type: :request do
                          })
   end
 
+  let(:json) { JSON.parse(response.body) }
+  let(:returned_labels) { json.map { |d| d['label'] } }
+
   it 'returns a report' do
     get '/departments.json'
-    json = JSON.parse(response.body)
-    expect(json.size).to eq 3
-    expect(json).to all(include('id', 'label'))
+    expect(returned_labels).to eq(['Biochemistry', 'Computer Science', 'Informatics'])
     expect(response.content_type).to eq 'application/json'
   end
 end
