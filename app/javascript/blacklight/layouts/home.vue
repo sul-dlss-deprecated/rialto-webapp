@@ -1,37 +1,45 @@
 <template>
   <section class="container">
-    <h1>Welcome to Rialto.</h1>
+    <h1 class="mt-5 mb-5">Discover patterns of research, publication, and funding</h1>
 
     <div class="row">
-      <div class="col-sm-3">
-        <div class="card">
-          <img class="card-img-top" src="https://loremflickr.com/320/240" alt="Lorem ipsum">
+      <div class="col-sm-4">
+        <div class="card intl-collab">
+          <img class="card-img-top" src="/home_intlcollab.png" alt="Topic Area">
+          <div class="card-img-overlay">
+            <div class="fas fa-globe-americas icon"></div>
+            <h2 class="card-title">Discover<br>international<br>collaborations</h2>
+          </div>
           <div class="card-body">
-            <h5 class="card-title">Explore Data</h5>
-            <p class="card-text">Explore the data using search and facet filters</p>
-            <router-link :to="{ name: 'search'}" class="btn btn-primary">Exploring</router-link>
+            <!-- <p class="card-text">any text here</p> -->
+            <router-link :to="{ name: 'visualizations'}" class="btn btn-primary">Search</router-link>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="card">
-          <img class="card-img-top" src="https://loremflickr.com/320/240/cat" alt="Lorem ipsum">
+          <img class="card-img-top" src="/home_topicarea.png" alt="Topic Area">
+          <div class="card-img-overlay">
+            <div class="fas fa-landmark icon"></div>
+            <h2 class="card-title">Cross-disciplinary<br>research output by<br>topic</h2>
+          </div>
           <div class="card-body">
-            <h5 class="card-title">Visualizations</h5>
-            <p class="card-text">See how Stanford researchers connect with the world</p>
-            <router-link :to="{ name: 'visualizations'}" class="btn btn-primary">Visualize</router-link>
+            <!-- <p class="card-text">any text here</p> -->
+            <router-link :to="{ name: 'reports'}" class="btn btn-primary">Search</router-link>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="card">
-          <img class="card-img-top" src="https://loremflickr.com/320/240/kitty" alt="Lorem ipsum">
+          <img class="card-img-top" src="/home_trends.png" alt="Research trends by topic">
+          <div class="card-img-overlay">
+            <div class="fas fa-book icon"></div>
+            <h2 class="card-title">Research trends<br>by topic</h2>
+          </div>
           <div class="card-body">
-            <h5 class="card-title">Reports</h5>
-            <p class="card-text">Download spreadsheets of the data.</p>
-            <router-link :to="{ name: 'reports'}" class="btn btn-primary">Download</router-link>
+            <router-link :to="{ name: 'reports'}" class="btn btn-primary">Search</router-link>
           </div>
         </div>
       </div>
@@ -46,5 +54,37 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '../../variables';
+
+  h1 {
+    color: $header-text-color;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 230%;
+    text-align: center;
+  }
+  .icon {
+    margin-top: 1rem;
+    font-size: 500%;
+  }
+  h2 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: bold;
+    margin-top: 2rem;
+  }
+  .card-img-top {
+    background-color: white;
+    height: 274px;
+    // width: 200px;
+    // margin: -75px 0 0 -100px;
+  }
+  .card-body {
+    z-index: 1000; // push the .card-body over the .card-img-overlay
+  }
+  .card {
+    background-color: $card-background;
+    text-align: center;
+    overflow: hidden;
+  }
+
 </style>

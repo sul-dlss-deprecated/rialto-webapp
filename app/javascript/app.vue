@@ -1,8 +1,17 @@
 <template>
 
   <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark topbar" role="navigation">
-        <a href="/" class="navbar-brand">Rialto</a>
+    <nav class="navbar navbar-expand-md" role="navigation">
+      <a class="navbar-brand" href="/">Stanford Libraries</a>
+    </nav>
+    <header class="masthead">
+      <h1 class="site-title">Rialto</h1>
+    </header>
+    <nav class="navbar navbar-expand-md navbar-dark subnav" role="navigation">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+        <li class="nav-item"><router-link :to="{ name: 'search'}" class="nav-link">Browse</router-link></li>
+      </ul>
     </nav>
     <router-view></router-view>
   </div>
@@ -11,5 +20,45 @@
 <script>
 </script>
 
-<style>
+<style lang="scss">
+  @import './app.scss';
+
+  // Our own local variables
+  $masthead-background: $cardinal;
+  $masthead-color: $white;
+
+  .navbar {
+    padding-top: 0.1rem;
+    padding-bottom: 0.3rem;
+    line-height: 1;
+    padding-left: 7px;
+  }
+  .navbar-brand {
+    background: transparent url(/StanfordLibraries-logo-cmyk.png) no-repeat bottom left;
+    overflow: hidden;
+    text-indent: 100%;
+  }
+  .masthead {
+    font-family: 'Source Serif Pro', serif;
+    height: 100px;
+    text-transform: uppercase;
+    background-color: $masthead-background;
+    color: $masthead-color;
+    .site-title {
+      font-size: 300%;
+      padding-top: 1.5rem;
+      padding-left: 1.5rem;
+      font-weight: 200;
+    }
+  }
+
+  .subnav {
+    background-color: $subnav-background;
+    .navbar-nav {
+      margin-left: 0.5rem;
+      .nav-link {
+        font-weight: bold;
+      }
+    }
+  }
 </style>
