@@ -18,3 +18,14 @@ namespace :js do
     sh 'npm run test'
   end
 end
+
+namespace :index do
+  desc 'Load sample RIALTO solr docs'
+  task :seed do
+    file = File.expand_path(File.join('spec', 'fixtures', 'sample_solr_documents.yml'), __dir__)
+    puts "Looking for #{file}"
+    conn = Blacklight.default_index.connection
+    conn.add YAML.load_file(file)
+    conn.commit
+  end
+end
