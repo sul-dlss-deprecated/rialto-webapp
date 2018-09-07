@@ -32,7 +32,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '../../bootstrap_overrides.scss';
+
   .collapse-toggle:after {
     content: "❯";
     float: right;
@@ -44,6 +46,10 @@ export default {
   }
   .card-header {
     font-size: 1rem;
+    background-color: $card-background;
+    a {
+      color: $body-color;
+    }
   }
   .card {
     margin-bottom: 1rem;
