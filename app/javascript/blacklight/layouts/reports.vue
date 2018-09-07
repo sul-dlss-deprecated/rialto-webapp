@@ -1,20 +1,27 @@
 <template>
   <section class="container">
-    <h1>Reports</h1>
-    <label for="department">Department</label>
+    <h1>Collaboration Report</h1>
+    <label for="department">Department: </label>
     <select name="department" v-model="selectedDepartment">
       <option v-for="department in departments" :value="department">{{ department.label }}</option>
     </select>
 
-    <ul v-if="selectedDepartment !== ''">
-      <li><a href="#" v-on:click="download">Collaboration Report</a></li>
+    <ul v-if="reportURL">
+      <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
+
+    <ReportTable v-bind:data-source="reportURL"></ReportTable>
   </section>
 </template>
 
 
 <script>
+import ReportTable from 'blacklight/reports/table.vue'
+
 export default {
+  components: {
+    ReportTable
+  },
   data: function () {
     return {
       selectedDepartment: '',
@@ -28,9 +35,17 @@ export default {
         console.error(error.statusText);
     })
   },
+  computed: {
+    reportURL: function(){
+      if (!this.selectedDepartment) {
+        return null
+      }
+      return `/reports/coauthors.csv?department_id=${this.selectedDepartment.id}`
+    }
+  },
   methods: {
     download: function() {
-      window.location = `/reports/coauthors.csv?department_id=${this.selectedDepartment.id}`
+      window.location = this.reportURL()
     }
   }
 }
