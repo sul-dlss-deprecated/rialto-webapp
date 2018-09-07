@@ -35,8 +35,9 @@
   }
   .navbar-brand {
     background: transparent url(/StanfordLibraries-logo-cmyk.png) no-repeat bottom left;
-    overflow: hidden;
-    text-indent: 100%;
+    overflow: hidden; // don't show the text in the link tag
+    text-indent: 100%; // Push the real text off the display, but leave it available for screen readers
+    min-width: 180px; // Allows the whole logo to display regardless of the text in the link tag
   }
   .masthead {
     font-family: 'Source Serif Pro', serif;
