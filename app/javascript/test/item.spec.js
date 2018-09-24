@@ -16,12 +16,12 @@ describe('title', () => {
     expect(getTitle(document)).to.equal('123')
   })
 
-  it("renders name_ssim when the document is a person", () => {
+  it("renders name_tsim when the document is a person", () => {
     var document = {
       id: '123',
       type: 'Person',
       attributes: {
-        name_ssim: {
+        name_tsim: {
           attributes: {
             value: 'Jim'
           }

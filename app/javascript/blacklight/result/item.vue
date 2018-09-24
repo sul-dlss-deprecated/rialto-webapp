@@ -21,7 +21,7 @@ export default {
       if (this.item.attributes === undefined)
         return this.item.id
       if (this.item.type === 'Person')
-        return this.item.attributes['name_ssim'].attributes.value
+        return this.item.attributes['name_tsim'].attributes.value
 
       return this.item.attributes['title_tesi'].attributes.value
     }

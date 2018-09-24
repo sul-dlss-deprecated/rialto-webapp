@@ -16,7 +16,7 @@ class CatalogController < ApplicationController
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {
       rows: 10,
-      qf: %(title_tesi name_ssim author_label_tsim abstract_tesim)
+      qf: %(title_tesi name_tsim author_label_tsim abstract_tesim)
     }
 
     # solr path which will be added to solr base url before the other solr params.
@@ -27,7 +27,7 @@ class CatalogController < ApplicationController
     # config.per_page = [10,20,50,100]
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'name_ssim'
+    config.index.title_field = 'name_tsim'
     config.index.display_type_field = 'type_ssi'
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
@@ -111,7 +111,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'subject_label_tsim', label: 'Subject'
     config.add_index_field 'title_tesi', label: 'Title'
     config.add_index_field 'alternative_title_tesim', label: 'Alternate Title'
-    config.add_index_field 'name_ssim', label: 'Name' # For People records
+    config.add_index_field 'name_tsim', label: 'Name' # For People records
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -134,7 +134,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'subject_label_tsim', label: 'Subject'
     config.add_show_field 'title_tesi', label: 'Title'
     config.add_show_field 'alternative_title_tesim', label: 'Alternate Title'
-    config.add_show_field 'name_ssim', label: 'Name' # For People records
+    config.add_show_field 'name_tsim', label: 'Name' # For People records
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

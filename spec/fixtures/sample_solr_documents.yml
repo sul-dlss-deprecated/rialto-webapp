@@ -1,13 +1,13 @@
 ---
 - id: http://example.com/record1
   type_ssi: Person
-  name_ssim: Hermione Granger
+  name_tsim: Hermione Granger
   department_ssim: Herbology
 - id: http://example.com/record2
   type_ssi: Person
-  name_ssim: Ron Weasley
+  name_tsim: Ron Weasley
   department_ssim: Logic
 - id: http://example.com/record3
   type_ssi: Person
-  name_ssim: Harry Potter
-  department_ssim: Astronomy  
+  name_tsim: Harry Potter
+  department_ssim: Astronomy
