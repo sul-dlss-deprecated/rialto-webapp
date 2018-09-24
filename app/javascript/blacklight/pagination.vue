@@ -27,7 +27,7 @@ export default {
       return this.pages.offset_value + 1
     },
     end: function() {
-      return Math.min(this.start + this.pages.limit_value, this.pages.total_count)
+      return Math.min(this.pages.offset_value + this.pages.limit_value, this.pages.total_count)
     },
     totalCount: function() {
       return this.pages.total_count
