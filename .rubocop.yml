@@ -14,5 +14,9 @@ Metrics/BlockLength:
     - 'spec/**/*'
     - 'app/controllers/catalog_controller.rb'
 
+Metrics/ClassLength:
+  Exclude:
+    - 'app/controllers/catalog_controller.rb'
+
 RSpec/MultipleExpectations:
   Enabled: false
