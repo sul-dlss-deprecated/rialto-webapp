@@ -78,11 +78,11 @@ class CatalogController < ApplicationController
     config.add_facet_field 'pub_year_ssim', label: 'Publication Year', single: true
     config.add_facet_field 'subject_label_ssim', label: 'Topic', limit: 20, index_range: 'A'..'Z'
     config.add_facet_field 'institute_ssim', label: 'Institute', limit: true
-    config.add_facet_field 'department_ssim', label: 'Department'
-    config.add_facet_field 'school_ssim', label: 'School'
+    config.add_facet_field 'department_label_ssim', label: 'Department'
+    config.add_facet_field 'school_label_ssim', label: 'School'
     config.add_facet_field 'subdivision_ssim', label: 'Subdivision'
     config.add_facet_field 'division_ssim', label: 'Division'
-    config.add_facet_field 'university_ssim', label: 'University'
+    config.add_facet_field 'institution_label_ssim', label: 'University'
     config.add_facet_field 'agent_ssim', label: 'Agent'
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -111,7 +111,13 @@ class CatalogController < ApplicationController
     config.add_index_field 'subject_label_tsim', label: 'Subject'
     config.add_index_field 'title_tesi', label: 'Title'
     config.add_index_field 'alternative_title_tesim', label: 'Alternate Title'
-    config.add_index_field 'name_tsim', label: 'Name' # For People records
+
+    config.for_display_type 'Person' do
+      config.add_index_field 'name_tsim', label: 'Name'
+      config.add_index_field 'department_label_ssim', label: 'Department'
+      config.add_index_field 'school_label_ssim', label: 'School'
+      config.add_index_field 'institution_label_ssim', label: 'University'
+    end
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -134,7 +140,13 @@ class CatalogController < ApplicationController
     config.add_show_field 'subject_label_tsim', label: 'Subject'
     config.add_show_field 'title_tesi', label: 'Title'
     config.add_show_field 'alternative_title_tesim', label: 'Alternate Title'
-    config.add_show_field 'name_tsim', label: 'Name' # For People records
+
+    config.for_display_type 'Person' do
+      config.add_show_field 'name_tsim', label: 'Name'
+      config.add_show_field 'department_label_ssim', label: 'Department'
+      config.add_show_field 'school_label_ssim', label: 'School'
+      config.add_show_field 'institution_label_ssim', label: 'University'
+    end
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
