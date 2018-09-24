@@ -13,7 +13,7 @@ jobs:
           RAILS_ENV: test
       - image: circleci/postgres:9.5-alpine
         environment:
-          POSTGRES_USER: dbuser
+          POSTGRES_USER: postgres
           POSTGRES_DB: rialto_test
           POSTGRES_PASSWORD: ""
     steps:
