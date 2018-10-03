@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: c435caddf14af6aa36c1428995b8cc52d76d4bf2
+  revision: f14f1f0ec975270734c5fa7710f4ae4940536e29
+  branch: show-field-config
   specs:
     blacklight (7.0.0.rc1)
       deprecation
@@ -99,7 +100,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
-    marcel (0.3.2)
+    marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (0.9.0)
     mimemagic (0.3.2)
@@ -245,4 +246,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.3
+   1.16.4

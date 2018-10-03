@@ -29,6 +29,7 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'name_tsim'
     config.index.display_type_field = 'type_ssi'
+
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     config.add_results_document_tool(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
@@ -47,7 +48,7 @@ class CatalogController < ApplicationController
 
     # solr field configuration for document/show views
     # config.show.title_field = 'title_tsim'
-    # config.show.display_type_field = 'format'
+    config.show.display_type_field = 'type_ssi'
     # config.show.thumbnail_field = 'thumbnail_path_ss'
 
     # solr fields that will be treated as facets by the blacklight application
@@ -140,7 +141,6 @@ class CatalogController < ApplicationController
     config.add_show_field 'subject_label_tsim', label: 'Subject'
     config.add_show_field 'title_tesi', label: 'Title'
     config.add_show_field 'alternative_title_tesim', label: 'Alternate Title'
-
     config.for_display_type 'Person' do
       config.add_show_field 'name_tsim', label: 'Name'
       config.add_show_field 'department_label_ssim', label: 'Department'
