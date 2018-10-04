@@ -93,23 +93,8 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field 'abstract_tesim', label: 'Abstract'
-    config.add_index_field 'author_label_tsim', label: 'Author'
-    config.add_index_field 'profiles_tesim', label: 'Profiles'
-    config.add_index_field 'cites_ssim', label: 'Cites'
-    config.add_index_field 'date_created_dtsi', label: 'Created'
-    config.add_index_field 'description_tesim', label: 'Description'
-    config.add_index_field 'doi_ssim', label: 'DOI'
-    config.add_index_field 'editor_label_tsim', label: 'Editor'
-    config.add_index_field 'identifier_ssim', label: 'Identifier'
     config.add_index_field 'funded_by_ssim', label: 'Funded By'
-    config.add_index_field 'has_instrument_ssim', label: 'Has Instrument'
-    config.add_index_field 'journal_issue_ssim', label: 'Journal Issue'
-    config.add_index_field 'link_ssim', label: 'Link'
-    config.add_index_field 'publisher_label_tsim', label: 'Publisher'
     config.add_index_field 'same_as_ssim', label: 'Same As'
-    config.add_index_field 'sponsor_label_tsim', label: 'Sponsor'
-    config.add_index_field 'subject_label_tsim', label: 'Subject'
     config.add_index_field 'title_tesi', label: 'Title'
     config.add_index_field 'alternative_title_tesim', label: 'Alternate Title'
 
@@ -120,32 +105,59 @@ class CatalogController < ApplicationController
       config.add_index_field 'institution_label_ssim', label: 'University'
     end
 
+    config.for_display_type 'Publication' do
+      config.add_index_field 'author_labels_tsim', label: 'Author'
+      config.add_index_field 'editor_label_tsim', label: 'Editor'
+      config.add_index_field 'abstract_tesim', label: 'Abstract'
+      config.add_index_field 'description_tesim', label: 'Description'
+      config.add_index_field 'doi_ssim', label: 'DOI'
+      config.add_index_field 'identifier_ssim', label: 'Identifier'
+      config.add_index_field 'cites_ssim', label: 'Cites'
+      config.add_index_field 'profiles_tesim', label: 'Profiles'
+      config.add_index_field 'date_created_dtsi', label: 'Created'
+      config.add_index_field 'has_instrument_ssim', label: 'Has Instrument'
+      config.add_index_field 'journal_issue_ssim', label: 'Journal Issue'
+      config.add_index_field 'sponsor_label_tsim', label: 'Sponsor'
+      config.add_index_field 'subject_label_tsim', label: 'Subject'
+      config.add_index_field 'link_ssim', label: 'Link'
+      config.add_index_field 'publisher_label_tsim', label: 'Publisher'
+    end
+
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'abstract_tesim', label: 'Abstract'
-    config.add_show_field 'author_label_tsim', label: 'Author'
-    config.add_show_field 'profiles_tesim', label: 'Profiles'
-    config.add_show_field 'cites_ssim', label: 'Cites'
-    config.add_show_field 'date_created_dtsi', label: 'Created'
-    config.add_show_field 'description_tesim', label: 'Description'
-    config.add_show_field 'doi_ssim', label: 'DOI'
-    config.add_show_field 'editor_label_tsim', label: 'Editor'
-    config.add_show_field 'identifier_ssim', label: 'Identifier'
+
+    # Organizations, Grants, and Publications have 'Funded By'
     config.add_show_field 'funded_by_ssim', label: 'Funded By'
-    config.add_show_field 'has_instrument_ssim', label: 'Has Instrument'
-    config.add_show_field 'journal_issue_ssim', label: 'Journal Issue'
-    config.add_show_field 'link_ssim', label: 'Link'
-    config.add_show_field 'publisher_label_tsim', label: 'Publisher'
+    # Topics and Papers have 'Same As'
     config.add_show_field 'same_as_ssim', label: 'Same As'
-    config.add_show_field 'sponsor_label_tsim', label: 'Sponsor'
-    config.add_show_field 'subject_label_tsim', label: 'Subject'
     config.add_show_field 'title_tesi', label: 'Title'
+
+    # Projects and Publications have 'Alternative Title'
     config.add_show_field 'alternative_title_tesim', label: 'Alternate Title'
+
     config.for_display_type 'Person' do
       config.add_show_field 'name_tsim', label: 'Name'
       config.add_show_field 'department_label_ssim', label: 'Department'
       config.add_show_field 'school_label_ssim', label: 'School'
       config.add_show_field 'institution_label_ssim', label: 'University'
+    end
+
+    config.for_display_type 'Publication' do
+      config.add_show_field 'author_labels_tsim', label: 'Author'
+      config.add_show_field 'editor_label_tsim', label: 'Editor'
+      config.add_show_field 'abstract_tesim', label: 'Abstract'
+      config.add_show_field 'description_tesim', label: 'Description'
+      config.add_show_field 'doi_ssim', label: 'DOI'
+      config.add_show_field 'identifier_ssim', label: 'Identifier'
+      config.add_show_field 'cites_ssim', label: 'Cites'
+      config.add_show_field 'profiles_tesim', label: 'Profiles'
+      config.add_show_field 'date_created_dtsi', label: 'Created'
+      config.add_show_field 'has_instrument_ssim', label: 'Has Instrument'
+      config.add_show_field 'journal_issue_ssim', label: 'Journal Issue'
+      config.add_show_field 'sponsor_label_tsim', label: 'Sponsor'
+      config.add_show_field 'subject_label_tsim', label: 'Subject'
+      config.add_show_field 'link_ssim', label: 'Link'
+      config.add_show_field 'publisher_label_tsim', label: 'Publisher'
     end
 
     # "fielded" search configuration. Used by pulldown among other places.
