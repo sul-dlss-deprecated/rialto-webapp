@@ -1,17 +1,18 @@
 import { expect } from 'chai'
 import Vue from 'vue'
-import Item from '../blacklight/result/item.vue'
+import Title from '../blacklight/result/title.vue'
 
 // helper function that mounts and returns the rendered text
 function getTitle (document) {
-  const Constructor = Vue.extend(Item)
+  const Constructor = Vue.extend(Title)
   return new Constructor({ propsData: { item: document } }).title
 }
 
 describe('title', () => {
   it("renders id when the document doesn't have a type", () => {
     var document = {
-      id: '123'
+      id: '123',
+      attributes: {}
     }
     expect(getTitle(document)).to.equal('123')
   })
