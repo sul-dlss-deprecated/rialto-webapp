@@ -1,31 +1,20 @@
 <template>
   <div>
-    <h3><router-link :to="{ name: 'show', params: { id: this.item.id } }" v-html="title"></router-link></h3>
-    <dl>
-      <template v-for="(property, index) in item.attributes">
-        <dt v-html="property.attributes.label"></dt>
-        <dd v-html="property.attributes.value"></dd>
-      </template>
-    </dl>
+    <h3><router-link :to="{ name: 'show', params: { id: this.item.id } }"><Title v-bind:item="item"></Title></router-link></h3>
+    <PropertyList v-bind:item="item"></PropertyList>
   </div>
 </template>
 
 <script>
+import Title from 'blacklight/result/title.vue'
+import PropertyList from 'blacklight/result/property_list.vue'
+
 export default {
   props: ['item'],
-  computed: {
-    url: function () {
-      return this.item.links.self
-    },
-    title: function () {
-      if (this.item.attributes === undefined)
-        return this.item.id
-      if (this.item.type === 'Person')
-        return this.item.attributes['name_tsim'].attributes.value
-
-      return this.item.attributes['title_tesi'].attributes.value
-    }
-  }
+  components: {
+    Title,
+    PropertyList
+  },
 }
 </script>
 
