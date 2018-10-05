@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: f14f1f0ec975270734c5fa7710f4ae4940536e29
-  branch: show-field-config
+  revision: 94749d5aa34c4474f4ad27c1dc35f95442271f23
   specs:
     blacklight (7.0.0.rc1)
       deprecation

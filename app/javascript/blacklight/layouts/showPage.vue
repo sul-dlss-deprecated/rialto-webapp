@@ -1,9 +1,10 @@
 <template>
   <section class="container">
-    <h1 v-html="result.data.attributes['title_tesi']"></h1>
+    <h1 v-html="result.data.attributes.title_tesi.attributes.value"></h1>
     <dl>
-    <template v-for="(attribute, index) in result.data.attributes">
-      <dt>{{index}}</dt><dd v-html="attribute"></dd>
+    <template v-for="(property, index) in result.data.attributes">
+      <dt v-html="property.attributes.label"></dt>
+      <dd v-html="property.attributes.value"></dd>
     </template>
     </dl>
   </section>
