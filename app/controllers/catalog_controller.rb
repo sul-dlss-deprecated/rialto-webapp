@@ -135,29 +135,29 @@ class CatalogController < ApplicationController
     # Projects and Publications have 'Alternative Title'
     config.add_show_field 'alternative_title_tesim', label: 'Alternate Title'
 
-    config.for_display_type 'Person' do
-      config.add_show_field 'name_tsim', label: 'Name'
-      config.add_show_field 'department_label_ssim', label: 'Department'
-      config.add_show_field 'school_label_ssim', label: 'School'
-      config.add_show_field 'institution_label_ssim', label: 'University'
+    config.for_display_type 'Person' do |pc|
+      pc.add_show_field 'name_tsim', label: 'Name'
+      pc.add_show_field 'department_label_ssim', label: 'Department'
+      pc.add_show_field 'school_label_ssim', label: 'School'
+      pc.add_show_field 'institution_label_ssim', label: 'University'
     end
 
-    config.for_display_type 'Publication' do
-      config.add_show_field 'author_labels_tsim', label: 'Author'
-      config.add_show_field 'editor_label_tsim', label: 'Editor'
-      config.add_show_field 'abstract_tesim', label: 'Abstract'
-      config.add_show_field 'description_tesim', label: 'Description'
-      config.add_show_field 'doi_ssim', label: 'DOI'
-      config.add_show_field 'identifier_ssim', label: 'Identifier'
-      config.add_show_field 'cites_ssim', label: 'Cites'
-      config.add_show_field 'profiles_tesim', label: 'Profiles'
-      config.add_show_field 'date_created_dtsi', label: 'Created'
-      config.add_show_field 'has_instrument_ssim', label: 'Has Instrument'
-      config.add_show_field 'journal_issue_ssim', label: 'Journal Issue'
-      config.add_show_field 'sponsor_label_tsim', label: 'Sponsor'
-      config.add_show_field 'subject_label_tsim', label: 'Subject'
-      config.add_show_field 'link_ssim', label: 'Link'
-      config.add_show_field 'publisher_label_tsim', label: 'Publisher'
+    config.for_display_type 'Publication' do |pc|
+      pc.add_show_field 'authors', label: 'Author', accessor: :linked_authors
+      pc.add_show_field 'editor_label_tsim', label: 'Editor'
+      pc.add_show_field 'abstract_tesim', label: 'Abstract'
+      pc.add_show_field 'description_tesim', label: 'Description'
+      pc.add_show_field 'doi_ssim', label: 'DOI'
+      pc.add_show_field 'identifier_ssim', label: 'Identifier'
+      pc.add_show_field 'cites_ssim', label: 'Cites'
+      pc.add_show_field 'profiles_tesim', label: 'Profiles'
+      pc.add_show_field 'date_created_dtsi', label: 'Created'
+      pc.add_show_field 'has_instrument_ssim', label: 'Has Instrument'
+      pc.add_show_field 'journal_issue_ssim', label: 'Journal Issue'
+      pc.add_show_field 'sponsor_label_tsim', label: 'Sponsor'
+      pc.add_show_field 'subject_label_tsim', label: 'Subject'
+      pc.add_show_field 'link_ssim', label: 'Link'
+      pc.add_show_field 'publisher_label_tsim', label: 'Publisher'
     end
 
     # "fielded" search configuration. Used by pulldown among other places.

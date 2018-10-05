@@ -17,4 +17,19 @@ class SolrDocument
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
+
+  # Produces a list of authors with links to the frontend app for each.
+  def linked_authors
+    tuples = self['author_labels_tsim'].zip(self['authors_ssim'])
+    parts = tuples.map do |author|
+      "<a href=\"#{search_link(author.last)}\">#{author.first}</a>"
+    end
+    parts.to_sentence.html_safe
+  end
+
+  # Create a link to the VueJS path for showing all the documents with this author
+  # @param String the uri for the author
+  def search_link(author_uri)
+    "/#/catalog/#{CGI.escape(author_uri)}"
+  end
 end
