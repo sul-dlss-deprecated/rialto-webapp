@@ -1,0 +1,23 @@
+FROM starefossen/ruby-node
+LABEL maintainer="Justin Littman <justinlittman@stanford.edu>"
+
+# netcat is required by wait-for in invoke.sh
+RUN apt-get update && apt-get install -y build-essential postgresql-client tzdata git netcat
+RUN gem install bundler
+
+RUN mkdir /app-setup
+WORKDIR /app-setup
+
+ENV RAILS_ENV development
+ENV RAILS_SERVE_STATIC_FILES true
+
+COPY Gemfile Gemfile.lock docker/invoke.sh /app-setup/
+RUN chmod +x invoke.sh
+
+ADD https://raw.githubusercontent.com/eficode/wait-for/master/wait-for /app-setup/wait-for
+RUN chmod +x wait-for
+
+RUN bundle install
+
+WORKDIR /app
+CMD ["/app-setup/invoke.sh"]
