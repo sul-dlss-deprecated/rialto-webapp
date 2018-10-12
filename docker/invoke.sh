@@ -13,5 +13,8 @@ set -e
 echo "Migrating db"
 rails db:migrate
 
+echo "Running webpack"
+./bin/webpack-dev-server &
+
 echo "Running server"
 exec puma -C config/puma.rb config.ru
