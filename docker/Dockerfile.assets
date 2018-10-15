@@ -1,0 +1,20 @@
+FROM suldlss/rialto-webapp:node-latest as node
+
+FROM suldlss/rialto-webapp:ruby-latest
+
+# Copy node_modules and the node executable so that assets can be precompiled by sprockets and react on rails.
+COPY --from=node /app/node_modules /opt/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
+# Skip yarn integrity check, this image won't have yarn because we are running multi-stage builds
+ENV SKIP_YARN_INTEGRITY_CHECK=true
+
+# Copy the application's source into the image.
+# See .dockerignore for the files in the local directory not being copied.
+COPY . /opt
+
+ENV RAILS_ENV=production
+
+WORKDIR ./opt
+# Precompile our assets
+RUN bundle exec rails NODE_ENV=production bin/webpack

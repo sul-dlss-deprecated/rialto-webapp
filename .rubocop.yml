@@ -5,6 +5,7 @@ AllCops:
   DisplayCopNames: true
   TargetRubyVersion: 2.3
   Exclude:
+  - 'docker/**/*'
   - 'node_modules/**/*'
   - 'db/schema.rb'
   - 'vendor/**/*'
