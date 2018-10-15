@@ -11,7 +11,7 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install --without development test --deployment
 COPY . .
 RUN npm install
-RUN bundle exec rake assets:precompile
+RUN SECRET_KEY_BASE="foo" bundle exec rake assets:precompile
 
 LABEL maintainer="Justin Coyne <jcoyne@justincoyne.com>"
 
