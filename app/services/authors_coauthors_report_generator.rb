@@ -35,13 +35,23 @@ class AuthorsCoauthorsReportGenerator
 
   attr_reader :organization
 
+  # rubocop:disable Metrics/AbcSize
   def expand_people(row)
     p1 = Person.find_by(uri: row['uri1'])
     p2 = Person.find_by(uri: row['uri2'])
-    [p1.name, p1.institution_name, p1.department_name,
-     p2.name, p2.institution_name, p2.department_name,
+    [p1.name, join_org_names(p1.institution_entities), join_org_names(p1.department_entities),
+     p2.name, join_org_names(p2.institution_entities), join_org_names(p2.department_entities),
      row['count'],
-     p2.institution_country]
+     join_org_countries(p2.institution_entities)]
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def join_org_names(orgs)
+    orgs.to_a.map(&:name).uniq.sort.join('; ')
+  end
+
+  def join_org_countries(orgs)
+    orgs.to_a.map(&:country).uniq.sort.join('; ')
   end
 
   # @return [ActiveRecord::Result]
@@ -57,7 +67,7 @@ class AuthorsCoauthorsReportGenerator
     'LEFT OUTER JOIN people_publications pp2 ON pub.id = pp2.publication_id ' \
     'LEFT OUTER JOIN people p2 ON pp2.person_id = p2.id ' \
     'WHERE p2.id != p1.id AND ' \
-    "p1.metadata->>'department' = $1 " \
+    "p1.metadata -> 'departments' ? $1 "  \
     'GROUP BY p1.uri, p2.uri ' \
     'ORDER BY p1.uri'
   end

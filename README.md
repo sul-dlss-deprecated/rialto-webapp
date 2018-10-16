@@ -40,3 +40,8 @@ Backend:
 ```
 rake spec
 ```
+
+To bring up a test database in a docker container:
+```
+docker run --rm --name rialto_test_db -e POSTGRES_DB=rialto_test -p "5432:5432" -e POSTGRES_USER=$USER -d postgres:9.6.2-alpine
+```
