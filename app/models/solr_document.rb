@@ -20,7 +20,7 @@ class SolrDocument
 
   # Produces a list of authors with links to the frontend app for each.
   def linked_authors
-    tuples = self['author_labels_tsim'].zip(self['authors_ssim'])
+    tuples = fetch('author_labels_tsim', []).zip(fetch('authors_ssim', []))
     parts = tuples.map do |author|
       "<a href=\"#{search_link(author.last)}\">#{author.first}</a>"
     end
