@@ -9,10 +9,10 @@ This is the Blacklight frontend for Rialto.
 1. A Solr index
 1. `config/master.key` containing the master key added to your clone of this repository.
 
-## Build
+## Build Docker image
 
 ```
-docker build -t suldlss/rialto-webapp:latest .
+./bin/build
 ```
 
 ## Run

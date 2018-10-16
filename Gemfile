@@ -19,6 +19,9 @@ gem 'lograge'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
+
+gem 'bigdecimal', '~> 1.3'
+gem 'json', '~> 2.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
