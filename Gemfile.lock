@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: 1a51feaf49388bd296417eb196fc5828098b60a9
-  branch: avoid_unnecessary_lookup
+  revision: c1ce34f2220af3b08c0ebec86d99991591f66f36
   specs:
     blacklight (7.0.0.rc1)
       deprecation
@@ -9,7 +8,7 @@ GIT
       jbuilder (~> 2.7)
       kaminari (>= 0.15)
       nokogiri (~> 1.6)
-      rails (~> 5.0)
+      rails (~> 5.1)
 
 GEM
   remote: https://rubygems.org/
@@ -258,4 +257,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.4
+   1.16.6
