@@ -13,7 +13,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 
-gem 'blacklight', github: 'projectblacklight/blacklight', branch: 'avoid_unnecessary_lookup'
+gem 'blacklight', github: 'projectblacklight/blacklight'
 gem 'honeybadger'
 gem 'lograge'
 
