@@ -3,17 +3,13 @@
 # Represents an author of a publication
 class Person < ApplicationRecord
   has_and_belongs_to_many :publications
-  store_accessor :metadata, :name, :institutionalAffiliation, :department
+  store_accessor :metadata, :name, :institutionalAffiliations, :departments
 
-  delegate :name, :country, to: :institution_entity, prefix: :institution
-
-  def institution_entity
-    @institution_entity ||= Organization.find_by(uri: institutionalAffiliation)
+  def institution_entities
+    @institution_entities ||= Organization.where(uri: institutionalAffiliations)
   end
 
-  delegate :name, to: :department_entity, prefix: :department
-
-  def department_entity
-    @department_entity ||= Organization.find_by(uri: department)
+  def department_entities
+    @department_entities ||= Organization.where(uri: departments)
   end
 end
