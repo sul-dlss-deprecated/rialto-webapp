@@ -20,14 +20,29 @@ export default {
       item: { attributes: {} }
     }
   },
+  methods: {
+    load: function() {
+      console.log("in load")
+
+      const endpoint = `/catalog/${encodeURIComponent(this.$route.params.id)}`
+      this.$http.get(endpoint).then(function(response){
+          this.item = response.data.data
+      }, function(error){
+          console.error(error.statusText);
+          alert("There was an error retrieveing this record")
+      })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      // react to route changes...
+      console.log("loading")
+      this.load()
+    }
+  },
   created() {
-    const endpoint = `/catalog/${encodeURIComponent(this.$route.params.id)}`
-    this.$http.get(endpoint).then(function(response){
-        this.item = response.data.data
-    }, function(error){
-        console.error(error.statusText);
-        alert("There was an error retrieveing this record")
-    })
+    this.load()
+
   }
 }
 </script>
