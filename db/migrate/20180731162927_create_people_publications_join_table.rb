@@ -2,10 +2,10 @@
 
 class CreatePeoplePublicationsJoinTable < ActiveRecord::Migration[5.2]
   def change
-    create_join_table :people, :publications do |t|
-      t.index :person_id
-      t.index :publication_id
-      t.index [:publication_id, :person_id], name: 'pub_person_uk', unique: true
+    create_table :people_publications, id: false do |t|
+      t.string :person_uri, null: false
+      t.string :publication_uri, null: false
+      t.index [:publication_uri, :person_uri], name: 'pub_person_uk', unique: true
     end
   end
 end

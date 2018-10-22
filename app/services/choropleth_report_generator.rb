@@ -45,12 +45,12 @@ class ChoroplethReportGenerator
 
   def sql
     "SELECT o2.metadata->>'country' as country, count(*) FROM people p1 " \
-    'LEFT OUTER JOIN people_publications pp ON p1.id = pp.person_id ' \
-    'LEFT OUTER JOIN publications pub ON pp.publication_id = pub.id ' \
-    'LEFT OUTER JOIN people_publications pp2 ON pub.id = pp2.publication_id ' \
-    'LEFT OUTER JOIN people p2 ON pp2.person_id = p2.id ' \
+    'LEFT OUTER JOIN people_publications pp ON p1.uri = pp.person_uri ' \
+    'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
+    'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
+    'LEFT OUTER JOIN people p2 ON pp2.person_uri = p2.uri ' \
     "LEFT OUTER JOIN organizations o2 ON p2.metadata->>'institutionalAffiliation' = o2.uri "\
-    'WHERE p2.id != p1.id AND ' \
+    'WHERE p2.uri != p1.uri AND ' \
     "p1.metadata->>'department' = $1 " \
     'GROUP BY country ' \
     'ORDER BY country '

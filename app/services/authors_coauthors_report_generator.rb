@@ -62,11 +62,11 @@ class AuthorsCoauthorsReportGenerator
 
   def sql
     'SELECT p1.uri as uri1, p2.uri as uri2, count(*) FROM people p1 ' \
-    'LEFT OUTER JOIN people_publications pp ON p1.id = pp.person_id ' \
-    'LEFT OUTER JOIN publications pub ON pp.publication_id = pub.id ' \
-    'LEFT OUTER JOIN people_publications pp2 ON pub.id = pp2.publication_id ' \
-    'LEFT OUTER JOIN people p2 ON pp2.person_id = p2.id ' \
-    'WHERE p2.id != p1.id AND ' \
+    'LEFT OUTER JOIN people_publications pp ON p1.uri = pp.person_uri ' \
+    'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
+    'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
+    'LEFT OUTER JOIN people p2 ON pp2.person_uri = p2.uri ' \
+    'WHERE p2.uri != p1.uri AND ' \
     "p1.metadata -> 'departments' ? $1 "  \
     'GROUP BY p1.uri, p2.uri ' \
     'ORDER BY p1.uri'

@@ -2,12 +2,10 @@
 
 class CreatePublications < ActiveRecord::Migration[5.2]
   def change
-    create_table :publications do |t|
-      t.string :uri, null: false
+    create_table :publications, id: :string, primary_key: :uri do |t|
       t.jsonb :metadata, null: false, default: {}
 
       t.timestamps
     end
-    add_index :publications, :uri, unique: true
   end
 end
