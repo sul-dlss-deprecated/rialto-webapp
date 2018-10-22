@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     data_source: function() {
-      `/reports/coauthors.csv?department_id=${this.selectedDepartment.id}`
+      `/reports/coauthors.csv?department_uri=${this.selectedDepartment.uri}`
     }
   }
 }

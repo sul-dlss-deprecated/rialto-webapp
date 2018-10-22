@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ChoroplethReportGenerator do
-  subject(:report) { described_class.generate(department_id: department.id.to_s) }
+  subject(:report) { described_class.generate(department_uri: department.uri) }
 
   let(:department) do
     Organization.create!(uri: 'http://example.com/department1',
