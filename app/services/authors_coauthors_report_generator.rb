@@ -6,17 +6,17 @@ require 'csv'
 # authors in that department have collaborated with, along with number of collaborations
 class AuthorsCoauthorsReportGenerator
   # @param params [ActionController::Parameters]
-  # @option params [String] :department_id the identifier of the deparment to generate
+  # @option params [String] :department_uri the identifier of the deparment to generate
   #   the report for
   def self.generate(params)
-    department_id = params[:department_id].to_i
-    new(department_id).generate
+    department_uri = params[:department_uri]
+    new(department_uri).generate
   end
 
-  # @param [Integer] department_id the identifier of the deparment to generate
+  # @param [Integer] department_uri the identifier of the deparment to generate
   #   the report for
-  def initialize(department_id)
-    @organization = Organization.find(department_id)
+  def initialize(department_uri)
+    @organization = Organization.find(department_uri)
   end
 
   # @return [String] a csv report
@@ -62,11 +62,11 @@ class AuthorsCoauthorsReportGenerator
 
   def sql
     'SELECT p1.uri as uri1, p2.uri as uri2, count(*) FROM people p1 ' \
-    'LEFT OUTER JOIN people_publications pp ON p1.id = pp.person_id ' \
-    'LEFT OUTER JOIN publications pub ON pp.publication_id = pub.id ' \
-    'LEFT OUTER JOIN people_publications pp2 ON pub.id = pp2.publication_id ' \
-    'LEFT OUTER JOIN people p2 ON pp2.person_id = p2.id ' \
-    'WHERE p2.id != p1.id AND ' \
+    'LEFT OUTER JOIN people_publications pp ON p1.uri = pp.person_uri ' \
+    'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
+    'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
+    'LEFT OUTER JOIN people p2 ON pp2.person_uri = p2.uri ' \
+    'WHERE p2.uri != p1.uri AND ' \
     "p1.metadata -> 'departments' ? $1 "  \
     'GROUP BY p1.uri, p2.uri ' \
     'ORDER BY p1.uri'

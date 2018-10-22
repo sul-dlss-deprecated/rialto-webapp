@@ -27,38 +27,30 @@ ActiveRecord::Schema.define(version: 2018_07_31_164045) do
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
-  create_table "organizations", force: :cascade do |t|
-    t.string "uri"
+  create_table "organizations", primary_key: "uri", id: :string, force: :cascade do |t|
     t.jsonb "metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index "((metadata ->> 'department'::text))", name: "index_organizations_on_metadata_department", using: :hash
     t.index "((metadata ->> 'type'::text))", name: "index_organizations_on_metadata_type", using: :hash
-    t.index ["uri"], name: "index_organizations_on_uri", unique: true
   end
 
-  create_table "people", force: :cascade do |t|
-    t.string "uri", null: false
+  create_table "people", primary_key: "uri", id: :string, force: :cascade do |t|
     t.jsonb "metadata", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["uri"], name: "index_people_on_uri", unique: true
   end
 
   create_table "people_publications", id: false, force: :cascade do |t|
-    t.bigint "person_id", null: false
-    t.bigint "publication_id", null: false
-    t.index ["person_id"], name: "index_people_publications_on_person_id"
-    t.index ["publication_id", "person_id"], name: "pub_person_uk", unique: true
-    t.index ["publication_id"], name: "index_people_publications_on_publication_id"
+    t.string "person_uri", null: false
+    t.string "publication_uri", null: false
+    t.index ["publication_uri", "person_uri"], name: "pub_person_uk", unique: true
   end
 
-  create_table "publications", force: :cascade do |t|
-    t.string "uri", null: false
+  create_table "publications", primary_key: "uri", id: :string, force: :cascade do |t|
     t.jsonb "metadata", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["uri"], name: "index_publications_on_uri", unique: true
   end
 
   create_table "searches", id: :serial, force: :cascade do |t|

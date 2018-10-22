@@ -7,29 +7,23 @@ default: &default
   reaping_frequency: <%= Integer(ENV.fetch("DB_REAPING_FREQUENCY", 10)) %>
   timeout: 5000
   <% unless local %>
-  host: localhost
-  user: postgres
-  port: 5432
+  username: <%= ENV.fetch('RDS_USERNAME', 'postgres') %>
+  password: <%= ENV.fetch('RDS_PASSWORD', '') %>
+  host: <%= ENV.fetch('RDS_HOSTNAME', 'localhost') %>
+  port: <%= ENV.fetch('RDS_PORT', '5432') %>
   <% end %>
 
 development:
   <<: *default
-  database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  database: rialto_development
 
 test:
   <<: *default
   database: rialto_test
+
 
 production:
   <<: *default
   encoding: unicode
   pool: 50
   database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>

@@ -10,17 +10,17 @@ require 'csv'
 # Third column is the country code (ISO 3166-1 alpha-3)
 class ChoroplethReportGenerator
   # @param params [ActionController::Parameters]
-  # @option params [String] :department_id the identifier of the deparment to generate
+  # @option params [String] :department_uri the identifier of the deparment to generate
   #   the report for
   def self.generate(params)
-    department_id = params[:department_id].to_i
-    new(department_id).generate
+    department_uri = params[:department_uri]
+    new(department_uri).generate
   end
 
-  # @param [Integer] department_id the identifier of the deparment to generate
+  # @param [String] department_uri the identifier of the deparment to generate
   #   the report for
-  def initialize(department_id)
-    @organization = Organization.find(department_id)
+  def initialize(department_uri)
+    @organization = Organization.find(department_uri)
   end
 
   # @return [String] a csv report
@@ -45,12 +45,12 @@ class ChoroplethReportGenerator
 
   def sql
     "SELECT o2.metadata->>'country' as country, count(*) FROM people p1 " \
-    'LEFT OUTER JOIN people_publications pp ON p1.id = pp.person_id ' \
-    'LEFT OUTER JOIN publications pub ON pp.publication_id = pub.id ' \
-    'LEFT OUTER JOIN people_publications pp2 ON pub.id = pp2.publication_id ' \
-    'LEFT OUTER JOIN people p2 ON pp2.person_id = p2.id ' \
+    'LEFT OUTER JOIN people_publications pp ON p1.uri = pp.person_uri ' \
+    'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
+    'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
+    'LEFT OUTER JOIN people p2 ON pp2.person_uri = p2.uri ' \
     "LEFT OUTER JOIN organizations o2 ON p2.metadata->>'institutionalAffiliation' = o2.uri "\
-    'WHERE p2.id != p1.id AND ' \
+    'WHERE p2.uri != p1.uri AND ' \
     "p1.metadata->>'department' = $1 " \
     'GROUP BY country ' \
     'ORDER BY country '

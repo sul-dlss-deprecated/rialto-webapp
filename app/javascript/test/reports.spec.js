@@ -19,7 +19,7 @@ describe('reportURL', () => {
   })
 
   it("is a url when the department is selected", () => {
-    vm.selectedDepartment = { id: "123" }
-    expect(vm.reportURL).to.equal('/reports/coauthors.csv?department_id=123')
+    vm.selectedDepartment = { uri: "123" }
+    expect(vm.reportURL).to.equal('/reports/coauthors.csv?department_uri=123')
   })
 })

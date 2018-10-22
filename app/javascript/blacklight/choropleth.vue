@@ -74,7 +74,7 @@ export default {
     },
 
     dataSource: function() {
-      return `/reports/choropleth.csv?department_id=${this.department.id}`
+      return `/reports/choropleth.csv?department_uri=${this.department.uri}`
     }
   }
 }

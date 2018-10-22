@@ -40,7 +40,7 @@ export default {
       if (!this.selectedDepartment) {
         return null
       }
-      return `/reports/coauthors.csv?department_id=${this.selectedDepartment.id}`
+      return `/reports/coauthors.csv?department_uri=${this.selectedDepartment.uri}`
     }
   },
   methods: {
