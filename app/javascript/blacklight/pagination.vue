@@ -1,17 +1,19 @@
 <template>
   <div class="sort-pagination">
-    <template v-if="pages.prev_page != null">
-      <router-link :to="{ name: 'search', query: { page: pages.prev_page } }">Previous</router-link>
-    </template>
-    <template v-else>
-      Previous
-    </template>
-    | {{start}} - {{end}} of {{totalCount}} |
-    <template v-if="pages.next_page != null">
-      <router-link :to="{ name: 'search', query: { page: pages.next_page } }">Next</router-link>
-    </template>
-    <template v-else>
-      Next
+    <template v-if="Object.keys(pages).length !== 0">
+      <template v-if="pages.prev_page != null">
+        <router-link :to="{ name: 'search', query: { page: pages.prev_page } }">Previous</router-link>
+      </template>
+      <template v-else>
+        Previous
+      </template>
+      | {{start}} - {{end}} of {{totalCount}} |
+      <template v-if="pages.next_page != null">
+        <router-link :to="{ name: 'search', query: { page: pages.next_page } }">Next</router-link>
+      </template>
+      <template v-else>
+        Next
+      </template>
     </template>
   </div>
 </template>
