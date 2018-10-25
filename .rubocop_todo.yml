@@ -26,10 +26,7 @@ Style/Documentation:
     - 'app/models/search_builder.rb'
     - 'app/models/solr_document.rb'
     - 'config/application.rb'
-    - 'db/migrate/20180731154305_create_people.rb'
-    - 'db/migrate/20180731154440_create_publications.rb'
-    - 'db/migrate/20180731162927_create_people_publications_join_table.rb'
-    - 'db/migrate/20180731164045_create_organizations.rb'
+    - 'db/migrate/*'
 
 # Offense count: 2
 # Cop supports --auto-correct.
