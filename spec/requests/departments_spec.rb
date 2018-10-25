@@ -6,26 +6,30 @@ RSpec.describe 'Deparment list', type: :request do
   before do
     # The results should not include this organization because it's a university:
     Organization.create!(uri: 'http://example.com/institution1',
+                         name: 'Stanford',
+
                          metadata: {
-                           name: 'Stanford',
                            type: 'http://vivoweb.org/ontology/core#University'
                          })
 
     Organization.create!(uri: 'http://example.com/department2',
+                         name: 'Biochemistry',
+
                          metadata: {
-                           name: 'Biochemistry',
                            type: Organization::DEPARTMENT
                          })
 
     Organization.create!(uri: 'http://example.com/department3',
+                         name: 'Informatics',
+
                          metadata: {
-                           name: 'Informatics',
                            type: Organization::DEPARTMENT
                          })
 
     Organization.create!(uri: 'http://example.com/department4',
+                         name: 'Computer Science',
+
                          metadata: {
-                           name: 'Computer Science',
                            type: Organization::DEPARTMENT
                          })
   end

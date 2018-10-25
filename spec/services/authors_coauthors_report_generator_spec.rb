@@ -7,97 +7,85 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
 
   let(:department) do
     Organization.create!(uri: 'http://example.com/department1',
-                         metadata: {
-                           name: 'Chemistry'
-                         })
+                         name: 'Chemistry')
   end
 
   context 'with some authors and publications' do
     before do
       Organization.create!(uri: 'http://example.com/institution1',
+                           name: 'Stanford',
                            metadata: {
-                             name: 'Stanford',
                              country: 'United States'
                            })
 
       Organization.create!(uri: 'http://example.com/institution2',
+                           name: 'Harvard',
                            metadata: {
-                             name: 'Harvard',
                              country: 'United States'
                            })
 
       Organization.create!(uri: 'http://example.com/institution3',
+                           name: 'Ghent',
                            metadata: {
-                             name: 'Ghent',
                              country: 'Belgium'
                            })
 
       Organization.create!(uri: 'http://example.com/institution4',
+                           name: 'Brussels U',
                            metadata: {
-                             name: 'Brussels U',
                              country: 'Belgium'
                            })
 
       Organization.create!(uri: 'http://example.com/department2',
-                           metadata: {
-                             name: 'Biochemistry'
-                           })
+                           name: 'Biochemistry')
 
       Organization.create!(uri: 'http://example.com/department3',
-                           metadata: {
-                             name: 'Informatics'
-                           })
+                           name: 'Informatics')
 
       Organization.create!(uri: 'http://example.com/department4',
-                           metadata: {
-                             name: 'Computer Science'
-                           })
+                           name: 'Computer Science')
 
       Organization.create!(uri: 'http://example.com/department5',
-                           metadata: {
-                             name: 'Informatics'
-                           })
+                           name: 'Informatics')
 
       Organization.create!(uri: 'http://example.com/department6',
-                           metadata: {
-                             name: 'Medicine'
-                           })
+                           name: 'Medicine')
 
       p1 = Person.create!(uri: 'http://example.com/person1',
+                          name: 'John Smith',
                           metadata: {
-                            name: 'John Smith',
                             departments: [department.uri],
                             institutionalAffiliations: ['http://example.com/institution1']
                           })
       p2 = Person.create!(uri: 'http://example.com/person2',
+                          name: 'Jane Smith',
                           metadata: {
-                            name: 'Jane Smith',
                             departments: ['http://example.com/department2'],
                             institutionalAffiliations: ['http://example.com/institution2']
                           })
       p3 = Person.create!(uri: 'http://example.com/person3',
+                          name: 'Jane Okoye',
                           metadata: {
-                            name: 'Jane Okoye',
                             departments: ['http://example.com/department3'],
                             institutionalAffiliations: ['http://example.com/institution3']
                           })
       p4 = Person.create!(uri: 'http://example.com/person4',
+                          name: 'Patrick Hoch',
                           metadata: {
-                            name: 'Patrick Hoch',
                             departments: ['http://example.com/department4'],
                             institutionalAffiliations: ['http://example.com/institution3']
                           })
 
       p5 = Person.create!(uri: 'http://example.com/person5',
+                          name: 'Peter Smith',
                           metadata: {
-                            name: 'Peter Smith',
                             departments: ['http://example.com/department5', 'http://example.com/department6'],
                             institutionalAffiliations: ['http://example.com/institution3',
                                                         'http://example.com/institution4']
                           })
       p6 = Person.create!(uri: 'http://example.com/person6',
+                          name: 'Lady Red',
                           metadata: {
-                            name: 'Lady Red',
                             departments: ['http://example.com/department6'],
                             institutionalAffiliations: ['http://example.com/institution1']
                           })

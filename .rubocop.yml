@@ -19,6 +19,21 @@ Metrics/ClassLength:
   Exclude:
     - 'app/controllers/catalog_controller.rb'
 
+
+# Offense count: 12
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/catalog_controller.rb'
+    - 'app/helpers/application_helper.rb'
+    - 'app/mailers/application_mailer.rb'
+    - 'app/models/application_record.rb'
+    - 'app/models/search_builder.rb'
+    - 'app/models/solr_document.rb'
+    - 'config/application.rb'
+    - 'db/migrate/*'
+
 RSpec/MultipleExpectations:
   Enabled: false
 
