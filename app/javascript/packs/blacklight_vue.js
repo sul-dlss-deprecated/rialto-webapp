@@ -20,8 +20,8 @@ import Visualizations from '../blacklight/layouts/visualizations.vue'
 import Reports from '../blacklight/layouts/reports.vue'
 
 const routes = [
-  { path: '/catalog/:id', name: 'show', component: Show },
-  { path: '/catalog', name: 'search', component: Search },
+  { path: '/item/:id', name: 'show', component: Show },
+  { path: '/catalog/:filter?', name: 'search', component: Search },
   { path: '/reports', name: 'reports', component: Reports },
   { path: '/viz', name: 'visualizations', component: Visualizations },
   { path: '/', name: 'home', component: Home }

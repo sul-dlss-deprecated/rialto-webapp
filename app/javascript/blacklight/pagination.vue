@@ -2,14 +2,14 @@
   <div class="sort-pagination">
     <template v-if="Object.keys(pages).length !== 0">
       <template v-if="pages.prev_page != null">
-        <router-link :to="{ name: 'search', query: { page: pages.prev_page } }">Previous</router-link>
+        <a href="#" v-on:click.prevent="prevPage">Previous</a>
       </template>
       <template v-else>
         Previous
       </template>
       | {{start}} - {{end}} of {{totalCount}} |
       <template v-if="pages.next_page != null">
-        <router-link :to="{ name: 'search', query: { page: pages.next_page } }">Next</router-link>
+        <a href="#" v-on:click.prevent="nextPage">Next</a>
       </template>
       <template v-else>
         Next
@@ -35,10 +35,12 @@ export default {
       return this.pages.total_count
     }
   },
-  watch: {
-    '$route': function(to, from) {
-      // react to route changes...
-      this.$parent.$emit('page')
+  methods: {
+    prevPage: function() {
+      this.$parent.$emit('page', this.pages.prev_page)
+    },
+    nextPage: function() {
+      this.$parent.$emit('page', this.pages.next_page)
     }
   }
 }
