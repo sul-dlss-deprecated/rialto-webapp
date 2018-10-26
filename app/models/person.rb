@@ -3,7 +3,7 @@
 # Represents an author of a publication
 class Person < ApplicationRecord
   has_and_belongs_to_many :publications, foreign_key: 'person_uri', association_foreign_key: 'publication_uri'
-  store_accessor :metadata, :institutionalAffiliations, :departments
+  store_accessor :metadata, :institutionalAffiliations, :departments, :country_labels
 
   def institution_entities
     @institution_entities ||= Organization.where(uri: institutionalAffiliations)
