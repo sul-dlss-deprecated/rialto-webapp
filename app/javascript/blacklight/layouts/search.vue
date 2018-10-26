@@ -34,18 +34,28 @@ export default {
   data: function () {
     return {
       message: "No results",
-      result: new Result(),
-      endpoint: `/catalog?q=&page=${this.$route.query.page || 1}`
+      result: new Result()
     }
   },
   methods: {
-    retrieveResults: function() {
-      this.$http.get(this.endpoint).then(function(response){
+    // This is passed a solr query url and it transforms it to a frontend url
+    solrUrlToPath: function(solrUrl) {
+      return '/catalog/' + solrUrl.split('?', 2)[1]
+    },
+    retrieveResults: function(url) {
+      this.$http.get(url).then(function(response){
           this.result = new Result(response.data)
           this.message = null
       }, function(error){
           console.error(error.statusText);
       });
+    },
+    load: function(route) {
+      this.message = 'searching...';
+      var filter = route.params.filter
+      if (filter === undefined)
+        filter = 'q='
+      this.retrieveResults('/catalog?' + filter)
     }
   },
   computed: {
@@ -53,33 +63,36 @@ export default {
       return this.result.links
     }
   },
+  watch: {
+    '$route' (to, from) {
+      // react to route changes...
+      this.load(to)
+    }
+  },
   created() {
+    // Triggered when loaded
+    this.load(this.$route)
+
     // Triggered when "search" is pressed
     this.$on('send', (text) => {
-      this.endpoint = '/catalog?q=' + text
-      this.message = 'searching...';
-      this.retrieveResults()
+      this.$router.push(this.solrUrlToPath(`/catalog?q=${text}`))
     })
 
     // Triggered when "next" or "previous" page is pressed
-    this.$on('page', () => {
+    this.$on('page', (page) => {
+      var state
       if (this.links.self.match(/page=\d+/)) {
-        this.endpoint = this.links.self.replace(/page=\d+/, `page=${this.$route.query.page}`)
+        state = this.links.self.replace(/page=\d+/, `page=${page}`)
       } else {
-        this.endpoint = `${this.links.self}&page=${this.$route.query.page}`
+        state = `${this.links.self}&page=${page}`
       }
-      this.retrieveResults()
+      this.$router.push(this.solrUrlToPath(state))
     })
 
     // Triggered when a facet value is pressed
     this.$on('facet', (url) => {
-      console.log(`Update url to ${url}`)
-      this.endpoint = url
-      this.retrieveResults()
+      this.$router.push(this.solrUrlToPath(url))
     })
-
-    // Triggered when loaded
-    this.retrieveResults()
   }
 }
 </script>

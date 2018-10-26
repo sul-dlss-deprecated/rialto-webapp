@@ -2,10 +2,10 @@
   <li>
     <template v-if="removeUrl() !== undefined">
       {{value.attributes.label}}
-      <a href="#" v-on:click="remove"><span class="remove-icon">X</span></a>
+      <a href="#" v-on:click.prevent="remove"><span class="remove-icon">X</span></a>
     </template>
     <template v-else>
-      <a href="#" v-on:click="setURL" v-html="value.attributes.label"></a>
+      <a href="#" v-on:click.prevent="setURL" v-html="value.attributes.label"></a>
     </template>
     {{value.attributes.hits}}
   </li>
