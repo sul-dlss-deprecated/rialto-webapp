@@ -76,16 +76,16 @@ class CatalogController < ApplicationController
     # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
 
     config.add_facet_field 'type_ssi', label: 'Type'
-    config.add_facet_field 'pub_year_ssim', label: 'Publication Year', single: true
-    config.add_facet_field 'subject_label_ssim', label: 'Topic', limit: 20, index_range: 'A'..'Z'
-    config.add_facet_field 'institute_ssim', label: 'Institute', limit: true
-    config.add_facet_field 'department_label_ssim', label: 'Department'
-    config.add_facet_field 'school_label_ssim', label: 'School'
-    config.add_facet_field 'subdivision_ssim', label: 'Subdivision'
-    config.add_facet_field 'division_ssim', label: 'Division'
-    config.add_facet_field 'institution_label_ssim', label: 'Institution'
+    config.add_facet_field 'pub_year_ssim', label: 'Publication Year', single: true, limit: 1000
+    config.add_facet_field 'subject_label_ssim', label: 'Topic', limit: 1000, index_range: 'A'..'Z'
+    config.add_facet_field 'institute_ssim', label: 'Institute', limit: 1000
+    config.add_facet_field 'department_label_ssim', label: 'Department', limit: 1000
+    config.add_facet_field 'school_label_ssim', label: 'School', limit: 1000
+    config.add_facet_field 'subdivision_ssim', label: 'Subdivision', limit: 1000
+    config.add_facet_field 'division_ssim', label: 'Division', limit: 1000
+    config.add_facet_field 'institution_label_ssim', label: 'Institution', limit: 1000
     config.add_facet_field 'agent_ssim', label: 'Agent'
-    config.add_facet_field 'concept_labels_ssim', label: 'Concept'
+    config.add_facet_field 'concept_labels_ssim', label: 'Concept', limit: 1000
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
