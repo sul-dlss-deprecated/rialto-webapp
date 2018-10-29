@@ -79,8 +79,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'pub_year_ssim', label: 'Publication Year', single: true, limit: 1000
     config.add_facet_field 'subject_label_ssim', label: 'Topic', limit: 1000, index_range: 'A'..'Z'
     config.add_facet_field 'institute_ssim', label: 'Institute', limit: 1000
-    config.add_facet_field 'department_label_ssim', label: 'Department', limit: 1000
     config.add_facet_field 'school_label_ssim', label: 'School', limit: 1000
+    config.add_facet_field 'department_label_ssim', label: 'Department', limit: 1000
     config.add_facet_field 'subdivision_ssim', label: 'Subdivision', limit: 1000
     config.add_facet_field 'division_ssim', label: 'Division', limit: 1000
     config.add_facet_field 'institution_label_ssim', label: 'Institution', limit: 1000
