@@ -64,15 +64,12 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
-      // react to route changes...
-      this.load(to)
+    '$route': {
+      handler: 'load',
+      immediate: true
     }
   },
   created() {
-    // Triggered when loaded
-    this.load(this.$route)
-
     // Triggered when "search" is pressed
     this.$on('send', (text) => {
       this.$router.push(this.solrUrlToPath(`/catalog?q=${text}`))
