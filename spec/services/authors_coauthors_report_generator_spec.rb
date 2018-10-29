@@ -13,28 +13,16 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
   context 'with some authors and publications' do
     before do
       Organization.create!(uri: 'http://example.com/institution1',
-                           name: 'Stanford',
-                           metadata: {
-                             country: 'United States'
-                           })
+                           name: 'Stanford')
 
       Organization.create!(uri: 'http://example.com/institution2',
-                           name: 'Harvard',
-                           metadata: {
-                             country: 'United States'
-                           })
+                           name: 'Harvard')
 
       Organization.create!(uri: 'http://example.com/institution3',
-                           name: 'Ghent',
-                           metadata: {
-                             country: 'Belgium'
-                           })
+                           name: 'Ghent')
 
       Organization.create!(uri: 'http://example.com/institution4',
-                           name: 'Brussels U',
-                           metadata: {
-                             country: 'Belgium'
-                           })
+                           name: 'Brussels U')
 
       Organization.create!(uri: 'http://example.com/department2',
                            name: 'Biochemistry')
@@ -55,25 +43,30 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                           name: 'John Smith',
                           metadata: {
                             departments: [department.uri],
-                            institutionalAffiliations: ['http://example.com/institution1']
+                            institutionalAffiliations: ['http://example.com/institution1'],
+                            country_labels: ['United States']
                           })
       p2 = Person.create!(uri: 'http://example.com/person2',
                           name: 'Jane Smith',
                           metadata: {
                             departments: ['http://example.com/department2'],
-                            institutionalAffiliations: ['http://example.com/institution2']
+                            institutionalAffiliations: ['http://example.com/institution2'],
+                            country_labels: ['United States']
                           })
       p3 = Person.create!(uri: 'http://example.com/person3',
                           name: 'Jane Okoye',
                           metadata: {
                             departments: ['http://example.com/department3'],
-                            institutionalAffiliations: ['http://example.com/institution3']
+                            institutionalAffiliations: ['http://example.com/institution3'],
+                            country_labels: ['Belgium']
+
                           })
       p4 = Person.create!(uri: 'http://example.com/person4',
                           name: 'Patrick Hoch',
                           metadata: {
                             departments: ['http://example.com/department4'],
-                            institutionalAffiliations: ['http://example.com/institution3']
+                            institutionalAffiliations: ['http://example.com/institution3'],
+                            country_labels: ['Belgium']
                           })
 
       p5 = Person.create!(uri: 'http://example.com/person5',
@@ -81,13 +74,15 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                           metadata: {
                             departments: ['http://example.com/department5', 'http://example.com/department6'],
                             institutionalAffiliations: ['http://example.com/institution3',
-                                                        'http://example.com/institution4']
+                                                        'http://example.com/institution4'],
+                            country_labels: ['Belgium']
                           })
       p6 = Person.create!(uri: 'http://example.com/person6',
                           name: 'Lady Red',
                           metadata: {
                             departments: ['http://example.com/department6'],
-                            institutionalAffiliations: ['http://example.com/institution1']
+                            institutionalAffiliations: ['http://example.com/institution1'],
+                            country_labels: ['Canada']
                           })
       Publication.create!(uri: 'http://example.com/publication1',
                           authors: [p1, p2])
@@ -109,11 +104,11 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
     it 'is a report' do
       expect(CSV.parse(report)).to eq [
         ['Author', 'Institution', 'Department', 'Co-Author', 'Co-Author Institution',
-         'Co-Author Department', 'Number of Collaborations', 'Co-Author Country'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', 'Biochemistry', '1', 'United States'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', 'Informatics', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', 'Computer Science', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', 'Informatics; Medicine', '10', 'Belgium']
+         'Number of Collaborations', 'Co-Author Country'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium']
       ]
     end
   end

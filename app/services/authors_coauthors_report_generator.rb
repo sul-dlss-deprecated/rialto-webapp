@@ -23,7 +23,7 @@ class AuthorsCoauthorsReportGenerator
   def generate
     CSV.generate do |csv|
       csv << ['Author', 'Institution', 'Department', 'Co-Author',
-              'Co-Author Institution', 'Co-Author Department',
+              'Co-Author Institution',
               'Number of Collaborations', 'Co-Author Country']
       database_values.each do |row|
         csv << expand_people(row)
@@ -35,23 +35,21 @@ class AuthorsCoauthorsReportGenerator
 
   attr_reader :organization
 
-  # rubocop:disable Metrics/AbcSize
   def expand_people(row)
     p1 = Person.find_by(uri: row['uri1'])
     p2 = Person.find_by(uri: row['uri2'])
     [p1.name, join_org_names(p1.institution_entities), join_org_names(p1.department_entities),
-     p2.name, join_org_names(p2.institution_entities), join_org_names(p2.department_entities),
+     p2.name, join_org_names(p2.institution_entities),
      row['count'],
-     join_org_countries(p2.institution_entities)]
+     join_person_countries(p2)]
   end
-  # rubocop:enable Metrics/AbcSize
 
   def join_org_names(orgs)
     orgs.to_a.map(&:name).uniq.sort.join('; ')
   end
 
-  def join_org_countries(orgs)
-    orgs.to_a.map(&:country).uniq.sort.join('; ')
+  def join_person_countries(person)
+    person.country_labels.sort.join('; ')
   end
 
   # @return [ActiveRecord::Result]
