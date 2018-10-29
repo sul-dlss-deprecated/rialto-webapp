@@ -88,6 +88,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'concept_labels_ssim', label: 'Concept', limit: 1000
     config.add_facet_field 'countries_label_ssim', label: 'Country', limit: 1000
     config.add_facet_field 'created_year_isim', label: 'Year'
+    config.add_facet_field 'person_subtype_ssi', label: 'Stanford Types'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
