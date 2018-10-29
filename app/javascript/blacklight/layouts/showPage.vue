@@ -22,8 +22,6 @@ export default {
   },
   methods: {
     load: function() {
-      console.log("in load")
-
       const endpoint = `/catalog/${encodeURIComponent(this.$route.params.id)}`
       this.$http.get(endpoint).then(function(response){
           this.item = response.data.data
@@ -34,15 +32,10 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
-      // react to route changes...
-      console.log("loading")
-      this.load()
+    '$route': {
+      handler: 'load',
+      immediate: true
     }
-  },
-  created() {
-    this.load()
-
   }
 }
 </script>
