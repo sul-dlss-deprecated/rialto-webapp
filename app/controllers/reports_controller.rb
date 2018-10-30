@@ -14,14 +14,20 @@ class ReportsController < ApplicationController
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def generator
     case params[:id]
     when 'coauthors'
       AuthorsCoauthorsReportGenerator
+    when 'coauthor-institutions'
+      AuthorsCoauthorInstitutionsReportGenerator
+    when 'coauthor-countries'
+      AuthorsCoauthorCountriesReportGenerator
     when 'choropleth'
       ChoroplethReportGenerator
     else
       raise ActionController::RoutingError, 'Report type not Found'
     end
   end
+  # rubocop:enable Metrics/MethodLength
 end
