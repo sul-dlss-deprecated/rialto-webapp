@@ -163,6 +163,11 @@ class CatalogController < ApplicationController
       pc.add_show_field 'publisher_label_tsim', label: 'Publisher'
     end
 
+    config.for_display_type 'Grant' do |pc|
+      pc.add_show_field 'pi', label: 'Principal Investigator', accessor: :linked_pi
+      pc.add_show_field 'assigned', label: 'Funded By', accessor: :linked_assigned
+    end
+
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
     #

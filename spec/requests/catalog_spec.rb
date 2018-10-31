@@ -29,9 +29,9 @@ RSpec.describe 'Catalog', type: :request do
       get '/catalog/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fpublications%2F7fec3f81bdf190e3e04d593c99803293', headers: headers
       expect(item['type']).to eq 'Publication'
       expect(authors).to eq(
-        '<a href="/#/catalog/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fagents%2Fpeople%2Fa8ab23cc-9bdc-46b0-a69e-03661725219f">' \
+        '<a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fagents%2Fpeople%2Fa8ab23cc-9bdc-46b0-a69e-03661725219f">' \
         'Vohs, Kathleen D.</a> and ' \
-        '<a href="/#/catalog/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fagents%2Fpeople%2F17930ba1-ecde-4751-a444-c2995d9bcdbf">' \
+        '<a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fagents%2Fpeople%2F17930ba1-ecde-4751-a444-c2995d9bcdbf">' \
         'Baumeister, Roy F.</a>'
       )
     end

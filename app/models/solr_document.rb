@@ -20,16 +20,32 @@ class SolrDocument
 
   # Produces a list of authors with links to the frontend app for each.
   def linked_authors
-    tuples = fetch('author_labels_tsim', []).zip(fetch('authors_ssim', []))
-    parts = tuples.map do |author|
-      "<a href=\"#{search_link(author.last)}\">#{author.first}</a>"
+    linked_fields(label: 'author_labels_tsim', uri: 'authors_ssim')
+  end
+
+  # Produces a list of PIs with links to the frontend app for each.
+  def linked_pi
+    linked_fields(label: 'pi_label_tsim', uri: 'pi_ssim')
+  end
+
+  # Produces a list of PIs with links to the frontend app for each.
+  def linked_assigned
+    linked_fields(label: 'assigned_label_tsim', uri: 'assigned_ssim')
+  end
+
+  private
+
+  def linked_fields(label:, uri:)
+    tuples = fetch(label, []).zip(fetch(uri, []))
+    parts = tuples.map do |labeled|
+      "<a href=\"#{search_link(labeled.last)}\">#{labeled.first}</a>"
     end
     parts.to_sentence.html_safe
   end
 
   # Create a link to the VueJS path for showing all the documents with this author
   # @param String the uri for the author
-  def search_link(author_uri)
-    "/#/catalog/#{CGI.escape(author_uri)}"
+  def search_link(uri)
+    "/#/item/#{CGI.escape(uri)}"
   end
 end
