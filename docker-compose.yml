@@ -9,43 +9,6 @@ services:
     image: 'suldlss/rialto-webapp:latest'
     ports:
       - "3000"
-
-  assets:
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile.assets
-    image: 'suldlss/rialto-webapp:assets-latest'
-
-  test:
-    command: sh -c "bundle exec rspec"
-    environment:
-      - RAILS_ENV=test
-    image: 'suldlss/rialto-webapp:latest'
-
-  development:
-    command: sh -c 'rm -rf ./tmp && bundle exec bin/rails s -b 0.0.0.0'
-    environment:
-      - RAILS_ENV=development
-    image: 'suldlss/rialto-webapp:latest'
-    ports:
-      - 3000:3000
-    volumes:
-      - ./app:/opt/app
-      - ./public:/opt/public
-
-  webpack:
-    command: sh -c 'rm -rf public/packs/* || true && bundle exec rake react_on_rails:locale && bin/webpack -w'
-    image: 'suldlss/rialto-webapp:assets-latest'
-    volumes:
-      - ./app:/opt/app
-      - ./public:/opt/public
-
-  node:
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile.node
-    image: 'suldlss/rialto-webapp:node-latest'
-
   ruby:
     build:
       context: ./
