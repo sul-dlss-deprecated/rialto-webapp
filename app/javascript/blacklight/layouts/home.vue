@@ -22,11 +22,11 @@
           <img class="card-img-top" src="/home_topicarea.png" alt="Topic Area">
           <div class="card-img-overlay">
             <div class="fas fa-landmark icon"></div>
-            <h2 class="card-title">Cross-disciplinary<br>research output by<br>topic</h2>
+            <h2 class="card-title">Collaboration<br>by co-author, institution, and country</h2>
           </div>
           <div class="card-body">
             <!-- <p class="card-text">any text here</p> -->
-            <router-link :to="{ name: 'reports'}" class="btn btn-primary">Search</router-link>
+            <router-link :to="{ name: 'collaboration_report'}" class="btn btn-primary">Search</router-link>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
             <h2 class="card-title">Research trends<br>by topic</h2>
           </div>
           <div class="card-body">
-            <router-link :to="{ name: 'reports'}" class="btn btn-primary">Search</router-link>
+            <!--<router-link :to="{ name: 'reports'}" class="btn btn-primary">Search</router-link>-->
           </div>
         </div>
       </div>

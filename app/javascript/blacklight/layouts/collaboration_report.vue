@@ -5,7 +5,12 @@
     <select name="department" v-model="selectedDepartment">
       <option v-for="department in departments" :value="department">{{ department.label }}</option>
     </select>
-
+    <label for="reportType">Report type: </label>
+    <select name="reportType" v-model="selectedReportType">
+        <option value="coauthors">Co-authors</option>
+        <option value="coauthor-institutions">Co-author institutions</option>
+        <option value="coauthor-countries">Co-author countries</option>
+    </select>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
@@ -26,6 +31,7 @@ export default {
     return {
       selectedDepartment: '',
       departments: [],
+      selectedReportType: 'coauthors'
     }
   },
   created() {
@@ -37,15 +43,15 @@ export default {
   },
   computed: {
     reportURL: function(){
-      if (!this.selectedDepartment) {
+      if (!this.selectedDepartment || !this.selectedReportType) {
         return null
       }
-      return `/reports/coauthors.csv?department_uri=${this.selectedDepartment.uri}`
+      return `/reports/${this.selectedReportType}.csv?department_uri=${this.selectedDepartment.uri}`
     }
   },
   methods: {
     download: function() {
-      window.location = this.reportURL()
+      window.location = this.reportURL
     }
   }
 }
