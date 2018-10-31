@@ -49,7 +49,7 @@ class AuthorsCoauthorsReportGenerator
   end
 
   def join_person_countries(person)
-    person.country_labels.sort.join('; ')
+    Array.wrap(person.country_labels).sort.join('; ')
   end
 
   # @return [ActiveRecord::Result]

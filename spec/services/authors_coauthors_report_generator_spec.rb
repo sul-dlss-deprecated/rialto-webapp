@@ -84,6 +84,13 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                             institutionalAffiliations: ['http://example.com/institution1'],
                             country_labels: ['Canada']
                           })
+      p7 = Person.create!(uri: 'http://example.com/person7',
+                          name: 'Dude without a country',
+                          metadata: {
+                            departments: ['http://example.com/department6'],
+                            institutionalAffiliations: ['http://example.com/institution1'],
+                            country_labels: nil
+                          })
       Publication.create!(uri: 'http://example.com/publication1',
                           authors: [p1, p2])
       2.upto(11) do |n|
@@ -99,6 +106,9 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
       # This publication shouldn't be included on the report:
       Publication.create!(uri: 'http://example.com/publication22',
                           authors: [p6, p3])
+
+      Publication.create!(uri: 'http://example.com/publication23',
+                          authors: [p1, p7])
     end
 
     it 'is a report' do
@@ -108,7 +118,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium']
+        ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', '']
       ]
     end
   end
