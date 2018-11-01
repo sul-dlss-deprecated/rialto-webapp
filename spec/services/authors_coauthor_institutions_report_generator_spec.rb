@@ -12,6 +12,7 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
 
   context 'with some authors and publications' do
     before do
+      # Create organizations
       Organization.create!(uri: 'http://example.com/institution1',
                            name: 'Stanford')
 
@@ -23,65 +24,66 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
 
       Organization.create!(uri: 'http://example.com/institution4',
                            name: 'Brussels U')
+      # Create people
       p1 = Person.create!(uri: 'http://example.com/person1',
                           name: 'John Smith',
                           metadata: {
-                            departments: [department.uri],
-                            institutionalAffiliations: ['http://example.com/institution1'],
-                            country_labels: ['United States']
+                            departments: ['http://example.com/department1'],
+                            institutionalAffiliations: ['http://example.com/institution1']
                           })
       p2 = Person.create!(uri: 'http://example.com/person2',
                           name: 'Jane Smith',
                           metadata: {
-                            departments: [],
-                            institutionalAffiliations: ['http://example.com/institution2'],
-                            country_labels: ['United States']
+                            departments: ['http://example.com/department1'],
+                            institutionalAffiliations: ['http://example.com/institution1']
                           })
       p3 = Person.create!(uri: 'http://example.com/person3',
                           name: 'Jane Okoye',
                           metadata: {
-                            departments: [],
-                            institutionalAffiliations: ['http://example.com/institution3'],
-                            country_labels: ['Belgium']
+                            institutionalAffiliations: ['http://example.com/institution2']
 
                           })
       p4 = Person.create!(uri: 'http://example.com/person4',
                           name: 'Patrick Hoch',
                           metadata: {
-                            departments: [],
-                            institutionalAffiliations: ['http://example.com/institution3'],
-                            country_labels: ['Belgium']
+                            institutionalAffiliations: ['http://example.com/institution3']
                           })
-
       p5 = Person.create!(uri: 'http://example.com/person5',
+                          name: 'Patricia Koch',
+                          metadata: {
+                            institutionalAffiliations: ['http://example.com/institution3']
+                          })
+      # In another department
+      p6 = Person.create!(uri: 'http://example.com/person6',
                           name: 'Peter Smith',
                           metadata: {
-                            departments: [],
-                            institutionalAffiliations: ['http://example.com/institution3',
-                                                        'http://example.com/institution4'],
-                            country_labels: ['Belgium']
+                            departments: ['http://example.com/department2'],
+                            institutionalAffiliations: ['http://example.com/institution4']
                           })
-      p6 = Person.create!(uri: 'http://example.com/person6',
-                          name: 'Lady Red',
-                          metadata: {
-                            departments: [],
-                            institutionalAffiliations: ['http://example.com/institution1'],
-                            country_labels: ['Canada']
-                          })
+
+      # John Smith co-authored with Jane Okoye twice
       Publication.create!(uri: 'http://example.com/publication1',
+                          authors: [p1, p3])
+      Publication.create!(uri: 'http://example.com/publication2',
+                          authors: [p1, p3])
+      # John Smith co-authored with Patrick Hoch once
+      Publication.create!(uri: 'http://example.com/publication3',
+                          authors: [p1, p4])
+      # John Smith co-authored with Jane and Patrick once
+      Publication.create!(uri: 'http://example.com/publication4',
+                          authors: [p1, p3, p4])
+      # Jane Smith co-authored with Jane Okoye once
+      Publication.create!(uri: 'http://example.com/publication5',
+                          authors: [p2, p3])
+      # Jane Smith co-authored with Patricia Koch once
+      Publication.create!(uri: 'http://example.com/publication6',
+                          authors: [p2, p5])
+      # John Smith and Jane Smith co-authored once
+      Publication.create!(uri: 'http://example.com/publication7',
                           authors: [p1, p2])
-      2.upto(11) do |n|
-        Publication.create!(uri: "http://example.com/publication#{n}",
-                            authors: [p1, p3, p4])
-      end
-
-      12.upto(21) do |n|
-        Publication.create!(uri: "http://example.com/publication#{n}",
-                            authors: [p1, p5])
-      end
-
-      # This publication shouldn't be included on the report:
-      Publication.create!(uri: 'http://example.com/publication22',
+      # Jane Okoye co-authored with someone in another department
+      # Jane Smith co-authored with Jane Okoye once
+      Publication.create!(uri: 'http://example.com/publication8',
                           authors: [p6, p3])
     end
 
@@ -89,9 +91,9 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
       # rubocop:disable Style/WordArray
       expect(CSV.parse(report)).to eq [
         ['Co-Author Institution', 'Number of Collaborations'],
-        ['Ghent', '30'],
-        ['Brussels U', '10'],
-        ['Harvard', '1']
+        ['Harvard', '4'],
+        ['Ghent', '3'],
+        ['Stanford', '2']
       ]
       # rubocop:enable Style/WordArray
     end
