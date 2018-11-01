@@ -10,7 +10,6 @@
 # echo $IMAGE_NAME
 
 # We explicitly build them individually because we don't use 'depends_on'
-docker-compose build node
+rake webpacker:compile
 docker-compose build ruby
-docker-compose build assets
 docker-compose build app
