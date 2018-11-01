@@ -1,1 +1,9 @@
 config/master.key
+
+/log/*
+/tmp/*
+.tmp
+!/log/.keep
+!/tmp/.keep
+
+/node_modules
