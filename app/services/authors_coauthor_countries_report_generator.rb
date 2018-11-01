@@ -49,7 +49,7 @@ class AuthorsCoauthorCountriesReportGenerator
     "FROM people p2, jsonb_array_elements_text(p2.metadata -> 'country_labels') p2ia) p2i ON pp2.person_uri = p2i.uri " \
     'WHERE p2i.uri != p1.uri AND ' \
     "p1.metadata -> 'departments' ? $1 " \
-    'GROUP BY p1.uri, p2i.country ' \
+    'GROUP BY p2i.country ' \
     'ORDER BY count(*) desc'
   end
 end

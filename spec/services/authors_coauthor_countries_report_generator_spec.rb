@@ -12,65 +12,66 @@ RSpec.describe AuthorsCoauthorCountriesReportGenerator do
 
   context 'with some authors and publications' do
     before do
+      # Create people
       p1 = Person.create!(uri: 'http://example.com/person1',
                           name: 'John Smith',
                           metadata: {
-                            departments: [department.uri],
-                            institutionalAffiliations: ['http://example.com/institution1'],
+                            departments: ['http://example.com/department1'],
                             country_labels: ['United States']
                           })
       p2 = Person.create!(uri: 'http://example.com/person2',
                           name: 'Jane Smith',
                           metadata: {
-                            departments: ['http://example.com/department2'],
-                            institutionalAffiliations: ['http://example.com/institution2'],
+                            departments: ['http://example.com/department1'],
                             country_labels: ['United States']
                           })
       p3 = Person.create!(uri: 'http://example.com/person3',
                           name: 'Jane Okoye',
                           metadata: {
-                            departments: ['http://example.com/department3'],
-                            institutionalAffiliations: ['http://example.com/institution3'],
                             country_labels: ['Belgium']
 
                           })
       p4 = Person.create!(uri: 'http://example.com/person4',
                           name: 'Patrick Hoch',
                           metadata: {
-                            departments: ['http://example.com/department4'],
-                            institutionalAffiliations: ['http://example.com/institution3'],
-                            country_labels: ['Belgium']
-                          })
-
-      p5 = Person.create!(uri: 'http://example.com/person5',
-                          name: 'Peter Smith',
-                          metadata: {
-                            departments: ['http://example.com/department5', 'http://example.com/department6'],
-                            institutionalAffiliations: ['http://example.com/institution3',
-                                                        'http://example.com/institution4'],
-                            country_labels: ['Croatia']
-                          })
-      p6 = Person.create!(uri: 'http://example.com/person6',
-                          name: 'Lady Red',
-                          metadata: {
-                            departments: ['http://example.com/department6'],
-                            institutionalAffiliations: ['http://example.com/institution1'],
                             country_labels: ['Canada']
                           })
+      p5 = Person.create!(uri: 'http://example.com/person5',
+                          name: 'Patricia Koch',
+                          metadata: {
+                            country_labels: ['Canada']
+                          })
+      # In another department
+      p6 = Person.create!(uri: 'http://example.com/person6',
+                          name: 'Peter Smith',
+                          metadata: {
+                            departments: ['http://example.com/department2'],
+                            country_labels: ['Croatia']
+                          })
+
+      # John Smith co-authored with Jane Okoye twice
       Publication.create!(uri: 'http://example.com/publication1',
+                          authors: [p1, p3])
+      Publication.create!(uri: 'http://example.com/publication2',
+                          authors: [p1, p3])
+      # John Smith co-authored with Patrick Hoch once
+      Publication.create!(uri: 'http://example.com/publication3',
+                          authors: [p1, p4])
+      # John Smith co-authored with Jane and Patrick once
+      Publication.create!(uri: 'http://example.com/publication4',
+                          authors: [p1, p3, p4])
+      # Jane Smith co-authored with Jane Okoye once
+      Publication.create!(uri: 'http://example.com/publication5',
+                          authors: [p2, p3])
+      # Jane Smith co-authored with Patricia Koch once
+      Publication.create!(uri: 'http://example.com/publication6',
+                          authors: [p2, p5])
+      # John Smith and Jane Smith co-authored once
+      Publication.create!(uri: 'http://example.com/publication7',
                           authors: [p1, p2])
-      2.upto(11) do |n|
-        Publication.create!(uri: "http://example.com/publication#{n}",
-                            authors: [p1, p3, p4])
-      end
-
-      12.upto(21) do |n|
-        Publication.create!(uri: "http://example.com/publication#{n}",
-                            authors: [p1, p5])
-      end
-
-      # This publication shouldn't be included on the report:
-      Publication.create!(uri: 'http://example.com/publication22',
+      # Jane Okoye co-authored with someone in another department
+      # Jane Smith co-authored with Jane Okoye once
+      Publication.create!(uri: 'http://example.com/publication8',
                           authors: [p6, p3])
     end
 
@@ -78,9 +79,9 @@ RSpec.describe AuthorsCoauthorCountriesReportGenerator do
       # rubocop:disable Style/WordArray
       expect(CSV.parse(report)).to eq [
         ['Co-Author Country', 'Number of Collaborations'],
-        ['Belgium', '20'],
-        ['Croatia', '10'],
-        ['United States', '1']
+        ['Belgium', '4'],
+        ['Canada', '3'],
+        ['United States', '2']
       ]
       # rubocop:enable Style/WordArray
     end
