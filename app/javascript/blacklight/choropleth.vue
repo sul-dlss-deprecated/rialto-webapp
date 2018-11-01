@@ -31,9 +31,9 @@ export default {
              var data = [{
                   type: 'choropleth',
                   locationmode: 'country names', // default is ISO-3
-                  locations: unpack(rows, 'Country'),
-                  z: unpack(rows, 'Number of collaborations'),
-                  text: unpack(rows, 'Country'),
+                  locations: unpack(rows, 'Co-Author Country'),
+                  z: unpack(rows, 'Number of Collaborations'),
+                  text: unpack(rows, 'Co-Author Country'),
                   colorscale: [
                       [0,'rgb(5, 10, 172)'],[0.35,'rgb(40, 60, 190)'],
                       [0.5,'rgb(70, 100, 245)'], [0.6,'rgb(90, 120, 245)'],
@@ -72,9 +72,8 @@ export default {
             Plotly.plot('choropleth', data, layout, {showLink: false, displayModeBar: false});
       });
     },
-
     dataSource: function() {
-      return `/reports/choropleth.csv?department_uri=${this.department.uri}`
+      return `/reports/coauthor-countries.csv?department_uri=${this.department.uri}`
     }
   }
 }
