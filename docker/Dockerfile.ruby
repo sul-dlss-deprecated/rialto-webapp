@@ -8,7 +8,7 @@ WORKDIR /opt
 EXPOSE 3000
 
 # Build argument for injecting native packages at build time via docker-compose
-RUN apk add --update --no-cache \
+RUN apk --no-cache add \
     git \
     ruby \
     ruby-bundler \
@@ -18,8 +18,7 @@ RUN apk add --update --no-cache \
     build-base \
     ruby-dev \
     libxml2-dev \
-    libxslt-dev \
-  && rm -rf /var/cache/apk/*
+    libxslt-dev
 
 # Copy the Gemfile and Gemfile.lock, and run bundle install prior to copying all source files
 # This is an optimization that will prevent the need to re-run bundle install when only source
