@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_210730) do
+ActiveRecord::Schema.define(version: 2018_10_31_172550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "tablefunc"
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
@@ -25,6 +26,13 @@ ActiveRecord::Schema.define(version: 2018_10_25_210730) do
     t.datetime "updated_at", null: false
     t.index ["document_id"], name: "index_bookmarks_on_document_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
+  create_table "concepts", primary_key: "uri", id: :string, force: :cascade do |t|
+    t.jsonb "metadata", default: {}, null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "organizations", primary_key: "uri", id: :string, force: :cascade do |t|
