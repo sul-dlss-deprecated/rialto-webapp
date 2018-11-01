@@ -36,10 +36,10 @@
           <img class="card-img-top" src="/home_trends.png" alt="Research trends by topic">
           <div class="card-img-overlay">
             <div class="fas fa-book icon"></div>
-            <h2 class="card-title">Research trends<br>by topic</h2>
+            <h2 class="card-title">Cross-disciplinary research<br>by concept</h2>
           </div>
           <div class="card-body">
-            <!--<router-link :to="{ name: 'reports'}" class="btn btn-primary">Search</router-link>-->
+              <router-link :to="{ name: 'crossDisplinaryReport'}" class="btn btn-primary">Search</router-link>
           </div>
         </div>
       </div>

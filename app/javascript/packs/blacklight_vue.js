@@ -18,11 +18,13 @@ import Search from '../blacklight/layouts/search.vue'
 import Home from '../blacklight/layouts/home.vue'
 import Visualizations from '../blacklight/layouts/visualizations.vue'
 import CollaborationReport from '../blacklight/layouts/collaboration_report.vue'
+import CrossDisciplinaryReport from '../blacklight/layouts/crossDisciplinaryReport'
 
 const routes = [
   { path: '/item/:id', name: 'show', component: Show },
   { path: '/catalog/:filter?', name: 'search', component: Search },
   { path: '/reports', name: 'collaboration_report', component: CollaborationReport },
+  { path: '/cross-disciplinary-report', name: 'crossDisplinaryReport', component: CrossDisciplinaryReport },
   { path: '/viz', name: 'visualizations', component: Visualizations },
   { path: '/', name: 'home', component: Home }
 ]

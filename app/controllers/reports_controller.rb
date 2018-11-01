@@ -3,7 +3,7 @@
 # Provides the various CSV reports
 class ReportsController < ApplicationController
   def show
-    data = generator.generate(params.slice(:department_uri))
+    data = generator.generate(params.slice(:department_uri, :concept_uri))
 
     respond_to do |format|
       format.csv do
@@ -25,6 +25,8 @@ class ReportsController < ApplicationController
       AuthorsCoauthorCountriesReportGenerator
     when 'choropleth'
       ChoroplethReportGenerator
+    when 'cross-disciplinary'
+      CrossDisciplinaryReportGenerator
     else
       raise ActionController::RoutingError, 'Report type not Found'
     end

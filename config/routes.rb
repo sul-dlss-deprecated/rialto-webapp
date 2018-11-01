@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :reports, only: :show
   resources :departments, only: :index
+  resources :concepts, only: :index
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :searchable
