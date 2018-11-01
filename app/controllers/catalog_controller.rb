@@ -113,7 +113,7 @@ class CatalogController < ApplicationController
       config.add_index_field 'editor_label_tsim', label: 'Editor'
       config.add_index_field 'abstract_tesim', label: 'Abstract'
       config.add_index_field 'description_tesim', label: 'Description'
-      config.add_index_field 'doi_ssim', label: 'DOI'
+      config.add_index_field 'doi_ssim', label: 'DOI', accessor: :linked_dois
       config.add_index_field 'identifier_ssim', label: 'Identifier'
       config.add_index_field 'cites_ssim', label: 'Cites'
       config.add_index_field 'profiles_tesim', label: 'Profiles'
@@ -150,7 +150,7 @@ class CatalogController < ApplicationController
       pc.add_show_field 'editor_label_tsim', label: 'Editor'
       pc.add_show_field 'abstract_tesim', label: 'Abstract'
       pc.add_show_field 'description_tesim', label: 'Description'
-      pc.add_show_field 'doi_ssim', label: 'DOI'
+      pc.add_show_field 'doi_ssim', label: 'DOI', accessor: :linked_dois
       pc.add_show_field 'identifier_ssim', label: 'Identifier'
       pc.add_show_field 'cites_ssim', label: 'Cites'
       pc.add_show_field 'profiles_tesim', label: 'Profiles'

@@ -18,6 +18,15 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
 
+  # Turns URI text into an HTML anchor
+  def linked_dois
+    dois = fetch('doi_ssim', [])
+    return '' if dois.empty?
+    dois.map do |doi|
+      "<a href=\"#{doi}\">#{doi}</a>"
+    end.to_sentence.html_safe
+  end
+
   # Produces a list of authors with links to the frontend app for each.
   def linked_authors
     linked_fields(label: 'author_labels_tsim', uri: 'authors_ssim')
