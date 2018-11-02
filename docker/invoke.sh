@@ -2,7 +2,7 @@
 
 set -e
 echo "Waiting for db"
-/app-setup/wait-for db:5432 -- echo "Db is up"
+/app-setup/wait-for db:5432 -t 45 -- echo "Db is up"
 
 set +e
 echo "Setting up db. OK to ignore errors about test db."
