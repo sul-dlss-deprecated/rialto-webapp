@@ -5,6 +5,67 @@ require 'rails_helper'
 RSpec.describe SolrDocument do
   let(:doc) { described_class.new(data) }
 
+  describe '#linked_dois' do
+    subject(:doi) { doc.linked_dois }
+
+    context 'when the record has a DOI' do
+      let(:data) do
+        {
+          id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
+          type_ssi: 'Publication',
+          doi_ssim: ['http://dx.doi.org/10.1234/foo-bar']
+        }
+      end
+
+      it 'returns HTML' do
+        expect(doi).to eq(
+          '<a href="http://dx.doi.org/10.1234/foo-bar">' \
+            'http://dx.doi.org/10.1234/foo-bar' \
+          '</a>'
+        )
+        expect(doi).to be_html_safe
+      end
+    end
+
+    context 'when the record has multiple DOIs' do
+      let(:data) do
+        {
+          id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
+          type_ssi: 'Publication',
+          doi_ssim: [
+            'http://dx.doi.org/10.1234/foo-bar',
+            'http://dx.doi.org/10.5678/baz-quux'
+          ]
+        }
+      end
+
+      it 'returns HTML' do
+        expect(doi).to eq(
+          '<a href="http://dx.doi.org/10.1234/foo-bar">' \
+            'http://dx.doi.org/10.1234/foo-bar' \
+            '</a> and ' \
+            '<a href="http://dx.doi.org/10.5678/baz-quux">' \
+            'http://dx.doi.org/10.5678/baz-quux' \
+            '</a>'
+        )
+        expect(doi).to be_html_safe
+      end
+    end
+
+    context 'when the record has no DOIs' do
+      let(:data) do
+        {
+          id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
+          type_ssi: 'Publication'
+        }
+      end
+
+      it 'returns an empty string' do
+        expect(doi).to be_empty
+      end
+    end
+  end
+
   describe '#linked_authors' do
     subject(:authors) { doc.linked_authors }
 
