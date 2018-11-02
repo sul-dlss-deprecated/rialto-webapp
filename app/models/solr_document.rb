@@ -3,6 +3,8 @@
 class SolrDocument
   include Blacklight::Solr::Document
 
+  DOI_HTTP_PREFIX = 'http://dx.doi.org/'
+
   # self.unique_key = 'id'
 
   # Email uses the semantic field mappings below to generate the body of an email.
@@ -23,7 +25,7 @@ class SolrDocument
     dois = fetch('doi_ssim', [])
     return '' if dois.empty?
     dois.map do |doi|
-      "<a href=\"#{doi}\">#{doi}</a>"
+      "<a href=\"#{doi}\">#{doi.remove(DOI_HTTP_PREFIX)}</a>"
     end.to_sentence.html_safe
   end
 
