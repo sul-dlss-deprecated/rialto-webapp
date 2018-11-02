@@ -20,7 +20,7 @@ RSpec.describe SolrDocument do
       it 'returns HTML' do
         expect(doi).to eq(
           '<a href="http://dx.doi.org/10.1234/foo-bar">' \
-            'http://dx.doi.org/10.1234/foo-bar' \
+            '10.1234/foo-bar' \
           '</a>'
         )
         expect(doi).to be_html_safe
@@ -42,10 +42,10 @@ RSpec.describe SolrDocument do
       it 'returns HTML' do
         expect(doi).to eq(
           '<a href="http://dx.doi.org/10.1234/foo-bar">' \
-            'http://dx.doi.org/10.1234/foo-bar' \
+            '10.1234/foo-bar' \
             '</a> and ' \
             '<a href="http://dx.doi.org/10.5678/baz-quux">' \
-            'http://dx.doi.org/10.5678/baz-quux' \
+            '10.5678/baz-quux' \
             '</a>'
         )
         expect(doi).to be_html_safe
