@@ -3,20 +3,20 @@
 require 'csv'
 
 # Generate a downloadable report consisting of a list of authors the
-# authors in that department have collaborated with, along with number of collaborations
+# authors in that organization have collaborated with, along with number of collaborations
 class AuthorsCoauthorsReportGenerator
   # @param params [ActionController::Parameters]
-  # @option params [String] :department_uri the identifier of the deparment to generate
+  # @option params [String] :org_uri the identifier of the deparment to generate
   #   the report for
   def self.generate(params)
-    department_uri = params[:department_uri]
-    new(department_uri).generate
+    org_uri = params[:org_uri]
+    new(org_uri).generate
   end
 
-  # @param [Integer] department_uri the identifier of the deparment to generate
+  # @param [Integer] org_uri the identifier of the organization to generate
   #   the report for
-  def initialize(department_uri)
-    @organization = Organization.find(department_uri)
+  def initialize(org_uri)
+    @organization = Organization.find(org_uri)
   end
 
   # @return [String] a csv report
@@ -55,7 +55,7 @@ class AuthorsCoauthorsReportGenerator
   # @return [ActiveRecord::Result]
   def database_values
     conn = ActiveRecord::Base.connection
-    conn.exec_query(sql, 'SQL', [[nil, organization.uri]])
+    conn.exec_query(sql, 'SQL', [[nil, Person.org_metadata_field(organization.type)], [nil, organization.uri]])
   end
 
   def sql
@@ -65,7 +65,7 @@ class AuthorsCoauthorsReportGenerator
     'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
     'LEFT OUTER JOIN people p2 ON pp2.person_uri = p2.uri ' \
     'WHERE p2.uri != p1.uri AND ' \
-    "p1.metadata -> 'departments' ? $1 "  \
+    'p1.metadata -> $1 ? $2 '  \
     'GROUP BY p1.uri, p2.uri ' \
     'ORDER BY p1.uri'
   end

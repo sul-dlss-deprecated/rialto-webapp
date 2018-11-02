@@ -73,7 +73,7 @@ export default {
       });
     },
     dataSource: function() {
-      return `/reports/coauthor-countries.csv?department_uri=${this.department.uri}`
+      return `/reports/coauthor-countries.csv?org_uri=${this.department.uri}`
     }
   }
 }
