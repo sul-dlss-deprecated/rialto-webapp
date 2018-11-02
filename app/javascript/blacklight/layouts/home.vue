@@ -8,21 +8,7 @@
           <img class="card-img-top" src="/home_intlcollab.png" alt="Topic Area">
           <div class="card-img-overlay">
             <div class="fas fa-globe-americas icon"></div>
-            <h2 class="card-title">Discover<br>international<br>collaborations</h2>
-          </div>
-          <div class="card-body">
-            <!-- <p class="card-text">any text here</p> -->
-            <router-link :to="{ name: 'research_trends_report'}" class="btn btn-primary">Search</router-link>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="card">
-          <img class="card-img-top" src="/home_topicarea.png" alt="Topic Area">
-          <div class="card-img-overlay">
-            <div class="fas fa-landmark icon"></div>
-            <h2 class="card-title">Collaboration<br>by co-author, institution, and country</h2>
+            <h2 class="card-title">Discover<br>Stanford<br>collaborations</h2>
           </div>
           <div class="card-body">
             <!-- <p class="card-text">any text here</p> -->
@@ -33,10 +19,24 @@
 
       <div class="col-sm-4">
         <div class="card">
+          <img class="card-img-top" src="/home_topicarea.png" alt="Topic Area">
+          <div class="card-img-overlay">
+            <div class="fas fa-landmark icon"></div>
+            <h2 class="card-title">Research trends<br>by topic</h2>
+          </div>
+          <div class="card-body">
+            <!-- <p class="card-text">any text here</p> -->
+            <router-link :to="{ name: 'research_trends_report'}" class="btn btn-primary">Search</router-link>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card">
           <img class="card-img-top" src="/home_trends.png" alt="Research trends by topic">
           <div class="card-img-overlay">
             <div class="fas fa-book icon"></div>
-            <h2 class="card-title">Cross-disciplinary research<br>by concept</h2>
+            <h2 class="card-title">Cross-disciplinary research output<br>by topic</h2>
           </div>
           <div class="card-body">
               <router-link :to="{ name: 'crossDisplinaryReport'}" class="btn btn-primary">Search</router-link>
