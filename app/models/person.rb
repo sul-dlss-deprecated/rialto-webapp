@@ -12,4 +12,16 @@ class Person < ApplicationRecord
   def department_entities
     @department_entities ||= Organization.where(uri: departments)
   end
+
+  # Returns the metadata field for the provided organization type or nil if no field.
+  def self.org_metadata_field(org_type)
+    case org_type
+    when Organization::SCHOOL
+      'schools'
+    when Organization::DEPARTMENT
+      'departments'
+    when Organization::INSTITUTE
+      'institutes'
+    end
+  end
 end

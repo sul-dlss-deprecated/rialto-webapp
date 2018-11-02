@@ -13,11 +13,11 @@ RSpec.describe 'CSV reports', type: :request do
     end
 
     it 'returns CSV data' do
-      get '/reports/coauthors.csv?department_uri=7'
+      get '/reports/coauthors.csv?org_uri=7'
       expect(response.body).to eq "Foo,Bar\n"
       expect(response.content_type).to eq 'text/csv'
       expect(AuthorsCoauthorsReportGenerator).to have_received(:generate)
-        .with(ActionController::Parameters.new(department_uri: '7'))
+        .with(ActionController::Parameters.new(org_uri: '7'))
     end
   end
 end

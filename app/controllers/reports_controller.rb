@@ -3,7 +3,7 @@
 # Provides the various CSV reports
 class ReportsController < ApplicationController
   def show
-    data = generator.generate(params.slice(:department_uri, :concept_uri))
+    data = generator.generate(params.slice(:org_uri, :concept_uri))
 
     respond_to do |format|
       format.csv do

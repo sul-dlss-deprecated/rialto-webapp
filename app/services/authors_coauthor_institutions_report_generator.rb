@@ -3,20 +3,20 @@
 require 'csv'
 
 # Generate a downloadable report consisting of a list of institutions the
-# authors in that department have collaborated with, along with number of collaborations
+# authors in that organization have collaborated with, along with number of collaborations
 class AuthorsCoauthorInstitutionsReportGenerator
   # @param params [ActionController::Parameters]
-  # @option params [String] :department_uri the identifier of the deparment to generate
+  # @option params [String] :org_uri the identifier of the deparment to generate
   #   the report for
   def self.generate(params)
-    department_uri = params[:department_uri]
-    new(department_uri).generate
+    org_uri = params[:org_uri]
+    new(org_uri).generate
   end
 
-  # @param [Integer] department_uri the identifier of the deparment to generate
+  # @param [Integer] org_uri the identifier of the deparment to generate
   #   the report for
-  def initialize(department_uri)
-    @organization = Organization.find(department_uri)
+  def initialize(org_uri)
+    @organization = Organization.find(org_uri)
   end
 
   # @return [String] a csv report
@@ -37,7 +37,7 @@ class AuthorsCoauthorInstitutionsReportGenerator
   # @return [ActiveRecord::Result]
   def database_values
     conn = ActiveRecord::Base.connection
-    conn.exec_query(sql, 'SQL', [[nil, organization.uri]])
+    conn.exec_query(sql, 'SQL', [[nil, Person.org_metadata_field(organization.type)], [nil, organization.uri]])
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -50,7 +50,7 @@ class AuthorsCoauthorInstitutionsReportGenerator
     "FROM people p2, jsonb_array_elements_text(p2.metadata -> 'institutionalAffiliations') p2ia) p2i ON pp2.person_uri = p2i.uri " \
     'LEFT OUTER JOIN organizations o on p2i.institution = o.uri ' \
     'WHERE p2i.uri != p1.uri AND ' \
-    "p1.metadata -> 'departments' ? $1 " \
+    'p1.metadata -> $1 ? $2 ' \
     'GROUP BY o.name ' \
     'ORDER BY count(*) desc'
   end
