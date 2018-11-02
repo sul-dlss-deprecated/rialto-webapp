@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <!-- <p class="card-text">any text here</p> -->
-            <router-link :to="{ name: 'visualizations'}" class="btn btn-primary">Search</router-link>
+            <!--<router-link :to="{ name: 'visualizations'}" class="btn btn-primary">Search</router-link>-->
           </div>
         </div>
       </div>

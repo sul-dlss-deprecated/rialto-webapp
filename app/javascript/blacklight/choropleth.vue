@@ -8,11 +8,11 @@ import * as Plotly from 'plotly.js';
 
 export default {
   name: 'Choropleth',
-  props: ['department'],
+  props: ['reportURL'],
   watch: {
-    department: function(newDept, oldDept) {
-      if (newDept) {
-        this.draw()
+    reportURL: function(newReportURL, oldReportURL) {
+        if (newReportURL) {
+          this.draw()
       }
     }
   },
@@ -69,11 +69,11 @@ export default {
                 }
             };
 
-            Plotly.plot('choropleth', data, layout, {showLink: false, displayModeBar: false});
+            Plotly.newPlot('choropleth', data, layout, {showLink: false, displayModeBar: false});
       });
     },
     dataSource: function() {
-      return `/reports/coauthor-countries.csv?org_uri=${this.department.uri}`
+      return this.reportURL
     }
   }
 }

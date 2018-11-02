@@ -18,7 +18,9 @@
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
-
+    <div v-show="selectedReportType === 'coauthor-countries'">
+      <Choropleth v-bind:reportURL="reportURL"/><br />
+    </div>
     <ReportTable v-bind:data-source="reportURL"></ReportTable>
   </section>
 </template>
@@ -26,10 +28,12 @@
 
 <script>
 import ReportTable from 'blacklight/reports/table.vue'
+import Choropleth from '../choropleth.vue'
 
 export default {
   components: {
-    ReportTable
+    ReportTable,
+    Choropleth
   },
   data: function () {
     return {
