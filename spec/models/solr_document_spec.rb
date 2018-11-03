@@ -13,13 +13,13 @@ RSpec.describe SolrDocument do
         {
           id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
           type_ssi: 'Publication',
-          doi_ssim: ['http://dx.doi.org/10.1234/foo-bar']
+          doi_ssim: ['https://doi.org/10.1234/foo-bar']
         }
       end
 
       it 'returns HTML' do
         expect(doi).to eq(
-          '<a href="http://dx.doi.org/10.1234/foo-bar">' \
+          '<a href="https://doi.org/10.1234/foo-bar">' \
             '10.1234/foo-bar' \
           '</a>'
         )
@@ -33,18 +33,18 @@ RSpec.describe SolrDocument do
           id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
           type_ssi: 'Publication',
           doi_ssim: [
-            'http://dx.doi.org/10.1234/foo-bar',
-            'http://dx.doi.org/10.5678/baz-quux'
+            'https://doi.org/10.1234/foo-bar',
+            'https://doi.org/10.5678/baz-quux'
           ]
         }
       end
 
       it 'returns HTML' do
         expect(doi).to eq(
-          '<a href="http://dx.doi.org/10.1234/foo-bar">' \
+          '<a href="https://doi.org/10.1234/foo-bar">' \
             '10.1234/foo-bar' \
             '</a> and ' \
-            '<a href="http://dx.doi.org/10.5678/baz-quux">' \
+            '<a href="https://doi.org/10.5678/baz-quux">' \
             '10.5678/baz-quux' \
             '</a>'
         )
