@@ -3,7 +3,7 @@
 class SolrDocument
   include Blacklight::Solr::Document
 
-  DOI_HTTP_PREFIX = 'http://dx.doi.org/'
+  DOI_HTTP_PREFIX = 'https://doi.org/'
 
   # self.unique_key = 'id'
 
