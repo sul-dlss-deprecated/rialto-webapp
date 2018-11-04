@@ -15,6 +15,7 @@ class ReportsController < ApplicationController
   private
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   def generator
     case params[:id]
     when 'coauthors'
@@ -27,9 +28,12 @@ class ReportsController < ApplicationController
       ChoroplethReportGenerator
     when 'cross-disciplinary'
       CrossDisciplinaryReportGenerator
+    when 'research-trends'
+      ResearchTrendsReportGenerator
     else
       raise ActionController::RoutingError, 'Report type not Found'
     end
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
 end
