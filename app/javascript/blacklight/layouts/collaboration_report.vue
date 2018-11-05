@@ -15,6 +15,8 @@
         <option value="coauthor-institutions">Co-author institutions</option>
         <option value="coauthor-countries">Co-author countries</option>
     </select><br />
+    <label for="yearsRange">Years: </label>
+    <vue-slider name="yearsRange" v-model="selectedYearsRange" :min=minYear :max=maxYear width="80%"></vue-slider><br />
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
@@ -29,19 +31,25 @@
 <script>
 import ReportTable from 'blacklight/reports/table.vue'
 import Choropleth from '../choropleth.vue'
+import vueSlider from 'vue-slider-component';
 
 export default {
   components: {
     ReportTable,
-    Choropleth
+    Choropleth,
+    vueSlider
   },
   data: function () {
+    const thisYear = (new Date()).getFullYear();
     return {
       selectedSchool: '',
       schools: [],
       selectedDepartment: '',
       departments: [],
-      selectedReportType: 'coauthors'
+      selectedReportType: 'coauthors',
+      selectedYearsRange: [2000, thisYear],
+      minYear: 2000,
+      maxYear: thisYear
     }
   },
   created() {
@@ -62,7 +70,7 @@ export default {
       if (!this.selectedReportType || !(this.selectedSchool || this.selectedDepartment)) {
           return null
       }
-      return `/reports/${this.selectedReportType}.csv?org_uri=${this.selectedDepartment.uri || this.selectedSchool.uri}`
+      return `/reports/${this.selectedReportType}.csv?org_uri=${this.selectedDepartment.uri || this.selectedSchool.uri}&start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}`
     }
   },
   methods: {
