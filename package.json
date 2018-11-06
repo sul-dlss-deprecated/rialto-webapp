@@ -20,9 +20,11 @@
     "vue-template-compiler": "^2.5.16"
   },
   "devDependencies": {
+    "jsdom": "^13.0.0",
+    "jsdom-global": "^3.0.2",
     "webpack-dev-server": "2.11.2"
   },
   "scripts": {
-    "test": "mocha-webpack --webpack-config config/webpack/test.js app/javascript/test/**/*.spec.js --recursive"
+    "test": "mocha-webpack --webpack-config config/webpack/test.js --require app/javascript/test/setup.js app/javascript/test/**/*.spec.js --recursive"
   }
 }
