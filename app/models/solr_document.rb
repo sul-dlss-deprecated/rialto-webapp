@@ -20,6 +20,8 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
 
+  attribute :title, Blacklight::Types::String, 'title_tesi'
+
   # Turns URI text into an HTML anchor
   def linked_dois
     dois = fetch('doi_ssim', [])
@@ -44,10 +46,36 @@ class SolrDocument
     linked_fields(label: 'assigned_label_tsim', uri: 'assigned_ssim')
   end
 
+  # A list of publications for this person
+  def person_publications
+    search_service = Blacklight::SearchService.new(config: blacklight_config,
+                                                   user_params: { author: id },
+                                                   search_builder_class: PublicationSearchBuilder)
+    response, _deprecated_stuff = search_service.search_results
+    docs = response.documents
+    tuples = docs.map do |doc|
+      "<li><a href=\"#{search_link(doc.id)}\">#{doc.title}</a></li>"
+    end
+    "<ul>#{tuples.join}</ul>".html_safe
+  end
+
   private
+
+  delegate :blacklight_config, to: CatalogController
+
+  def search_builder(controller)
+    search_builder_class.new(controller)
+                        .where(controller.params[:q])
+                        .with_access(access)
+                        .rows(100)
+  end
 
   def linked_fields(label:, uri:)
     tuples = fetch(label, []).zip(fetch(uri, []))
+    linked_fields_to_links(tuples)
+  end
+
+  def linked_fields_to_links(tuples)
     parts = tuples.map do |labeled|
       "<a href=\"#{search_link(labeled.last)}\">#{labeled.first}</a>"
     end
