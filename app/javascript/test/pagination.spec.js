@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import Pagination from '../blacklight/pagination.vue'
-import Result from '../blacklight/result.js'
+import Pagination from '../blacklight/search/pagination.vue'
+import Result from '../blacklight/search/result.js'
 
 describe('result', () => {
   it("shows nothing while loading", () => {

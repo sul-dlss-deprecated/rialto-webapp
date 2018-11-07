@@ -3,6 +3,7 @@
     <SearchControl />
     <div class="container">
       <p>{{ message }}</p>
+      <StartOver/>
       <div class="row">
         <section class="col-md-9 order-last">
           <Pagination v-bind:result="result" />
@@ -18,15 +19,17 @@
 
 <script>
 
-import SearchControl from 'blacklight/searchControl.vue'
-import Result from 'blacklight/result'
+import StartOver from 'blacklight/search/startOver.vue'
+import SearchControl from 'blacklight/search/searchControl.vue'
+import Result from 'blacklight/search/result'
 import ResultList from 'blacklight/result/list.vue'
 import FacetList from 'blacklight/facet/list.vue'
-import Pagination from 'blacklight/pagination.vue'
+import Pagination from 'blacklight/search/pagination.vue'
 
 export default {
   components: {
     SearchControl,
+    StartOver,
     ResultList,
     FacetList,
     Pagination,
