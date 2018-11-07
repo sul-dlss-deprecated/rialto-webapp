@@ -7,7 +7,7 @@ echo "Waiting for db"
 set +e
 echo "Setting up db. OK to ignore errors about test db."
 # https://github.com/rails/rails/issues/27299
-rails db:setup
+rails db:create
 
 set -e
 echo "Migrating db"
