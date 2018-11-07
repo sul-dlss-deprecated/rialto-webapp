@@ -20,6 +20,7 @@
     "vue-template-compiler": "^2.5.16"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.25",
     "jsdom": "^13.0.0",
     "jsdom-global": "^3.0.2",
     "webpack-dev-server": "2.11.2"
