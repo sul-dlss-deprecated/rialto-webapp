@@ -1,2 +1,6 @@
 @import 'bootstrap_overrides';
 @import '~bootstrap/scss/bootstrap';
+
+.constraints-container {
+  @extend .mb-2;
+}
