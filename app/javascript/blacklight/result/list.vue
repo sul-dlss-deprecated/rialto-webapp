@@ -19,4 +19,8 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
 </style>
