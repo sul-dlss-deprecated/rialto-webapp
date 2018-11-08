@@ -2,7 +2,6 @@
   <div>
     <SearchControl />
     <div class="container">
-      <p>{{ message }}</p>
       <StartOver/>
       <div class="row">
         <section class="col-md-9 order-last">
@@ -36,7 +35,6 @@ export default {
   },
   data: function () {
     return {
-      message: "No results",
       result: new Result()
     }
   },
@@ -46,15 +44,15 @@ export default {
       return '/catalog/' + solrUrl.split('?', 2)[1]
     },
     retrieveResults: function(url) {
+      this.$Progress.start()
       this.$http.get(url).then(function(response){
           this.result = new Result(response.data)
-          this.message = null
+          this.$Progress.finish()
       }, function(error){
           console.error(error.statusText);
       });
     },
     load: function(route) {
-      this.message = 'searching...';
       var filter = route.params.filter
       if (filter === undefined)
         filter = 'q='

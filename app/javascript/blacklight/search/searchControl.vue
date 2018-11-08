@@ -33,4 +33,7 @@ export default {
 </script>
 
 <style scoped>
+.navbar-search {
+  margin-bottom: 1rem;
+}
 </style>
