@@ -29,7 +29,6 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'name_tsim'
     config.index.display_type_field = 'type_ssi'
-
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     config.add_results_document_tool(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
@@ -100,30 +99,30 @@ class CatalogController < ApplicationController
     config.add_index_field 'title_tesi', label: 'Title'
     config.add_index_field 'alternative_title_tesim', label: 'Alternate Title'
 
-    config.for_display_type 'Person' do
-      config.add_index_field 'name_tsim', label: 'Name'
-      config.add_index_field 'department_label_ssim', label: 'Department'
-      config.add_index_field 'school_label_ssim', label: 'School'
-      config.add_index_field 'institute_label_ssim', label: 'Institute'
-      config.add_index_field 'institution_label_ssim', label: 'University'
+    config.for_display_type 'Person' do |pc|
+      pc.add_index_field 'name_tsim', label: 'Name'
+      pc.add_index_field 'department_label_ssim', label: 'Department'
+      pc.add_index_field 'school_label_ssim', label: 'School'
+      pc.add_index_field 'institute_label_ssim', label: 'Institute'
+      pc.add_index_field 'institution_label_ssim', label: 'University'
     end
 
-    config.for_display_type 'Publication' do
-      config.add_index_field 'author_labels_tsim', label: 'Author'
-      config.add_index_field 'editor_label_tsim', label: 'Editor'
-      config.add_index_field 'abstract_tesim', label: 'Abstract'
-      config.add_index_field 'description_tesim', label: 'Description'
-      config.add_index_field 'doi_ssim', label: 'DOI', accessor: :linked_dois
-      config.add_index_field 'identifier_ssim', label: 'Identifier'
-      config.add_index_field 'cites_ssim', label: 'Cites'
-      config.add_index_field 'profiles_tesim', label: 'Profiles'
-      config.add_index_field 'date_created_dtsi', label: 'Created'
-      config.add_index_field 'has_instrument_ssim', label: 'Has Instrument'
-      config.add_index_field 'journal_issue_ssim', label: 'Journal Issue'
-      config.add_index_field 'sponsor_label_tsim', label: 'Sponsor'
-      config.add_index_field 'subject_label_tsim', label: 'Subject'
-      config.add_index_field 'link_ssim', label: 'Link'
-      config.add_index_field 'publisher_label_tsim', label: 'Publisher'
+    config.for_display_type 'Publication' do |pc|
+      pc.add_index_field 'author_labels_tsim', label: 'Author'
+      pc.add_index_field 'editor_label_tsim', label: 'Editor'
+      pc.add_index_field 'abstract_tesim', label: 'Abstract'
+      pc.add_index_field 'description_tesim', label: 'Description'
+      pc.add_index_field 'doi_ssim', label: 'DOI', accessor: :linked_dois
+      pc.add_index_field 'identifier_ssim', label: 'Identifier'
+      pc.add_index_field 'cites_ssim', label: 'Cites'
+      pc.add_index_field 'profiles_tesim', label: 'Profiles'
+      pc.add_index_field 'date_created_dtsi', label: 'Created'
+      pc.add_index_field 'has_instrument_ssim', label: 'Has Instrument'
+      pc.add_index_field 'journal_issue_ssim', label: 'Journal Issue'
+      pc.add_index_field 'sponsor_label_tsim', label: 'Sponsor'
+      pc.add_index_field 'subject_label_tsim', label: 'Subject'
+      pc.add_index_field 'link_ssim', label: 'Link'
+      pc.add_index_field 'publisher_label_tsim', label: 'Publisher'
     end
 
     # solr fields to be displayed in the show (single result) view
