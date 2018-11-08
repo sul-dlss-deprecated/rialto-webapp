@@ -9,6 +9,8 @@
     <select name="department" v-model="selectedDepartment" @change="selectedSchool=''">
       <option v-for="department in departments" :value="department">{{ department.label }}</option>
     </select><br />
+    <label for="yearsRange">Years: </label>
+    <YearSlider v-model="selectedYearsRange"></YearSlider>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
@@ -19,10 +21,12 @@
 
 <script>
 import ReportTable from 'blacklight/reports/table.vue'
+import YearSlider from '../reports/yearSlider'
 
 export default {
   components: {
-    ReportTable
+    ReportTable,
+    YearSlider
   },
   data: function () {
     return {
@@ -30,6 +34,7 @@ export default {
       schools: [],
       selectedDepartment: '',
       departments: [],
+      selectedYearsRange: [2000, (new Date()).getFullYear()]
     }
   },
   created() {
@@ -50,7 +55,7 @@ export default {
       if (!(this.selectedSchool || this.selectedDepartment)) {
           return null
       }
-      return `/reports/research-trends.csv?org_uri=${this.selectedDepartment.uri || this.selectedSchool.uri}`
+      return `/reports/research-trends.csv?org_uri=${this.selectedDepartment.uri || this.selectedSchool.uri}&start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}`
     }
   },
   methods: {

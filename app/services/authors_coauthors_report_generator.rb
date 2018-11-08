@@ -8,13 +8,17 @@ class AuthorsCoauthorsReportGenerator
   # @param params [ActionController::Parameters]
   # @option params [String] :org_uri the identifier of the deparment to generate
   #   the report for
+  # @option params [Integer] :start_year the minimum publication year on the report
+  # @option params [Integer] :end_year the maximum publication year on the report
   def self.generate(params)
-    new(params[:org_uri], params[:start_year], params[:end_year]).generate
+    new(params).generate
   end
 
   # @param [Integer] org_uri the identifier of the organization to generate
   #   the report for
-  def initialize(org_uri, start_year, end_year)
+  # @param [Integer] start_year the minimum publication year on the report
+  # @param [Integer] end_year the maximum publication year on the report
+  def initialize(org_uri:, start_year:, end_year:)
     @organization = Organization.find(org_uri)
     @start_year = start_year
     @end_year = end_year

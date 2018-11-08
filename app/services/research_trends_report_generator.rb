@@ -8,15 +8,20 @@ require 'set'
 class ResearchTrendsReportGenerator
   # @param params [ActionController::Parameters]
   # @option params [String] :org_uri the identifier of the org to generate the report for
+  # @option params [Integer] :start_year the minimum publication year on the report
+  # @option params [Integer] :end_year the maximum publication year on the report
   def self.generate(params)
-    org_uri = params[:org_uri]
-    new(org_uri).generate
+    new(params).generate
   end
 
   # @param [Integer] org_uri the identifier of the org to generate
   #   the report for
-  def initialize(org_uri)
+  # @param [Integer] start_year the minimum publication year on the report
+  # @param [Integer] end_year the maximum publication year on the report
+  def initialize(org_uri:, start_year:, end_year:)
     @organization = Organization.find(org_uri)
+    @start_year = start_year
+    @end_year = end_year
   end
 
   # @return [String] a csv report
@@ -34,7 +39,7 @@ class ResearchTrendsReportGenerator
 
   private
 
-  attr_reader :organization
+  attr_reader :organization, :start_year, :end_year
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -79,18 +84,26 @@ class ResearchTrendsReportGenerator
   # @return [ActiveRecord::Result]
   def database_values
     conn = ActiveRecord::Base.connection
-    conn.exec_query(sql, 'SQL', [[nil, Person.org_metadata_field(organization.type)], [nil, organization.uri]])
+    conn.exec_query(sql, 'SQL', [[nil, Person.org_metadata_field(organization.type)],
+                                 [nil, organization.uri],
+                                 [nil, start_year],
+                                 [nil, end_year]])
   end
 
+  # rubocop:disable Metrics/MethodLength
   def sql
     'SELECT con.name as concept, dpub.created_year as year, count(*) ' \
     "FROM (SELECT DISTINCT pub.uri, pub.metadata -> 'created_year' as created_year, " \
     "jsonb_array_elements_text(pub.metadata -> 'concepts') as concept_uri FROM publications pub " \
     'INNER JOIN people_publications pp on pub.uri=pp.publication_uri ' \
     'INNER JOIN people p on p.uri=pp.person_uri ' \
-    'WHERE p.metadata -> $1 ? $2) as dpub ' \
+    'WHERE p.metadata -> $1 ? $2 AND '\
+    "pub.metadata -> 'created_year' >= $3 AND " \
+    "pub.metadata -> 'created_year' <= $4 " \
+    ') as dpub ' \
     'INNER JOIN concepts con on con.uri=dpub.concept_uri ' \
     'GROUP BY con.name, dpub.created_year ' \
     'ORDER BY con.name, dpub.created_year'
   end
+  # rubocop:enable Metrics/MethodLength
 end
