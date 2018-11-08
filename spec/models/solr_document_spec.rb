@@ -5,6 +5,41 @@ require 'rails_helper'
 RSpec.describe SolrDocument do
   let(:doc) { described_class.new(data) }
 
+  describe '#person_publications' do
+    subject(:person_publications) { doc.person_publications }
+
+    before do
+      conn.add(
+        id: 'http://sul.stanford.edu/rialto/publications/4444',
+        type_ssi: 'Publication',
+        authors_ssim: [data.fetch(:id)],
+        title_tesi: 'My Book'
+      )
+      conn.add(
+        id: 'http://sul.stanford.edu/rialto/publications/5555',
+        type_ssi: 'Publication',
+        authors_ssim: ['foobar'],
+        title_tesi: 'Not My Book'
+      )
+      conn.commit
+    end
+
+    let(:conn) { Blacklight.default_index.connection }
+
+    let(:data) do
+      {
+        id: 'http://sul.stanford.edu/rialto/person/123',
+        type_ssi: 'Person'
+      }
+    end
+
+    it do
+      expect(person_publications).to eq(
+        '<ul><li><a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fpublications%2F4444">My Book</a></li></ul>'
+      )
+    end
+  end
+
   describe '#linked_dois' do
     subject(:doi) { doc.linked_dois }
 
