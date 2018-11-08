@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ResearchTrendsReportGenerator do
-  subject(:report) { described_class.generate(org_uri: organization.uri) }
+  subject(:report) { described_class.generate(org_uri: organization.uri, start_year: 2000, end_year: 2099) }
 
   before do
     # Create people
@@ -97,6 +97,20 @@ RSpec.describe ResearchTrendsReportGenerator do
         ['Concept2', '0', '1', '0', '1']
       ]
       # rubocop:enable Style/WordArray
+    end
+
+    context 'when date range is specified' do
+      subject(:report) { described_class.generate(org_uri: organization.uri, start_year: 2017, end_year: 2018) }
+
+      it 'is a report' do
+        # rubocop:disable Style/WordArray
+        expect(CSV.parse(report)).to eq [
+          ['Concept', '2017', '2018', 'Total'],
+          ['Concept1', '0', '1', '1'],
+          ['Concept2', '1', '0', '1']
+        ]
+        # rubocop:enable Style/WordArray
+      end
     end
   end
 end
