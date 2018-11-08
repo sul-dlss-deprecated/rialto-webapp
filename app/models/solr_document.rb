@@ -36,6 +36,11 @@ class SolrDocument
     linked_fields(label: 'author_labels_tsim', uri: 'authors_ssim')
   end
 
+  # Produces a list of Grants with links to the frontend app for each.
+  def linked_grants
+    linked_fields(label: 'grant_labels_ssim', uri: 'grants_ssim')
+  end
+
   # Produces a list of PIs with links to the frontend app for each.
   def linked_pi
     linked_fields(label: 'pi_label_tsim', uri: 'pi_ssim')

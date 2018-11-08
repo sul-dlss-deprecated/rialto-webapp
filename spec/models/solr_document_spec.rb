@@ -101,6 +101,46 @@ RSpec.describe SolrDocument do
     end
   end
 
+  describe '#linked_grants' do
+    subject(:text) { doc.linked_grants }
+
+    context 'when the record has authors' do
+      let(:data) do
+        {
+          id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
+          type_ssi: 'Publication',
+          grant_labels_ssim: ['Hydra in a box.',
+                              'LD4P'],
+          grants_ssim: ['http://sul.stanford.edu/rialto/grants/a8ab23cc-9bdc-46b0-a69e-03661725219f',
+                        'http://sul.stanford.edu/rialto/grants/17930ba1-ecde-4751-a444-c2995d9bcdbf']
+        }
+      end
+
+      it 'returns HTML' do
+        expect(text).to eq(
+          '<a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fgrants%2Fa8ab23cc-9bdc-46b0-a69e-03661725219f">' \
+          'Hydra in a box.</a> and ' \
+          '<a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fgrants%2F17930ba1-ecde-4751-a444-c2995d9bcdbf">' \
+          'LD4P</a>'
+        )
+        expect(text).to be_html_safe
+      end
+    end
+
+    context 'when the record has no grants' do
+      let(:data) do
+        {
+          id: 'http://sul.stanford.edu/rialto/publications/7fec3f81bdf190e3e04d593c99803293',
+          type_ssi: 'Publication'
+        }
+      end
+
+      it 'returns an empty string' do
+        expect(text).to be_empty
+      end
+    end
+  end
+
   describe '#linked_authors' do
     subject(:authors) { doc.linked_authors }
 

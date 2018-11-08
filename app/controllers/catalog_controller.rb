@@ -160,6 +160,7 @@ class CatalogController < ApplicationController
       pc.add_show_field 'subject_label_tsim', label: 'Subject'
       pc.add_show_field 'link_ssim', label: 'Link'
       pc.add_show_field 'publisher_label_tsim', label: 'Publisher'
+      pc.add_show_field 'Grants', label: 'Grant', accessor: :linked_grants
     end
 
     config.for_display_type 'Grant' do |pc|
