@@ -9,9 +9,24 @@ import Vue from 'vue'
 import App from '../app.vue'
 import VueResource from  'vue-resource'
 import VueRouter from  'vue-router'
+import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
+const options = {
+  color: '#e62117',
+  failedColor: '#874b4b',
+  thickness: '5px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  inverse: false
+}
+
+Vue.use(VueProgressBar, options)
 
 import Show from '../blacklight/layouts/showPage.vue'
 import Search from '../blacklight/layouts/search.vue'

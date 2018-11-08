@@ -14,6 +14,7 @@
     "typeahead.js": "^0.11.1",
     "vue": "^2.5.16",
     "vue-loader": "^15.4.2",
+    "vue-progressbar": "^0.7.5",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.8.0",

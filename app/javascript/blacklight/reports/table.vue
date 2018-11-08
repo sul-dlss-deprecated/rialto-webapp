@@ -29,8 +29,10 @@ export default {
   },
   watch: {
     dataSource(newVal, oldVal) {
+      this.$Progress.start()
       d3.text(newVal, (data) => {
         this.parsedCSV = d3.csv.parseRows(data);
+        this.$Progress.finish()
       })
     }
   }

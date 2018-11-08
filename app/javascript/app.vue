@@ -1,6 +1,7 @@
 <template>
 
   <div id="app">
+    <vue-progress-bar></vue-progress-bar>
     <nav class="navbar navbar-expand-md" role="navigation">
       <a class="navbar-brand" href="/">Stanford Libraries</a>
     </nav>
