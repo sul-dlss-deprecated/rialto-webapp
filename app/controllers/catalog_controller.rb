@@ -110,7 +110,6 @@ class CatalogController < ApplicationController
     config.for_display_type 'Publication' do |pc|
       pc.add_index_field 'author_labels_tsim', label: 'Author'
       pc.add_index_field 'editor_label_tsim', label: 'Editor'
-      pc.add_index_field 'abstract_tesim', label: 'Abstract'
       pc.add_index_field 'description_tesim', label: 'Description'
       pc.add_index_field 'doi_ssim', label: 'DOI', accessor: :linked_dois
       pc.add_index_field 'identifier_ssim', label: 'Identifier'
