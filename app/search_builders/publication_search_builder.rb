@@ -6,14 +6,16 @@ class PublicationSearchBuilder < ::SearchBuilder
 
   def linked_publications(solr_parameters)
     solr_parameters[:fq] ||= []
-    solr_parameters[:fq] += ["authors_ssim:\"#{author}\""]
+    solr_parameters[:fq] += [type_filter]
     solr_parameters[:fq] += ['type_ssi:Publication']
     solr_parameters[:rows] = 1000
   end
 
   private
 
-  def author
-    blacklight_params.fetch(:author)
+  def type_filter
+    return "authors_ssim:\"#{blacklight_params.fetch(:author)}\"" if blacklight_params.key?(:author)
+    return "grants_ssim:\"#{blacklight_params.fetch(:grant)}\"" if blacklight_params.key?(:grant)
+    raise ArgumentError, "No valid parameters were provided: #{params}"
   end
 end

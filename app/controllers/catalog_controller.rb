@@ -160,12 +160,13 @@ class CatalogController < ApplicationController
       pc.add_show_field 'subject_label_tsim', label: 'Subject'
       pc.add_show_field 'link_ssim', label: 'Link'
       pc.add_show_field 'publisher_label_tsim', label: 'Publisher'
-      pc.add_show_field 'Grants', label: 'Grant', accessor: :linked_grants
+      pc.add_show_field 'grants', label: 'Grant', accessor: :linked_grants
     end
 
     config.for_display_type 'Grant' do |pc|
       pc.add_show_field 'pi', label: 'Principal Investigator', accessor: :linked_pi
       pc.add_show_field 'assigned', label: 'Funded By', accessor: :linked_assigned
+      pc.add_show_field 'publications', label: 'Publications', accessor: :grant_publications
     end
 
     # "fielded" search configuration. Used by pulldown among other places.
