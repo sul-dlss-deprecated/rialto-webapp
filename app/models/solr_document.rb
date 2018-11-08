@@ -53,8 +53,22 @@ class SolrDocument
 
   # A list of publications for this person
   def person_publications
+    linked_publications(author: id)
+  end
+
+  # A list of publications for this person
+  def grant_publications
+    linked_publications(grant: id)
+  end
+
+  private
+
+  delegate :blacklight_config, to: CatalogController
+
+  # A list of publications for this person
+  def linked_publications(params)
     search_service = Blacklight::SearchService.new(config: blacklight_config,
-                                                   user_params: { author: id },
+                                                   user_params: params,
                                                    search_builder_class: PublicationSearchBuilder)
     response, _deprecated_stuff = search_service.search_results
     docs = response.documents
@@ -62,17 +76,6 @@ class SolrDocument
       "<li><a href=\"#{search_link(doc.id)}\">#{doc.title}</a></li>"
     end
     "<ul>#{tuples.join}</ul>".html_safe
-  end
-
-  private
-
-  delegate :blacklight_config, to: CatalogController
-
-  def search_builder(controller)
-    search_builder_class.new(controller)
-                        .where(controller.params[:q])
-                        .with_access(access)
-                        .rows(100)
   end
 
   def linked_fields(label:, uri:)
