@@ -65,7 +65,7 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
     "pub.metadata -> 'created_year' >= $3 AND " \
     "pub.metadata -> 'created_year' <= $4 " \
     'GROUP BY p1.uri, p2.uri ' \
-    'ORDER BY p1.uri'
+    'ORDER BY count(*) desc, p1.uri, p2.uri'
   end
   # rubocop:enable Metrics/MethodLength
 end
