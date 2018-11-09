@@ -2,7 +2,7 @@
   <div>
     <SearchControl />
     <div class="container">
-      <StartOver/>
+      <Filters v-bind:filters="result.filters"/>
       <div class="row">
         <section class="col-md-9 order-last">
           <Pagination v-bind:result="result" />
@@ -18,19 +18,19 @@
 
 <script>
 
-import StartOver from 'blacklight/search/startOver.vue'
-import SearchControl from 'blacklight/search/searchControl.vue'
+import SearchControl from 'blacklight/search/searchControl'
 import Result from 'blacklight/search/result'
-import ResultList from 'blacklight/result/list.vue'
-import FacetList from 'blacklight/facet/list.vue'
-import Pagination from 'blacklight/search/pagination.vue'
+import ResultList from 'blacklight/result/list'
+import FacetList from 'blacklight/facet/list'
+import Pagination from 'blacklight/search/pagination'
+import Filters from 'blacklight/search/filters'
 
 export default {
   components: {
     SearchControl,
-    StartOver,
     ResultList,
     FacetList,
+    Filters,
     Pagination,
   },
   data: function () {
