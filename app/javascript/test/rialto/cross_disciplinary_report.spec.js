@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import Vue from 'vue'
-import CrossDisciplinaryReport from '../blacklight/layouts/crossDisciplinaryReport.vue'
+import CrossDisciplinaryReport from 'rialto/layouts/crossDisciplinaryReport'
 
 const vm = new Vue(CrossDisciplinaryReport).$mount()
 
