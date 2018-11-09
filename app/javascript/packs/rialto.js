@@ -28,12 +28,12 @@ const options = {
 
 Vue.use(VueProgressBar, options)
 
-import Show from '../blacklight/layouts/showPage.vue'
-import Search from '../blacklight/layouts/search.vue'
-import Home from '../blacklight/layouts/home.vue'
-import CollaborationReport from '../blacklight/layouts/collaboration_report.vue'
-import CrossDisciplinaryReport from '../blacklight/layouts/crossDisciplinaryReport'
-import ResearchTrendsReport from '../blacklight/layouts/research_trends_report.vue'
+import Show from 'blacklight/layouts/showPage'
+import Search from 'blacklight/layouts/search'
+import Home from 'rialto/layouts/home'
+import CollaborationReport from 'rialto/layouts/collaborationReport'
+import CrossDisciplinaryReport from 'rialto/layouts/crossDisciplinaryReport'
+import ResearchTrendsReport from 'rialto/layouts/researchTrendsReport'
 
 const routes = [
   { path: '/item/:id', name: 'show', component: Show },

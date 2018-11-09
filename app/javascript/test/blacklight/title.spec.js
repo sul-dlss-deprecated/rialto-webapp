@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import Vue from 'vue'
-import Title from '../blacklight/result/title.vue'
+import Title from 'blacklight/result/title'
 
 // helper function that mounts and returns the rendered text
 function getTitle (document) {

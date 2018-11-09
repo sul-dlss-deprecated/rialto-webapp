@@ -16,7 +16,7 @@
 
 
 <script>
-import ReportTable from 'blacklight/reports/table.vue'
+import ReportTable from 'rialto/reports/table'
 
 export default {
   components: {

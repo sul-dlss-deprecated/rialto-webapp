@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Vue from 'vue'
 import VueResource from  'vue-resource'
 Vue.use(VueResource)
-import CollaborationReport from '../blacklight/layouts/collaboration_report.vue'
+import CollaborationReport from 'rialto/layouts/collaborationReport'
 
 const MockMiddleware = () => {
   return (request, next) => {
