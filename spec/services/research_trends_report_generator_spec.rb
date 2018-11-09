@@ -62,6 +62,13 @@ RSpec.describe ResearchTrendsReportGenerator do
                           created_year: 2017
                         },
                         authors: [p2])
+    # No concepts
+    Publication.create!(uri: 'http://example.com/publication6',
+                        metadata: {
+                          concepts: [],
+                          created_year: 2016
+                        },
+                        authors: [p1])
   end
 
   context 'when querying by department' do
@@ -76,7 +83,8 @@ RSpec.describe ResearchTrendsReportGenerator do
       expect(CSV.parse(report)).to eq [
         ['Concept', '2016', '2017', '2018', 'Total'],
         ['Concept1', '2', '0', '1', '3'],
-        ['Concept2', '0', '1', '0', '1']
+        ['Concept2', '0', '1', '0', '1'],
+        ['No concept', '1', '0', '0', '1']
       ]
       # rubocop:enable Style/WordArray
     end
@@ -94,7 +102,8 @@ RSpec.describe ResearchTrendsReportGenerator do
       expect(CSV.parse(report)).to eq [
         ['Concept', '2016', '2017', '2018', 'Total'],
         ['Concept1', '2', '0', '1', '3'],
-        ['Concept2', '0', '1', '0', '1']
+        ['Concept2', '0', '1', '0', '1'],
+        ['No concept', '1', '0', '0', '1']
       ]
       # rubocop:enable Style/WordArray
     end
