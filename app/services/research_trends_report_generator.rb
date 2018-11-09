@@ -83,7 +83,7 @@ class ResearchTrendsReportGenerator < ReportGenerator
 
   # rubocop:disable Metrics/MethodLength
   def sql
-    'SELECT con.name as concept, dpub.created_year as year, count(*) ' \
+    'SELECT con.name as concept, dpub.created_year as year, count(*) as count ' \
     "FROM (SELECT DISTINCT pub.uri, pub.metadata -> 'created_year' as created_year, " \
     "jsonb_array_elements_text(pub.metadata -> 'concepts') as concept_uri FROM publications pub " \
     'INNER JOIN people_publications pp on pub.uri=pp.publication_uri ' \
@@ -94,7 +94,19 @@ class ResearchTrendsReportGenerator < ReportGenerator
     ') as dpub ' \
     'INNER JOIN concepts con on con.uri=dpub.concept_uri ' \
     'GROUP BY con.name, dpub.created_year ' \
-    'ORDER BY con.name, dpub.created_year'
+    'UNION ALL ' \
+    "SELECT 'No concept' as concept, dpub.created_year as year, count(*) as count " \
+    "FROM (SELECT DISTINCT pub.metadata -> 'created_year' as created_year " \
+    'FROM publications pub ' \
+    'INNER JOIN people_publications pp on pub.uri=pp.publication_uri ' \
+    'INNER JOIN people p on p.uri=pp.person_uri ' \
+    'WHERE p.metadata -> $1 ? $2 AND '\
+    "pub.metadata -> 'created_year' >= $3 AND " \
+    "pub.metadata -> 'created_year' <= $4 AND " \
+    "jsonb_array_length(pub.metadata -> 'concepts') = 0 " \
+    ') as dpub ' \
+    'GROUP BY dpub.created_year ' \
+    'ORDER BY count desc, concept'
   end
   # rubocop:enable Metrics/MethodLength
 end
