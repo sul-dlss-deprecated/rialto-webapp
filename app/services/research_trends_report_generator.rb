@@ -1,19 +1,10 @@
 # frozen_string_literal: true
 
-require 'csv'
 require 'set'
 
 # Generate a downloadable report consisting of publications counts by year for concepts
 # limited by organizations
-class ResearchTrendsReportGenerator
-  # @param params [ActionController::Parameters]
-  # @option params [String] :org_uri the identifier of the org to generate the report for
-  # @option params [Integer] :start_year the minimum publication year on the report
-  # @option params [Integer] :end_year the maximum publication year on the report
-  def self.generate(params)
-    new(params).generate
-  end
-
+class ResearchTrendsReportGenerator < ReportGenerator
   # @param [Integer] org_uri the identifier of the org to generate
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
