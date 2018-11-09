@@ -16,6 +16,7 @@ RSpec.describe PublicationSearchBuilder do
       it 'filters for id and type' do
         expect(solr_params[:fq]).to eq ['authors_ssim:"123abc"', 'type_ssi:Publication']
         expect(solr_params[:rows]).to eq 1000
+        expect(solr_params[:sort]).to eq 'created_year_isim desc'
       end
     end
 
@@ -25,6 +26,7 @@ RSpec.describe PublicationSearchBuilder do
       it 'filters for id and type' do
         expect(solr_params[:fq]).to eq ['grants_ssim:"123abc"', 'type_ssi:Publication']
         expect(solr_params[:rows]).to eq 1000
+        expect(solr_params[:sort]).to eq 'created_year_isim desc'
       end
     end
   end

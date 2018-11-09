@@ -73,7 +73,7 @@ class SolrDocument
     response, _deprecated_stuff = search_service.search_results
     docs = response.documents
     tuples = docs.map do |doc|
-      "<li><a href=\"#{search_link(doc.id)}\">#{doc.title}</a></li>"
+      "<li><a href=\"#{search_link(doc.id)}\">#{doc.title}</a> (#{doc.first('created_year_isim')})</li>"
     end
     "<ul>#{tuples.join}</ul>".html_safe
   end

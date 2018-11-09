@@ -9,6 +9,7 @@ class PublicationSearchBuilder < ::SearchBuilder
     solr_parameters[:fq] += [type_filter]
     solr_parameters[:fq] += ['type_ssi:Publication']
     solr_parameters[:rows] = 1000
+    solr_parameters[:sort] = 'created_year_isim desc'
   end
 
   private

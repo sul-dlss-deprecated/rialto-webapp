@@ -13,7 +13,8 @@ RSpec.describe SolrDocument do
         id: 'http://sul.stanford.edu/rialto/publications/4444',
         type_ssi: 'Publication',
         authors_ssim: [data.fetch(:id)],
-        title_tesi: 'My Book'
+        title_tesi: 'My Book',
+        created_year_isim: [1995]
       )
       conn.add(
         id: 'http://sul.stanford.edu/rialto/publications/5555',
@@ -35,7 +36,7 @@ RSpec.describe SolrDocument do
 
     it do
       expect(person_publications).to eq(
-        '<ul><li><a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fpublications%2F4444">My Book</a></li></ul>'
+        '<ul><li><a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fpublications%2F4444">My Book</a> (1995)</li></ul>'
       )
     end
   end
