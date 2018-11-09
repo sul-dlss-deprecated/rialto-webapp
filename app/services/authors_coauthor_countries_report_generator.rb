@@ -1,20 +1,13 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 # Generate a downloadable report consisting of a list of countries the
 # authors in that organization have collaborated with, along with number of collaborations
-class AuthorsCoauthorCountriesReportGenerator
-  # @param params [ActionController::Parameters]
-  # @option params [String] :org_uri the identifier of the org to generate
-  #   the report for
-  def self.generate(params)
-    new(params[:org_uri], params[:start_year], params[:end_year]).generate
-  end
-
+class AuthorsCoauthorCountriesReportGenerator < ReportGenerator
   # @param [Integer] org_uri the identifier of the deparment to generate
   #   the report for
-  def initialize(org_uri, start_year, end_year)
+  # @param [Integer] start_year the minimum publication year on the report
+  # @param [Integer] end_year the maximum publication year on the report
+  def initialize(org_uri:, start_year:, end_year:)
     @organization = Organization.find(org_uri)
     @start_year = start_year
     @end_year = end_year

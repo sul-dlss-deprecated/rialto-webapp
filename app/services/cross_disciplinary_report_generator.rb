@@ -1,21 +1,13 @@
 # frozen_string_literal: true
 
-require 'csv'
 require 'set'
 
 # Generate a downloadable report consisting of publications counts by year for institutes
 # limted by concept
-class CrossDisciplinaryReportGenerator
-  # @param params [ActionController::Parameters]
-  # @option params [String] :concept_uri the identifier of the concept to generate the report for
-  def self.generate(params)
-    concept_uri = params[:concept_uri]
-    new(concept_uri).generate
-  end
-
+class CrossDisciplinaryReportGenerator < ReportGenerator
   # @param [Integer] concept_uri the identifier of the concept to generate
   #   the report for
-  def initialize(concept_uri)
+  def initialize(concept_uri:)
     @concept = Concept.find(concept_uri)
   end
 

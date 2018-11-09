@@ -1,19 +1,8 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 # Generate a downloadable report consisting of a list of authors the
 # authors in that organization have collaborated with, along with number of collaborations
-class AuthorsCoauthorsReportGenerator
-  # @param params [ActionController::Parameters]
-  # @option params [String] :org_uri the identifier of the deparment to generate
-  #   the report for
-  # @option params [Integer] :start_year the minimum publication year on the report
-  # @option params [Integer] :end_year the maximum publication year on the report
-  def self.generate(params)
-    new(params).generate
-  end
-
+class AuthorsCoauthorsReportGenerator < ReportGenerator
   # @param [Integer] org_uri the identifier of the organization to generate
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
