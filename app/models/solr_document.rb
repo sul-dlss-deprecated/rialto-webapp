@@ -66,17 +66,26 @@ class SolrDocument
   delegate :blacklight_config, to: CatalogController
 
   # A list of publications for this person
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def linked_publications(params)
+    return @publications || nil unless @publications.nil?
     search_service = Blacklight::SearchService.new(config: blacklight_config,
                                                    user_params: params,
                                                    search_builder_class: PublicationSearchBuilder)
     response, _deprecated_stuff = search_service.search_results
     docs = response.documents
+    if docs.empty?
+      @publications = false
+      return nil
+    end
     tuples = docs.map do |doc|
       "<li><a href=\"#{search_link(doc.id)}\">#{doc.title}</a> (#{doc.first('created_year_isim')})</li>"
     end
-    "<ul>#{tuples.join}</ul>".html_safe
+    @publications = "<ul>#{tuples.join}</ul>".html_safe
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def linked_fields(label:, uri:)
     tuples = fetch(label, []).zip(fetch(uri, []))

@@ -141,7 +141,9 @@ class CatalogController < ApplicationController
       pc.add_show_field 'department_label_ssim', label: 'Department'
       pc.add_show_field 'school_label_ssim', label: 'School'
       pc.add_show_field 'institution_label_ssim', label: 'University'
-      pc.add_show_field 'publications', accessor: :person_publications
+      pc.add_show_field 'publications', accessor: :person_publications, unless: lambda { |_context, _field_config, document|
+        document.person_publications.nil?
+      }
     end
 
     config.for_display_type 'Publication' do |pc|
