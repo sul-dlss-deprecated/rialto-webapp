@@ -142,10 +142,10 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
       expect(CSV.parse(report)).to eq [
         ['Author', 'Institution', 'Department', 'Co-Author', 'Co-Author Institution',
          'Number of Collaborations', 'Co-Author Country'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
         ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', '']
       ]
     end
@@ -188,10 +188,10 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
       expect(CSV.parse(report)).to eq [
         ['Author', 'Institution', 'Department', 'Co-Author', 'Co-Author Institution',
          'Number of Collaborations', 'Co-Author Country'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium'],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
         ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', '']
       ]
     end
