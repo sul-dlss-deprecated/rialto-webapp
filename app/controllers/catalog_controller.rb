@@ -144,6 +144,9 @@ class CatalogController < ApplicationController
       pc.add_show_field 'publications', accessor: :person_publications, unless: lambda { |_context, _field_config, document|
         document.person_publications.nil?
       }
+      pc.add_show_field 'grants', accessor: :person_grants, unless: lambda { |_context, _field_config, document|
+        document.person_grants.nil?
+      }
     end
 
     config.for_display_type 'Publication' do |pc|

@@ -61,6 +61,28 @@ class SolrDocument
     linked_publications(grant: id)
   end
 
+  # A list of grants for this person
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  def person_grants
+    return @grants || nil unless @grants.nil?
+    search_service = Blacklight::SearchService.new(config: blacklight_config,
+                                                   user_params: { pi: id },
+                                                   search_builder_class: GrantSearchBuilder)
+    response, _deprecated_stuff = search_service.search_results
+    docs = response.documents
+    if docs.empty?
+      @grants = false
+      return nil
+    end
+    tuples = docs.map do |doc|
+      "<li><a href=\"#{search_link(doc.id)}\">#{doc.title}</a></li>"
+    end
+    @grants = "<ul>#{tuples.join}</ul>".html_safe
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+
   private
 
   delegate :blacklight_config, to: CatalogController

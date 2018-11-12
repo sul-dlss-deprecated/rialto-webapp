@@ -5,17 +5,22 @@ require 'rails_helper'
 RSpec.describe SolrDocument do
   let(:doc) { described_class.new(data) }
 
+  let(:conn) { Blacklight.default_index.connection }
+
+  let(:data) do
+    {
+      id: 'http://sul.stanford.edu/rialto/person/123',
+      type_ssi: 'Person'
+    }
+  end
+
   describe '#person_publications' do
     subject(:person_publications) { doc.person_publications }
 
-    let(:data) do
-      {
-        id: 'http://sul.stanford.edu/rialto/person/123',
-        type_ssi: 'Person'
-      }
+    before do
+      conn.delete_by_query('*:*')
+      conn.commit
     end
-
-    let(:conn) { Blacklight.default_index.connection }
 
     context 'when the person has publications' do
       before do
@@ -45,6 +50,45 @@ RSpec.describe SolrDocument do
     context 'when the person has no publications' do
       it 'returns nil' do
         expect(person_publications).to be_nil
+      end
+    end
+  end
+
+  describe '#person_grants' do
+    subject(:person_grants) { doc.person_grants }
+
+    before do
+      conn.delete_by_query('*:*')
+      conn.commit
+    end
+
+    context 'when the person has grants' do
+      before do
+        conn.add(
+          id: 'http://sul.stanford.edu/rialto/grants/4444',
+          type_ssi: 'Grant',
+          pi_ssim: [data.fetch(:id)],
+          title_tesi: 'My Grant'
+        )
+        conn.add(
+          id: 'http://sul.stanford.edu/rialto/grants/5555',
+          type_ssi: 'Grant',
+          pi_ssim: ['foobar'],
+          title_tesi: 'Not My Grant'
+        )
+        conn.commit
+      end
+
+      it do
+        expect(person_grants).to eq(
+          '<ul><li><a href="/#/item/http%3A%2F%2Fsul.stanford.edu%2Frialto%2Fgrants%2F4444">My Grant</a></li></ul>'
+        )
+      end
+    end
+
+    context 'when the person has no grants' do
+      it 'returns nil' do
+        expect(person_grants).to be_nil
       end
     end
   end
