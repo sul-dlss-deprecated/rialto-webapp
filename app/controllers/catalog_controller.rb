@@ -16,7 +16,7 @@ class CatalogController < ApplicationController
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {
       rows: 10,
-      qf: %(title_tesi name_tsim author_label_tsim abstract_tesim)
+      qf: %(title_tesi name_tsim author_label_tsim abstract_tesim identifiers_ssim)
     }
 
     # solr path which will be added to solr base url before the other solr params.
@@ -166,9 +166,14 @@ class CatalogController < ApplicationController
     end
 
     config.for_display_type 'Grant' do |pc|
+      pc.add_show_field 'start_date_ss', label: 'Start Date'
+      pc.add_show_field 'end_date_ss', label: 'End Date'
       pc.add_show_field 'pi', label: 'Principal Investigator', accessor: :linked_pi
       pc.add_show_field 'assigned', label: 'Funded By', accessor: :linked_assigned
-      pc.add_show_field 'publications', label: 'Publications', accessor: :grant_publications
+      pc.add_show_field 'identifiers_ssim', label: 'Identifiers', helper_method: 'make_this_a_list'
+      pc.add_show_field 'publications', accessor: :grant_publications, unless: lambda { |_context, _field_config, document|
+        document.grant_publications.nil?
+      }
     end
 
     # "fielded" search configuration. Used by pulldown among other places.
