@@ -20,10 +20,10 @@
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
+    <ReportTable v-bind:data-source="reportURL"></ReportTable><br />
     <div v-show="selectedReportType === 'coauthor-countries'">
-      <Choropleth v-bind:reportURL="reportURL"/><br />
+      <Choropleth v-bind:reportURL="reportURL"/>
     </div>
-    <ReportTable v-bind:data-source="reportURL"></ReportTable>
   </section>
 </template>
 
