@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <table v-if="parsedCSV" class="table table-striped">
+    <table v-if="parsedCSV && parsedCSV.length > 1" class="table table-striped">
       <tr v-for="(row, index) in parsedCSV">
         <template v-if="index === 0">
           <th v-for="cell in row">
@@ -14,6 +14,7 @@
         </template>
       </tr>
     </table>
+    <div v-else-if="parsedCSV && parsedCSV.length <= 1">There is no data available with the selections above.</div>
   </section>
 </template>
 
