@@ -25,7 +25,11 @@ export default {
               return
             }
             function unpack(rows, key) {
-                return rows.map(function(row) { return row[key]; });
+                return rows.map(function(row) {
+                    if (row['Co-Author Country'] != 'United States') {
+                        return row[key];
+                    }
+                });
             }
 
              var data = [{
