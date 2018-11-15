@@ -16,7 +16,9 @@ export default {
   props: ['value'],
   methods: {
     setURL: function() {
-      this.$parent.$parent.$parent.$emit('facet', this.url())
+      // Escape encoded ampersands (%26) so they don't get decoded into &.
+      const escapedUrl = this.url().replace(/%26/g, '%2526')
+      this.$parent.$parent.$parent.$emit('facet', escapedUrl)
     },
     url: function() {
       return this.value.links.self
