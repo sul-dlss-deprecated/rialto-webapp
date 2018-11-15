@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2018_10_31_172550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "tablefunc"
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
