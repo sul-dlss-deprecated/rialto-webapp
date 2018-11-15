@@ -45,7 +45,7 @@ export default {
       schools: [],
       selectedDepartment: '',
       departments: [],
-      selectedReportType: 'coauthors',
+      selectedReportType: 'coauthor-countries',
       selectedYearsRange: [2000, (new Date()).getFullYear()]
     }
   },
