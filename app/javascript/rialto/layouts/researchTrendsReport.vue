@@ -14,7 +14,24 @@
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
+    <div class="alert alert-light">
+      <p>This report aggregates publications by research topic and year, in order to show trends in research by
+         topic area over time. You can filter by school, department and date of publication.</p>
+    </div>
     <ReportTable v-bind:data-source="reportURL"></ReportTable>
+    <div class="alert alert-light">
+      <p>Topic area data for these reports are pulled from publications in the Web of Science, a Clarivate product. Note
+         that Clarivate categorizes publications into topic area at the level of a journal (not individual
+         publications). Note that some limits of this report include:
+        <ul>
+          <li>not all publications are represented in the Web of Science, and coverage by subject area will vary</li>
+          <li>only publications from authors currently at Stanford and published while at Stanford are included</li>
+          <li>due to name ambiguities and the querying mechanism, there will be both false positive and false negative
+              publication results in these aggregated counts</li>
+          <li>topic areas are determined at the level of a journal (so all publications in a given journal will have the same topic area)</li>
+        </ul>
+      </p>
+    </div>
   </section>
 </template>
 
