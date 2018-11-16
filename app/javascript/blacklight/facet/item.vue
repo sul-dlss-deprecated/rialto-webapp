@@ -4,7 +4,7 @@
         v-bind:class="{ collapsed: !isActive }"
         v-on:click="toggle"><a v-on:click.prevent="" v-bind:href="'#' + item.id">{{item.attributes.label}}</a></h3>
     <div class="card-body" v-bind:class="{ collapse: !isActive }">
-      <ul class="list-unstyled">
+      <ul class="facet-values list-unstyled">
         <FacetValue v-for="value in item.attributes.items" v-bind:value="value" />
       </ul>
     </div>
@@ -53,5 +53,8 @@ export default {
   }
   .card {
     margin-bottom: 1rem;
+  }
+  .card-body {
+    padding: 1rem;
   }
 </style>

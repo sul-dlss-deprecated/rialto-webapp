@@ -1,13 +1,15 @@
 <template>
   <li>
+    <span class="facet-label">
     <template v-if="removeUrl() !== undefined">
       {{value.attributes.label}}
-      <a href="#" v-on:click.prevent="remove"><span class="remove-icon">X</span></a>
+      <a href="#" v-on:click.prevent="remove"><span class="remove-icon">✖</span></a>
     </template>
     <template v-else>
       <a href="#" v-on:click.prevent="setURL" v-html="value.attributes.label"></a>
     </template>
-    {{value.attributes.hits}}
+    </span>
+    <span class="facet-count">{{value.attributes.hits}}</span>
   </li>
 </template>
 
@@ -33,5 +35,5 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 </style>
