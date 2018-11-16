@@ -1,15 +1,24 @@
 <template>
   <section class="container">
     <h1>Research Trends Report</h1>
-    <label for="school">School: </label>
-    <select name="school" v-model="selectedSchool" @change="selectedDepartment=''">
-      <option v-for="school in schools" :value="school">{{ school.label }}</option>
-    </select><br />
-    <label for="department">Department: </label>
-    <select name="department" v-model="selectedDepartment" @change="selectedSchool=''">
-      <option v-for="department in departments" :value="department">{{ department.label }}</option>
-    </select><br />
-    <label for="yearsRange">Years: </label>
+
+    <div class="form-group">
+      <div class="row">
+        <input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />
+        <label for="school" class="col-form-label col-sm-2">School: </label>
+        <select name="school" class="col-sm-10" v-model="selectedSchool" @change="loadDepartments">
+          <option v-for="school in schools" :value="school">{{ school.label }}</option>
+        </select>
+        <label for="department"  class="col-form-label col-sm-2">Department: </label>
+        <select name="department" class="col-sm-10" v-model="selectedDepartment">
+          <option v-for="department in departments" :value="department">{{ department.label }}</option>
+        </select>
+      </div>
+      <div class="row">
+        <input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />
+        <label class="form-check-label col-sm-2" for="all">All Stanford</label>
+      </div>
+    </div>
     <YearSlider v-model="selectedYearsRange"></YearSlider>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
@@ -54,7 +63,8 @@ export default {
       schools: [],
       selectedDepartment: '',
       departments: [],
-      selectedYearsRange: [2000, (new Date()).getFullYear()]
+      selectedYearsRange: [2000, (new Date()).getFullYear()],
+      picked: 'part'
     }
   },
   created() {
@@ -62,26 +72,41 @@ export default {
         this.schools = response.data
     }, function(error){
         console.error(error.statusText);
-    })
-    var result = this.$http.get('/departments').then(function(response){
-        this.departments = response.data
-    }, function(error){
-        console.error(error.statusText);
-    })
+    });
+    this.loadDepartments();
   },
   computed: {
     reportURL: function(){
-      // Must have a report type
-      if (!(this.selectedSchool || this.selectedDepartment)) {
-          return null
-      }
-      return `/reports/research-trends.csv?org_uri=${this.selectedDepartment.uri || this.selectedSchool.uri}&start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}`
+        let org_qs = '';
+        if (this.picked == 'part') {
+            if (!(this.selectedSchool || this.selectedDepartment)) {
+                return null
+            }
+            org_qs = '&org_uri=' + (this.selectedDepartment || this.selectedSchool).uri
+        }
+        return `/reports/research-trends.csv?start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}${org_qs}`
     }
   },
   methods: {
     download: function() {
       window.location = this.reportURL
+    },
+    loadDepartmentsUrl: function() {
+        let url = '/departments'
+        if (this.selectedSchool != '') {
+            url += '?parent_school=' + this.selectedSchool.uri
+        }
+        return url;
+    },
+    loadDepartments: function() {
+        this.selectedDepartment = '';
+        var result = this.$http.get(this.loadDepartmentsUrl()).then(function(response){
+            this.departments = response.data;
+        }, function(error){
+            console.error(error.statusText);
+        })
     }
+
   }
 }
 </script>

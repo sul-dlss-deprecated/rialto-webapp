@@ -1,20 +1,21 @@
 <template>
   <section class="container">
     <h1>Cross-Disciplinary Research Report</h1>
-    <label for="concept">Topic area: </label>
-    <select name="concept" v-model="selectedConcept">
-      <option v-for="concept in concepts" :value="concept">{{ concept.label }}</option>
-    </select>
+    <div class="form-group row">
+      <label for="concept" class="col-form-label col-sm-2">Topic area: </label>
+      <select name="concept" class="col-sm-10" v-model="selectedConcept">
+        <option v-for="concept in concepts" :value="concept">{{ concept.label }}</option>
+      </select>
+    </div>
     <div class="alert alert-light">
-      <p>This report aggregates publications for a given topic area and then breaks them down by researchers
-         affiliated with Stanford cross-disciplinary institutes by year, in order to show trends for a given topic
-         area by institute and year. You need to select a topic area to see results.
-      </p>
+        <p>This report aggregates publications for a given topic area and then breaks them down by researchers
+            affiliated with Stanford cross-disciplinary institutes by year, in order to show trends for a given topic
+            area by institute and year. You need to select a topic area to see results.
+        </p>
     </div>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
-
     <ReportTable v-bind:data-source="reportURL"></ReportTable>
     <div class="alert alert-light">
       <p>Topic area data for these reports are pulled from publications in the Web of Science, a Clarivate product.

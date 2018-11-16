@@ -7,8 +7,8 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
   # @param [Integer] end_year the maximum publication year on the report
-  def initialize(org_uri:, start_year:, end_year:)
-    @organization = Organization.find(org_uri)
+  def initialize(org_uri: nil, start_year:, end_year:)
+    @organization = Organization.find(org_uri) if org_uri
     @start_year = start_year
     @end_year = end_year
   end
@@ -49,23 +49,32 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
   # @return [ActiveRecord::Result]
   def database_values
     conn = ActiveRecord::Base.connection
-    conn.exec_query(sql, 'SQL', [[nil, Person.org_metadata_field(organization.type)], [nil, organization.uri],
-                                 [nil, start_year], [nil, end_year]])
+    params = [[nil, start_year], [nil, end_year]]
+    if organization
+      params << [nil, Person.org_metadata_field(organization.type)]
+      params << [nil, organization.uri]
+    end
+    conn.exec_query(sql, 'SQL', params)
   end
 
   # rubocop:disable Metrics/MethodLength
   def sql
-    'SELECT p1.uri as uri1, p2.uri as uri2, count(*) FROM people p1 ' \
+    sql_str = +'SELECT p1.uri as uri1, p2.uri as uri2, count(*) FROM people p1 ' \
     'LEFT OUTER JOIN people_publications pp ON p1.uri = pp.person_uri ' \
     'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
     'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
     'LEFT OUTER JOIN people p2 ON pp2.person_uri = p2.uri ' \
     'WHERE p2.uri != p1.uri AND ' \
-    'p1.metadata -> $1 ? $2 AND '  \
-    "pub.metadata -> 'created_year' >= $3 AND " \
-    "pub.metadata -> 'created_year' <= $4 " \
-    'GROUP BY p1.uri, p2.uri ' \
-    'ORDER BY count(*) desc, p1.uri, p2.uri'
+    "pub.metadata -> 'created_year' >= $1 AND " \
+    "pub.metadata -> 'created_year' <= $2"
+    sql_str << if organization
+                 ' AND p1.metadata -> $3 ? $4 '
+               else
+                 # This makes sure that all people includes the same people as when filtering by school / dept.
+                 " AND (jsonb_array_length(p1.metadata -> 'schools') != 0 OR jsonb_array_length(p1.metadata -> 'departments') != 0)"
+               end
+    sql_str << 'GROUP BY p1.uri, p2.uri ' \
+               'ORDER BY count(*) desc, p1.uri, p2.uri'
   end
   # rubocop:enable Metrics/MethodLength
 end
