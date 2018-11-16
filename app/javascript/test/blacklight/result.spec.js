@@ -28,6 +28,14 @@ describe('Result', () => {
               "links": {
                 "remove": "/?q="
               }
+            },
+            {
+              "attributes": {
+                "label": "Organization",
+                "value": "Organization",
+                "hits": 300
+              },
+              "links": {}
             }]
           },
           "links": {
