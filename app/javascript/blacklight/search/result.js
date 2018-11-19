@@ -26,14 +26,18 @@ export default class {
 
   // Return a list of facets and the list to remove them
   get filters() {
+    // first get a list of the facets that have at least one applied item
     var facetsWithRemove = this.facets.filter(facet => {
       return facet.attributes.items.some(facetItem => {
         return 'remove' in facetItem.links
       })
     })
+    // Then select the facetItems that have a remove link and map them to a simple object
     return flatMap(facetsWithRemove, field => {
       var attr = field.attributes
-      return attr.items.map(item => { return { field: attr.label, value: item.attributes.label, link: item.links.remove } })
+      return attr.items.
+        filter(item => item.links.remove).
+        map(item => { return { field: attr.label, value: item.attributes.label, link: item.links.remove } })
     })
   }
 }
