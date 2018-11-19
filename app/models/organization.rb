@@ -7,7 +7,11 @@ class Organization < ApplicationRecord
   INSTITUTE = 'http://vivoweb.org/ontology/core#Institute'
   SCHOOL = 'http://vivoweb.org/ontology/core#School'
   UNIVERSITY = 'http://vivoweb.org/ontology/core#University'
-  store_accessor :metadata, :type, :country
-  scope :departments, -> { where("metadata->>'type' = ?", DEPARTMENT).order('name') }
+  store_accessor :metadata, :type, :parent_school
   scope :schools, -> { where("metadata->>'type' = ?", SCHOOL).order('name') }
+  def self.departments(parent_school: nil)
+    scope = where("metadata->>'type' = ?", DEPARTMENT)
+    scope = scope.where("metadata->>'parent_school' = ?", parent_school) if parent_school
+    scope.order('name')
+  end
 end

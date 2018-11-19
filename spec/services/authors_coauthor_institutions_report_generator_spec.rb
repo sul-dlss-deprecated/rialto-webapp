@@ -3,11 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
-  subject(:report) { described_class.generate(org_uri: organization.uri, start_year: start_year, end_year: end_year) }
+  subject(:report) { described_class.generate(org_uri: organization_uri, start_year: start_year, end_year: end_year) }
 
   let(:start_year) { '2016' }
 
   let(:end_year) { '2018' }
+
+  let(:organization_uri) { organization&.uri }
 
   before do
     # Create organizations
@@ -164,6 +166,21 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
       expect(CSV.parse(report)).to eq [
         ['Co-Author Institution', 'Number of Collaborations'],
         ['Harvard', '4'],
+        ['Ghent', '3'],
+        ['Stanford', '2']
+      ]
+      # rubocop:enable Style/WordArray
+    end
+  end
+
+  context 'when all Stanfordl' do
+    let(:organization) { nil }
+
+    it 'is a report' do
+      # rubocop:disable Style/WordArray
+      expect(CSV.parse(report)).to eq [
+        ['Co-Author Institution', 'Number of Collaborations'],
+        ['Harvard', '5'],
         ['Ghent', '3'],
         ['Stanford', '2']
       ]

@@ -13,7 +13,17 @@ describe('ResearchTrendsReport', () => {
     it("is a url when the department is selected", () => {
       var currentYear = (new Date()).getFullYear()
       vm.selectedDepartment = { uri: "123" }
-      expect(vm.reportURL).to.equal(`/reports/research-trends.csv?org_uri=123&start_year=2000&end_year=${currentYear}`)
+      expect(vm.reportURL).to.equal(`/reports/research-trends.csv?start_year=2000&end_year=${currentYear}&org_uri=123`)
     })
+  })
+  describe('loadDepartmentsUrl', () => {
+      it("does not include school when school not selected", () => {
+          expect(vm.loadDepartmentsUrl()).to.equal(`/departments`)
+      })
+
+      it("includes school when school is selected", () => {
+          vm.selectedSchool = { uri: "123"}
+          expect(vm.loadDepartmentsUrl()).to.equal(`/departments?parent_school=123`)
+      })
   })
 })

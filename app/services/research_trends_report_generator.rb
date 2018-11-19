@@ -9,8 +9,8 @@ class ResearchTrendsReportGenerator < ReportGenerator
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
   # @param [Integer] end_year the maximum publication year on the report
-  def initialize(org_uri:, start_year:, end_year:)
-    @organization = Organization.find(org_uri)
+  def initialize(org_uri: nil, start_year:, end_year:)
+    @organization = Organization.find(org_uri) if org_uri
     @start_year = start_year
     @end_year = end_year
   end
@@ -75,23 +75,30 @@ class ResearchTrendsReportGenerator < ReportGenerator
   # @return [ActiveRecord::Result]
   def database_values
     conn = ActiveRecord::Base.connection
-    conn.exec_query(sql, 'SQL', [[nil, Person.org_metadata_field(organization.type)],
-                                 [nil, organization.uri],
-                                 [nil, start_year],
-                                 [nil, end_year]])
+    params = [[nil, start_year], [nil, end_year]]
+    if organization
+      params << [nil, Person.org_metadata_field(organization.type)]
+      params << [nil, organization.uri]
+    end
+    conn.exec_query(sql, 'SQL', params)
   end
 
   # rubocop:disable Metrics/MethodLength
   def sql
-    'SELECT con.name as concept, dpub.created_year as year, count(*) as count ' \
+    sql_str = +'SELECT con.name as concept, dpub.created_year as year, count(*) as count ' \
     "FROM (SELECT DISTINCT pub.uri, pub.metadata -> 'created_year' as created_year, " \
     "jsonb_array_elements_text(pub.metadata -> 'concepts') as concept_uri FROM publications pub " \
     'INNER JOIN people_publications pp on pub.uri=pp.publication_uri ' \
     'INNER JOIN people p on p.uri=pp.person_uri ' \
-    'WHERE p.metadata -> $1 ? $2 AND '\
-    "pub.metadata -> 'created_year' >= $3 AND " \
-    "pub.metadata -> 'created_year' <= $4 " \
-    ') as dpub ' \
+    "WHERE pub.metadata -> 'created_year' >= $1 AND " \
+    "pub.metadata -> 'created_year' <= $2"
+    sql_str << if organization
+                 ' AND p.metadata -> $3 ? $4 '
+               else
+                 # This makes sure that all people includes the same people as when filtering by school / dept.
+                 " AND (jsonb_array_length(p.metadata -> 'schools') != 0 OR jsonb_array_length(p.metadata -> 'departments') != 0)"
+               end
+    sql_str << ') as dpub ' \
     'INNER JOIN concepts con on con.uri=dpub.concept_uri ' \
     'GROUP BY con.name, dpub.created_year ' \
     'UNION ALL ' \
@@ -100,10 +107,16 @@ class ResearchTrendsReportGenerator < ReportGenerator
     'FROM publications pub ' \
     'INNER JOIN people_publications pp on pub.uri=pp.publication_uri ' \
     'INNER JOIN people p on p.uri=pp.person_uri ' \
-    'WHERE p.metadata -> $1 ? $2 AND '\
-    "pub.metadata -> 'created_year' >= $3 AND " \
-    "pub.metadata -> 'created_year' <= $4 AND " \
-    "jsonb_array_length(pub.metadata -> 'concepts') = 0 " \
+    "WHERE pub.metadata -> 'created_year' >= $1 AND " \
+    "pub.metadata -> 'created_year' <= $2"
+    sql_str << if organization
+                 ' AND p.metadata -> $3 ? $4 '
+               else
+                 # This makes sure that all people includes the same people as when filtering by school / dept.
+                 " AND (jsonb_array_length(p.metadata -> 'schools') != 0 OR jsonb_array_length(p.metadata -> 'departments') != 0)"
+               end
+
+    sql_str << " AND jsonb_array_length(pub.metadata -> 'concepts') = 0 " \
     ') as dpub ' \
     'GROUP BY dpub.created_year ' \
     'ORDER BY count desc, concept'

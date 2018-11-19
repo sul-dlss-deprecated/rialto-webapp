@@ -1,46 +1,56 @@
 <template>
   <section class="container">
     <h1>Collaboration Report</h1>
-    <label for="school">School: </label>
-    <select name="school" v-model="selectedSchool" @change="selectedDepartment=''">
-      <option v-for="school in schools" :value="school">{{ school.label }}</option>
-    </select><br />
-    <label for="department">Department: </label>
-    <select name="department" v-model="selectedDepartment" @change="selectedSchool=''">
-      <option v-for="department in departments" :value="department">{{ department.label }}</option>
-    </select><br />
-    <label for="reportType">Report type: </label>
-    <select name="reportType" v-model="selectedReportType">
-        <option value="coauthors">Co-authors</option>
-        <option value="coauthor-institutions">Co-author institutions</option>
-        <option value="coauthor-countries">Co-author countries</option>
-    </select><br />
+    <div class="form-group">
+      <div class="row">
+        <input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />
+        <label for="school" class="col-form-label col-sm-2">School: </label>
+        <select name="school" class="col-sm-10" v-model="selectedSchool" @change="loadDepartments">
+          <option v-for="school in schools" :value="school">{{ school.label }}</option>
+        </select>
+        <label for="department"  class="col-form-label col-sm-2">Department: </label>
+        <select name="department" class="col-sm-10" v-model="selectedDepartment">
+          <option v-for="department in departments" :value="department">{{ department.label }}</option>
+        </select>
+      </div>
+      <div class="row">
+        <input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />
+        <label class="form-check-label col-sm-2" for="all">All Stanford</label>
+      </div>
+    </div>
     <YearSlider v-model="selectedYearsRange"></YearSlider>
-
+    <div class="form-group row">
+      <label for="reportType" class="col-sm-2 col-form-label">Report type: </label>
+      <select name="reportType" v-model="selectedReportType">
+          <option value="coauthors">Co-authors</option>
+          <option value="coauthor-institutions">Co-author institutions</option>
+          <option value="coauthor-countries">Co-author countries</option>
+      </select>
+    </div>
     <div v-if="selectedReportType == 'coauthor-institutions'" class="alert alert-light">
-      <p>This report aggregates and counts the number of co-authors at each institution for papers authored by Stanford
-         researchers. You can filter by school, department and date of publication. Note that it includes Stanford
-         co-authors, so Stanford University will often be the top result, which indicates Stanford authors often
-         collaborate with other Stanford authors. You may also download the results as a CSV file.</p>
+        <p>This report aggregates and counts the number of co-authors at each institution for papers authored by Stanford
+            researchers. You can filter by school, department and date of publication. Note that it includes Stanford
+            co-authors, so Stanford University will often be the top result, which indicates Stanford authors often
+            collaborate with other Stanford authors. You may also download the results as a CSV file.</p>
     </div>
     <div v-if="selectedReportType == 'coauthor-countries'" class="alert alert-light">
-      <p>This report aggregates and counts the number of co-authors in each country for papers authored by Stanford
-         researchers. You can filter by school, department and date of publication. Note that it includes Stanford
-         co-authors, so the count of the USA will include many instances of inter-Stanford collaborations. You may
-         also download the results as a CSV file.</p>
+        <p>This report aggregates and counts the number of co-authors in each country for papers authored by Stanford
+            researchers. You can filter by school, department and date of publication. Note that it includes Stanford
+            co-authors, so the count of the USA will include many instances of inter-Stanford collaborations. You may
+            also download the results as a CSV file.</p>
     </div>
     <div v-if="selectedReportType == 'coauthors'" class="alert alert-light">
-      <p>This report includes data that can be used to perform further analysis of co-authors collaborations. The output
-         is one row per unique author/co-author pair per publication and may include multiple rows per paper, if the paper
-         has co-authors across multiple institutions. The number of collaborations column counts the number of times
-         that author/co-author have collaborated (i.e. the number of publications that include that collaboration). Also
-         note that authors can have multiple institutional affiliations, either through previous or current
-         co-affiliations, as determined by the publications being aggregated over. You can filter by school, department
-         and date of publication.</p>
+        <p>This report includes data that can be used to perform further analysis of co-authors collaborations. The output
+            is one row per unique author/co-author pair per publication and may include multiple rows per paper, if the paper
+            has co-authors across multiple institutions. The number of collaborations column counts the number of times
+            that author/co-author have collaborated (i.e. the number of publications that include that collaboration). Also
+            note that authors can have multiple institutional affiliations, either through previous or current
+            co-affiliations, as determined by the publications being aggregated over. You can filter by school, department
+            and date of publication.</p>
 
-      <p>By design, this report will include a lot of data if you select a broad filtering, and only a limited result
-         set is shown on screen. You may download the full result set as a CSV, but it may take some time to generate
-         and may be a very large file to download.</p>
+        <p>By design, this report will include a lot of data if you select a broad filtering, and only a limited result
+            set is shown on screen. You may download the full result set as a CSV, but it may take some time to generate
+            and may be a very large file to download.</p>
     </div>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
@@ -88,7 +98,8 @@ export default {
       selectedDepartment: '',
       departments: [],
       selectedReportType: 'coauthor-countries',
-      selectedYearsRange: [2000, (new Date()).getFullYear()]
+      selectedYearsRange: [2000, (new Date()).getFullYear()],
+      picked: 'part'
     }
   },
   created() {
@@ -96,26 +107,41 @@ export default {
         this.schools = response.data
     }, function(error){
         console.error(error.statusText);
-    })
-    var result = this.$http.get('/departments').then(function(response){
-        this.departments = response.data
-    }, function(error){
-        console.error(error.statusText);
-    })
+    });
+    this.loadDepartments();
   },
   computed: {
     reportURL: function(){
-      // Must have a report type
-      if (!this.selectedReportType || !(this.selectedSchool || this.selectedDepartment)) {
-          return null
+      let org_qs = '';
+      if (this.picked == 'part') {
+          if (!(this.selectedSchool || this.selectedDepartment)) {
+            return null
+          }
+          org_qs = '&org_uri=' + (this.selectedDepartment || this.selectedSchool).uri
       }
-      return `/reports/${this.selectedReportType}.csv?org_uri=${this.selectedDepartment.uri || this.selectedSchool.uri}&start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}`
+      return `/reports/${this.selectedReportType}.csv?start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}${org_qs}`
     }
   },
   methods: {
     download: function() {
       window.location = this.reportURL
+    },
+    loadDepartmentsUrl: function() {
+      let url = '/departments'
+      if (this.selectedSchool != '') {
+          url += '?parent_school=' + this.selectedSchool.uri
+      }
+      return url;
+    },
+    loadDepartments: function() {
+        this.selectedDepartment = '';
+        var result = this.$http.get(this.loadDepartmentsUrl()).then(function(response){
+            this.departments = response.data;
+        }, function(error){
+            console.error(error.statusText);
+        })
     }
+
   }
 }
 </script>
