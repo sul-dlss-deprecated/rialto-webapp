@@ -31,6 +31,7 @@ Vue.use(VueProgressBar, options)
 import Show from 'blacklight/layouts/showPage'
 import Search from 'blacklight/layouts/search'
 import Home from 'rialto/layouts/home'
+import About from 'rialto/layouts/about'
 import CollaborationReport from 'rialto/layouts/collaborationReport'
 import CrossDisciplinaryReport from 'rialto/layouts/crossDisciplinaryReport'
 import ResearchTrendsReport from 'rialto/layouts/researchTrendsReport'
@@ -41,7 +42,9 @@ const routes = [
   { path: '/reports', name: 'collaboration_report', component: CollaborationReport },
   { path: '/cross-disciplinary-report', name: 'crossDisplinaryReport', component: CrossDisciplinaryReport },
   { path: '/research-trends-report', name: 'research_trends_report', component: ResearchTrendsReport },
-  { path: '/', name: 'home', component: Home }
+  { path: '/', name: 'home', component: Home },
+  { path: '/about', name: 'about', component: About }
+
 ]
 
 const router = new VueRouter({
