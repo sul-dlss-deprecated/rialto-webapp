@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <h1>Cross-Disciplinary Research Report</h1>
-    <label for="concept">Concept: </label>
+    <label for="concept">Topic area: </label>
     <select name="concept" v-model="selectedConcept">
       <option v-for="concept in concepts" :value="concept">{{ concept.label }}</option>
     </select>
