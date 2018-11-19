@@ -31,16 +31,19 @@
         </ul>
       </p>
     </div>
+    <SourceInfo v-model="reportURL"></SourceInfo>
   </section>
 </template>
 
 
 <script>
 import ReportTable from 'rialto/reports/table'
+import SourceInfo from 'rialto/reports/sourceInfo'
 
 export default {
   components: {
-    ReportTable
+    ReportTable,
+    SourceInfo
   },
   data: function () {
     return {
