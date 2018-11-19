@@ -16,6 +16,7 @@
         <option value="coauthor-countries">Co-author countries</option>
     </select><br />
     <YearSlider v-model="selectedYearsRange"></YearSlider>
+
     <div v-if="selectedReportType == 'coauthor-institutions'" class="alert alert-light">
       <p>This report aggregates and counts the number of co-authors at each institution for papers authored by Stanford
          researchers. You can filter by school, department and date of publication. Note that it includes Stanford
@@ -48,6 +49,8 @@
     <div v-show="selectedReportType === 'coauthor-countries'">
       <Choropleth v-bind:reportURL="reportURL"/>
     </div>
+
+
     <div class="alert alert-light">
       <p>Co-author data for these reports are pulled from publications in the Web of Science, a Clarivate product.
          Publications are determined by querying the web of science by Stanford researcher name, and are updated
@@ -60,6 +63,7 @@
         </ul>
       </p>
     </div>
+    <SourceInfo v-model="reportURL"></SourceInfo>
   </section>
 </template>
 
@@ -68,12 +72,14 @@
 import ReportTable from 'rialto/reports/table'
 import Choropleth from 'rialto/choropleth'
 import YearSlider from 'rialto/reports/yearSlider'
+import SourceInfo from 'rialto/reports/sourceInfo'
 
 export default {
   components: {
     YearSlider,
     ReportTable,
-    Choropleth
+    Choropleth,
+    SourceInfo
   },
   data: function () {
     return {

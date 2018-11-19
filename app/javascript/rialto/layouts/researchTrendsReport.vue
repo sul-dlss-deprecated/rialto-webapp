@@ -32,6 +32,7 @@
         </ul>
       </p>
     </div>
+    <SourceInfo v-model="reportURL"></SourceInfo>
   </section>
 </template>
 
@@ -39,11 +40,13 @@
 <script>
 import ReportTable from 'rialto/reports/table'
 import YearSlider from 'rialto/reports/yearSlider'
+import SourceInfo from 'rialto/reports/sourceInfo'
 
 export default {
   components: {
     ReportTable,
-    YearSlider
+    YearSlider,
+    SourceInfo
   },
   data: function () {
     return {
