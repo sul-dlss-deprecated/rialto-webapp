@@ -5,8 +5,13 @@
     <nav class="navbar navbar-expand-md" role="navigation">
       <a class="navbar-brand" href="/">Stanford Libraries</a>
     </nav>
-    <header class="masthead">
-      <h1 class="site-title">Rialto</h1>
+    <header class="masthead row">
+      <div class="col-sm-10">
+        <h1 class="site-title">Rialto</h1>
+      </div>
+      <div class="col-sm-2 d-none d-sm-block">
+        <img src="beta.png">
+      </div>
     </header>
     <nav class="navbar navbar-expand-md navbar-dark subnav" role="navigation">
       <ul class="navbar-nav mr-auto">
