@@ -3,8 +3,11 @@
 # Provides the various CSV reports
 class ReportsController < ApplicationController
   def show
-    data = generator.generate(params.permit(:org_uri, :concept_uri, :start_year, :end_year))
-
+    data = if params.key?(:count)
+             generator.count(params.permit(:org_uri, :concept_uri, :start_year, :end_year))
+           else
+             generator.generate(params.permit(:org_uri, :concept_uri, :start_year, :end_year, :offset, :limit))
+           end
     respond_to do |format|
       format.csv do
         send_data data, type: Mime[:csv], disposition: 'attachment; filename=report.csv'
@@ -36,4 +39,13 @@ class ReportsController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/CyclomaticComplexity
+
+  def counter
+    case params[:id]
+    when 'coauthors'
+      AuthorsCoauthorsReportGenerator
+    else
+      raise ActionController::RoutingError, 'Report type not Found'
+    end
+  end
 end

@@ -46,7 +46,7 @@ class AuthorsCoauthorInstitutionsReportGenerator < ReportGenerator
     'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
     'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
     'LEFT OUTER JOIN (SELECT p2.uri, p2ia.value as institution ' \
-    "FROM people p2, jsonb_array_elements_text(p2.metadata -> 'institutionalAffiliations') p2ia) p2i ON pp2.person_uri = p2i.uri " \
+    "FROM people p2, jsonb_array_elements_text(p2.metadata -> 'institutions') p2ia) p2i ON pp2.person_uri = p2i.uri " \
     'LEFT OUTER JOIN organizations o on p2i.institution = o.uri ' \
     'WHERE p2i.uri != p1.uri AND ' \
     "pub.metadata -> 'created_year' >= $1 AND " \

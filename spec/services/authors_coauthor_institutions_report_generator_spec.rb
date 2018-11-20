@@ -30,30 +30,30 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
                         metadata: {
                           departments: ['http://example.com/department1'],
                           schools: ['http://example.com/school1'],
-                          institutionalAffiliations: ['http://example.com/institution1']
+                          institutions: ['http://example.com/institution1']
                         })
     p2 = Person.create!(uri: 'http://example.com/person2',
                         name: 'Jane Smith',
                         metadata: {
                           departments: ['http://example.com/department1'],
                           schools: ['http://example.com/school1'],
-                          institutionalAffiliations: ['http://example.com/institution1']
+                          institutions: ['http://example.com/institution1']
                         })
     p3 = Person.create!(uri: 'http://example.com/person3',
                         name: 'Jane Okoye',
                         metadata: {
-                          institutionalAffiliations: ['http://example.com/institution2']
+                          institutions: ['http://example.com/institution2']
 
                         })
     p4 = Person.create!(uri: 'http://example.com/person4',
                         name: 'Patrick Hoch',
                         metadata: {
-                          institutionalAffiliations: ['http://example.com/institution3']
+                          institutions: ['http://example.com/institution3']
                         })
     p5 = Person.create!(uri: 'http://example.com/person5',
                         name: 'Patricia Koch',
                         metadata: {
-                          institutionalAffiliations: ['http://example.com/institution3']
+                          institutions: ['http://example.com/institution3']
                         })
     # In another department and school
     p6 = Person.create!(uri: 'http://example.com/person6',
@@ -61,7 +61,7 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
                         metadata: {
                           departments: ['http://example.com/department2'],
                           schools: ['http://example.com/school2'],
-                          institutionalAffiliations: ['http://example.com/institution4']
+                          institutions: ['http://example.com/institution4']
                         })
 
     # John Smith co-authored with Jane Okoye twice
