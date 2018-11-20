@@ -31,8 +31,10 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         name: 'John Smith',
                         metadata: {
                           departments: ['http://example.com/department1'],
+                          department_labels: ['Chemistry'],
                           schools: ['http://example.com/school1'],
-                          institutionalAffiliations: ['http://example.com/institution1'],
+                          # institutionalAffiliations: ['http://example.com/institution1'],
+                          institution_labels: ['Stanford'],
                           country_labels: ['United States']
                         })
     p2 = Person.create!(uri: 'http://example.com/person2',
@@ -40,7 +42,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          institutionalAffiliations: ['http://example.com/institution2'],
+                          # institutionalAffiliations: ['http://example.com/institution2'],
+                          institution_labels: ['Harvard'],
                           country_labels: ['United States']
                         })
     p3 = Person.create!(uri: 'http://example.com/person3',
@@ -48,7 +51,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          institutionalAffiliations: ['http://example.com/institution3'],
+                          # institutionalAffiliations: ['http://example.com/institution3'],
+                          institution_labels: ['Ghent'],
                           country_labels: ['Belgium']
 
                         })
@@ -57,7 +61,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          institutionalAffiliations: ['http://example.com/institution3'],
+                          # institutionalAffiliations: ['http://example.com/institution3'],
+                          institution_labels: ['Ghent'],
                           country_labels: ['Belgium']
                         })
 
@@ -66,24 +71,29 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          institutionalAffiliations: ['http://example.com/institution3',
-                                                      'http://example.com/institution4'],
+                          institution_labels: ['Ghent', 'Brussels U'],
+                          # institutionalAffiliations: ['http://example.com/institution3',
+                          #                             'http://example.com/institution4'],
                           country_labels: ['Belgium']
                         })
     p6 = Person.create!(uri: 'http://example.com/person6',
                         name: 'Lady Red',
                         metadata: {
                           departments: ['http://example.com/department2'],
+                          department_labels: ['Biochemistry'],
                           schools: ['http://example.com/school6'],
-                          institutionalAffiliations: ['http://example.com/institution1'],
+                          # institutionalAffiliations: ['http://example.com/institution1'],
+                          institution_labels: ['Stanford'],
                           country_labels: ['United States']
                         })
     p7 = Person.create!(uri: 'http://example.com/person7',
                         name: 'Dude without a country',
                         metadata: {
                           departments: ['http://example.com/department2'],
+                          department_labels: ['Biochemistry'],
                           schools: ['http://example.com/school7'],
-                          institutionalAffiliations: ['http://example.com/institution1'],
+                          # institutionalAffiliations: ['http://example.com/institution1'],
+                          institution_labels: ['Stanford'],
                           country_labels: nil
                         })
     Publication.create!(uri: 'http://example.com/publication1',
@@ -135,8 +145,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', '']
+        ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', ''],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States']
       ]
     end
   end
@@ -181,8 +191,8 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', '']
+        ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', ''],
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States']
       ]
     end
   end
@@ -202,10 +212,10 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Okoye', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Patrick Hoch', 'Ghent', '10', 'Belgium'],
         ['John Smith', 'Stanford', 'Chemistry', 'Peter Smith', 'Brussels U; Ghent', '10', 'Belgium'],
-        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
+        ['Dude without a country', 'Stanford', 'Biochemistry', 'John Smith', 'Stanford', '1', 'United States'],
         ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', ''],
-        ['Lady Red', 'Stanford', 'Biochemistry', 'Jane Okoye', 'Ghent', '1', 'Belgium'],
-        ['Dude without a country', 'Stanford', 'Biochemistry', 'John Smith', 'Stanford', '1', 'United States']
+        ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
+        ['Lady Red', 'Stanford', 'Biochemistry', 'Jane Okoye', 'Ghent', '1', 'Belgium']
       ]
     end
   end

@@ -20,7 +20,7 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
               'Co-Author Institution',
               'Number of Collaborations', 'Co-Author Country']
       database_values.each do |row|
-        csv << expand_people(row)
+        csv << expand_row(row)
       end
     end
   end
@@ -29,21 +29,15 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
 
   attr_reader :organization, :start_year, :end_year
 
-  def expand_people(row)
-    p1 = Person.find_by(uri: row['uri1'])
-    p2 = Person.find_by(uri: row['uri2'])
-    [p1.name, join_org_names(p1.institution_entities), join_org_names(p1.department_entities),
-     p2.name, join_org_names(p2.institution_entities),
-     row['count'],
-     join_person_countries(p2)]
+  def expand_row(row)
+    [row['name1'], join_list(row['institutions1']), join_list(row['departments1']),
+     row['name2'], join_list(row['institutions2']),
+     row['count'], join_list(row['countries2'])]
   end
 
-  def join_org_names(orgs)
-    orgs.to_a.map(&:name).uniq.sort.join('; ')
-  end
-
-  def join_person_countries(person)
-    Array.wrap(person.country_labels).sort.join('; ')
+  def join_list(list)
+    return '' if !list || list == 'null'
+    JSON.parse(list).sort.join('; ')
   end
 
   # @return [ActiveRecord::Result]
@@ -59,7 +53,9 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
 
   # rubocop:disable Metrics/MethodLength
   def sql
-    sql_str = +'SELECT p1.uri as uri1, p2.uri as uri2, count(*) FROM people p1 ' \
+    sql_str = +"SELECT p1.name as name1, p1.metadata->'institution_labels' as institutions1, " \
+    "p1.metadata->'department_labels' as departments1, p2.name as name2, p2.metadata->'institution_labels' as institutions2, " \
+    "p2.metadata->'country_labels' as countries2, count(*) FROM people p1 " \
     'LEFT OUTER JOIN people_publications pp ON p1.uri = pp.person_uri ' \
     'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
     'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
@@ -73,8 +69,9 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
                  # This makes sure that all people includes the same people as when filtering by school / dept.
                  " AND (jsonb_array_length(p1.metadata -> 'schools') != 0 OR jsonb_array_length(p1.metadata -> 'departments') != 0)"
                end
-    sql_str << 'GROUP BY p1.uri, p2.uri ' \
-               'ORDER BY count(*) desc, p1.uri, p2.uri'
+    sql_str << "GROUP BY p1.name, p1.metadata->'institution_labels', p1.metadata->'department_labels', p2.name, " \
+               "p2.metadata->'institution_labels', p2.metadata->'country_labels' " \
+               'ORDER BY count(*) desc, p1.name, p2.name'
   end
   # rubocop:enable Metrics/MethodLength
 end
