@@ -9,13 +9,13 @@
       <a href="#" v-on:click.prevent="setURL" v-html="value.attributes.label"></a>
     </template>
     </span>
-    <span class="facet-count">{{value.attributes.hits}}</span>
+    <span class="facet-count" v-bind:style="style">{{count}}</span>
   </li>
 </template>
 
 <script>
 export default {
-  props: ['value'],
+  props: ['value', 'size'],
   methods: {
     setURL: function() {
       // Escape encoded ampersands (%26) so they don't get decoded into &.
@@ -30,6 +30,15 @@ export default {
     },
     remove: function() {
       this.$parent.$parent.$parent.$emit('facet', this.removeUrl())
+    }
+  },
+  computed: {
+    count: function() {
+      return this.value.attributes.hits.toLocaleString()
+    },
+    style: function() {
+      // Adding 1 for commas.
+      return `width: ${this.size + 1}ch`
     }
   }
 }
