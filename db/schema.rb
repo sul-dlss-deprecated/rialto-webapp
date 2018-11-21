@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_172550) do
+ActiveRecord::Schema.define(version: 2018_11_21_152008) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gin"
   enable_extension "plpgsql"
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_172550) do
     t.string "name"
     t.index "((metadata ->> 'department'::text))", name: "index_organizations_on_metadata_department", using: :hash
     t.index "((metadata ->> 'type'::text))", name: "index_organizations_on_metadata_type", using: :hash
+    t.index ["name"], name: "index_organizations_on_name"
   end
 
   create_table "people", primary_key: "uri", id: :string, force: :cascade do |t|
@@ -48,6 +50,9 @@ ActiveRecord::Schema.define(version: 2018_10_31_172550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.index "((metadata ->> 'departments'::text))", name: "index_people_on_metadata_departments", using: :gin
+    t.index "((metadata ->> 'schools'::text))", name: "index_people_on_metadata_schools", using: :gin
+    t.index ["name"], name: "index_people_on_name"
   end
 
   create_table "people_publications", id: false, force: :cascade do |t|
@@ -60,6 +65,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_172550) do
     t.jsonb "metadata", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "(((metadata ->> 'created_year'::text))::numeric)", name: "index_publications_on_metadata_created_year_numeric"
+    t.index "((metadata ->> 'concepts'::text))", name: "index_publications_on_metadata_concepts", using: :gin
   end
 
   create_table "searches", id: :serial, force: :cascade do |t|
