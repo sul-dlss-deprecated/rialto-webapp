@@ -15,7 +15,6 @@ COPY Gemfile.lock /opt
 
 RUN apk --no-cache add \
   libpq \
-  git \
   tzdata
 
 
