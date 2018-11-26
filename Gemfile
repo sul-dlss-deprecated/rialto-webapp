@@ -13,7 +13,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 
-gem 'blacklight', github: 'projectblacklight/blacklight'
+gem 'blacklight', '7.0.0.rc2'
 gem 'honeybadger'
 gem 'lograge'
 
