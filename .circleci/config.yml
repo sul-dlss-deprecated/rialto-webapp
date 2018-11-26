@@ -95,6 +95,36 @@ jobs:
           command: npm test
 
 
+
       # Save test results for timing analysis
       - store_test_results:
           path: test_results
+
+  register_image:
+    docker:
+      - image: circleci/ruby:2.5.3-stretch-node
+    steps:
+      - setup_remote_docker:
+          version: 18.05.0-ce
+      - checkout
+      - run:
+          name: Build Image & Register Task
+          command: |
+            ./bin/build
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push suldlss/rialto-webapp:latest
+
+workflows:
+  version: 2
+
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: master
+      - register_image:
+          requires:
+          filters:
+            branches:
+              only: master
