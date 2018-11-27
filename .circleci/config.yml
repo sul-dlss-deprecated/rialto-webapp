@@ -108,6 +108,9 @@ jobs:
           version: 18.05.0-ce
       - checkout
       - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - run:
           name: Build Image & Register Task
           command: |
             ./bin/build
