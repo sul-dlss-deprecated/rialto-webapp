@@ -19,9 +19,16 @@
 <script>
 
 export default {
-  data: function() {
+  props: ['value'],
+  data: function () {
     return {
-      q: ''
+      q: this.value,
+    }
+  },
+  watch: {
+    // If the route changes to a different search value, make sure the input field is updated
+    value: function(val) {
+      this.q = val
     }
   },
   methods: {
