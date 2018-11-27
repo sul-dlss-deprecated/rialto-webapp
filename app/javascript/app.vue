@@ -6,8 +6,11 @@
       <a class="navbar-brand" href="/">Stanford Libraries</a>
     </nav>
     <header class="masthead row">
-      <div class="col-sm-10">
+      <div class="col-sm-6 col-md-7 col-xl-8 ">
         <h1 class="site-title">Rialto</h1>
+      </div>
+      <div class="col-sm-4 col-md-3 col-xl-2 d-none d-sm-block">
+        <Types/>
       </div>
       <div class="col-sm-2 d-none d-sm-block">
         <img src="beta.png">
@@ -25,6 +28,12 @@
 </template>
 
 <script>
+import Types from 'rialto/types'
+export default {
+  components: {
+    Types
+  }
+}
 </script>
 
 <style lang="scss">
