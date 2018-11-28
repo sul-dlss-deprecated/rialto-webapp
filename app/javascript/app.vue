@@ -24,6 +24,9 @@
       </ul>
     </nav>
     <router-view></router-view>
+    <footer class="footer">
+      <div class="nav-link">Note: This is an internal Stanford system and data should be considered confidential. <a href="mailto:rialto-contact@lists.stanford.edu?Subject=RIALTO" target="_top">Contact us</a> to use the data publicly.</div>
+    </footer>
   </div>
 </template>
 
@@ -77,5 +80,23 @@ export default {
         font-weight: bold;
       }
     }
+  }
+
+  .footer {
+    bottom: 0;
+    width: 100%;
+    background-color: $subnav-background;
+    line-height: 1;
+    margin-top: 2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.3rem;
+    padding-left: 7px;
+    .nav-link {
+      font-size: 1rem;
+      color: #fff;
+    }
+
+  }
+  .navbar {
   }
 </style>
