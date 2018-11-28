@@ -11,6 +11,8 @@
       <li>Grant data from SeRA</li>
     </ul>
 
+    <p>If you would like to use or share this data outside of Stanford, please <a href="mailto:rialto-contact@lists.stanford.edu?Subject=RIALTO" target="_top">contact us</a>.  We also welcome new use cases, suggestions of other interested parties, and sharing of how you have used this system.</p>
+
     <p>Some limitations of the data include, but are not limited to:</p>
 
     <ul>
