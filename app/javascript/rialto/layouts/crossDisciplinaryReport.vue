@@ -2,7 +2,7 @@
   <section class="container">
     <h1>Cross-Disciplinary Research Report</h1>
     <div class="form-group row">
-      <label for="concept" class="col-form-label col-sm-2">Topic area: </label>
+      <label for="concept" class="col-form-label col-sm-2">Topic Area: </label>
       <select name="concept" class="col-sm-10" v-model="selectedConcept">
         <option v-for="concept in concepts" :value="concept">{{ concept.label }}</option>
       </select>
