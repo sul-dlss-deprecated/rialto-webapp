@@ -6,14 +6,13 @@
       <a class="navbar-brand" href="/">Stanford Libraries</a>
     </nav>
     <header class="masthead row">
-      <div class="col-sm-6 col-md-7 col-xl-8 ">
-        <h1 class="site-title">Rialto</h1>
+      <div class="col-sm-2 col-md-2 col-xl-2 media">
+        <h1 class="site-title media-body">Rialto</h1><img class="media" src="beta.png">
       </div>
-      <div class="col-sm-4 col-md-3 col-xl-2 d-none d-sm-block">
+      <div class="col-md-6 col-xl-7 d-none d-md-block">
+      </div>
+      <div class="col-sm-4 col-md-3 col-xl-2 d-none d-md-block">
         <Types/>
-      </div>
-      <div class="col-sm-2 d-none d-sm-block">
-        <img src="beta.png">
       </div>
     </header>
     <nav class="navbar navbar-expand-md navbar-dark subnav" role="navigation">
@@ -65,6 +64,7 @@ export default {
       font-size: 300%;
       padding-top: 1.5rem;
       padding-left: 1.5rem;
+      padding-right: 1.5rem;
       font-weight: 200;
     }
   }
