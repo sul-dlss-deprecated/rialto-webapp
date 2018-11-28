@@ -17,7 +17,7 @@
       <li>not all publications are represented in the Web of Science, and coverage by subject area will vary</li>
       <li>only publications from authors currently at Stanford and published while at Stanford are included</li>
       <li>due to name ambiguities and the querying mechanism, there will be both false positive and false negative publication results in these aggregated counts</li>
-      <li>topic areas are determined at the level of a journal (so all publications in a given journal will have the same topic area)</li>
+      <li>research areas are determined at the level of a journal (so all publications in a given journal will have the same research areas)</li>
       <li>data is updated monthly</li>
     </ul>
     <p>More detailed information about the data sources may be found on our <a href="https://github.com/sul-dlss/rialto/wiki/Data-Sources-and-Issues-with-Data">project wiki page</a>.</p>

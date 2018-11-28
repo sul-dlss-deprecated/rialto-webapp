@@ -82,7 +82,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'institute_label_ssim', label: 'Institute', limit: 1000
     config.add_facet_field 'institution_label_ssim', label: 'Institution', limit: 1000
     config.add_facet_field 'agent_ssim', label: 'Agent'
-    config.add_facet_field 'concept_labels_ssim', label: 'Topic Area', limit: 1000
+    config.add_facet_field 'concept_labels_ssim', label: 'Research Area', limit: 1000
     config.add_facet_field 'countries_label_ssim', label: 'Country', limit: 1000
     config.add_facet_field 'created_year_isim', label: 'Year'
     config.add_facet_field 'person_subtype_ssi', label: 'Stanford Types'
@@ -129,7 +129,7 @@ class CatalogController < ApplicationController
 
     # Organizations, Grants, and Publications have 'Funded By'
     config.add_show_field 'funded_by_ssim', label: 'Funded By'
-    # Topics and Papers have 'Same As'
+    # Concepts (AKA "Research Areas") and Publications have 'Same As'
     config.add_show_field 'same_as_ssim', label: 'Same As'
     config.add_show_field 'title_tesi', label: 'Title'
 
