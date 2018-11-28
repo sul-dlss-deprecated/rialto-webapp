@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="card intl-collab">
-          <img class="card-img-top" src="/home_intlcollab.png" alt="Topic Area">
+          <img class="card-img-top" src="/home_intlcollab.png" alt="Research Area">
           <div class="card-img-overlay">
             <div class="fas fa-globe-americas icon"></div>
             <h2 class="card-title">Discover<br>Stanford<br>collaborations</h2>
@@ -19,7 +19,7 @@
 
       <div class="col-sm-4">
         <div class="card">
-          <img class="card-img-top" src="/home_topicarea.png" alt="Topic Area">
+          <img class="card-img-top" src="/home_topicarea.png" alt="Research Area">
           <div class="card-img-overlay">
             <div class="fas fa-landmark icon"></div>
             <h2 class="card-title">Research trends<br>by topic</h2>
