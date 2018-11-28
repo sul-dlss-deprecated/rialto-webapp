@@ -55,7 +55,7 @@
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
-    <ReportTable v-bind:data-source="reportURL"></ReportTable><br />
+    <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated"></ReportTable><br />
     <div v-show="selectedReportType === 'coauthor-countries'">
       <Choropleth v-bind:reportURL="reportURL"/>
     </div>
@@ -120,7 +120,14 @@ export default {
           org_qs = '&org_uri=' + (this.selectedDepartment || this.selectedSchool).uri
       }
       return `/reports/${this.selectedReportType}.csv?start_year=${this.selectedYearsRange[0]}&end_year=${this.selectedYearsRange[1]}${org_qs}`
+    },
+    isPaginated: function(){
+        if (this.selectedReportType == 'coauthors') {
+            return true;
+        }
+        return false;
     }
+
   },
   methods: {
     download: function() {

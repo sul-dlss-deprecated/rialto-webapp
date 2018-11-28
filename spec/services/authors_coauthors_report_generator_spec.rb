@@ -33,7 +33,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                           departments: ['http://example.com/department1'],
                           department_labels: ['Chemistry'],
                           schools: ['http://example.com/school1'],
-                          # institutionalAffiliations: ['http://example.com/institution1'],
                           institution_labels: ['Stanford'],
                           country_labels: ['United States']
                         })
@@ -42,7 +41,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          # institutionalAffiliations: ['http://example.com/institution2'],
                           institution_labels: ['Harvard'],
                           country_labels: ['United States']
                         })
@@ -51,7 +49,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          # institutionalAffiliations: ['http://example.com/institution3'],
                           institution_labels: ['Ghent'],
                           country_labels: ['Belgium']
 
@@ -61,7 +58,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                         metadata: {
                           departments: [],
                           schools: [],
-                          # institutionalAffiliations: ['http://example.com/institution3'],
                           institution_labels: ['Ghent'],
                           country_labels: ['Belgium']
                         })
@@ -72,8 +68,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                           departments: [],
                           schools: [],
                           institution_labels: ['Ghent', 'Brussels U'],
-                          # institutionalAffiliations: ['http://example.com/institution3',
-                          #                             'http://example.com/institution4'],
                           country_labels: ['Belgium']
                         })
     p6 = Person.create!(uri: 'http://example.com/person6',
@@ -82,7 +76,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                           departments: ['http://example.com/department2'],
                           department_labels: ['Biochemistry'],
                           schools: ['http://example.com/school6'],
-                          # institutionalAffiliations: ['http://example.com/institution1'],
                           institution_labels: ['Stanford'],
                           country_labels: ['United States']
                         })
@@ -92,7 +85,6 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
                           departments: ['http://example.com/department2'],
                           department_labels: ['Biochemistry'],
                           schools: ['http://example.com/school7'],
-                          # institutionalAffiliations: ['http://example.com/institution1'],
                           institution_labels: ['Stanford'],
                           country_labels: nil
                         })
@@ -216,6 +208,24 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
         ['John Smith', 'Stanford', 'Chemistry', 'Dude without a country', 'Stanford', '1', ''],
         ['John Smith', 'Stanford', 'Chemistry', 'Jane Smith', 'Harvard', '1', 'United States'],
         ['Lady Red', 'Stanford', 'Biochemistry', 'Jane Okoye', 'Ghent', '1', 'Belgium']
+      ]
+    end
+  end
+
+  context 'when counting all Stanford' do
+    subject(:report) { described_class.count(org_uri: organization_uri, start_year: start_year, end_year: end_year) }
+
+    let(:organization) { nil }
+
+    before do
+      Organization.create!(uri: 'http://example.com/department1',
+                           name: 'Chemistry')
+    end
+
+    it 'is returns the count' do
+      expect(CSV.parse(report)).to eq [
+        ['Count'],
+        ['7']
       ]
     end
   end
