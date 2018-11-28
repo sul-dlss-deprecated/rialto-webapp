@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchControl />
+    <SearchControl v-model="q" />
     <div class="container">
       <Filters v-bind:filters="result.filters"/>
       <div class="row">
@@ -35,6 +35,7 @@ export default {
   },
   data: function () {
     return {
+      q: '',
       result: new Result()
     }
   },
@@ -56,6 +57,12 @@ export default {
       var filter = route.params.filter
       if (filter === undefined)
         filter = 'q='
+
+      // Start over should clear the search input
+      var query = filter.match(/q=([^&]*)/)
+      // Get rid of any spaces that have been encoded as '+'
+      this.q = query[1].replace(/\+/g, " ")
+
       this.retrieveResults('/catalog?' + filter)
     }
   },
