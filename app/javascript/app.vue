@@ -22,6 +22,9 @@
         <li class="nav-item"><router-link :to="{ name: 'search'}" class="nav-link">Browse</router-link></li>
         <li class="nav-item"><router-link :to="{ name: 'about'}" class="nav-link">About</router-link></li>
       </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="mailto:rialto-contact@lists.stanford.edu?Subject=RIALTO" target="_top">Feedback</a></li>
+      </ul>
     </nav>
     <router-view></router-view>
   </div>
