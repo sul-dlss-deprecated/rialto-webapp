@@ -7,10 +7,16 @@
             <th v-for="cell in row">
               {{ cell }}
             </th>
+            <th v-if="detailsFieldIndex !== null">
+              Details
+            </th>
           </template>
           <template v-else>
             <td v-for="cell in row">
               {{ cell }}
+            </td>
+            <td v-if="detailsFieldIndex !== null">
+              <a href="#" v-on:click="download(row[detailsFieldIndex])">Download</a>
             </td>
           </template>
         </tr>
@@ -31,12 +37,13 @@ export default {
   components: {
       Pagination,
   },
-  props: ['dataSource','paginated'],
+  props: ['dataSource','paginated', 'detailsField'],
   data: function () {
     return {
       parsedCSV: null,
       count: null,
       rowsPerPage: 100,
+      detailsFieldIndex: null,
     }
   },
   watch: {
@@ -55,8 +62,31 @@ export default {
       }
       d3.text(newVal, (data) => {
         this.parsedCSV = d3.csv.parseRows(data);
+        if (this.detailsFieldLabel) {
+            for (let i = 0; i < this.parsedCSV[0].length; i++) {
+                if (this.parsedCSV[0][i] == this.detailsFieldLabel) {
+                    this.detailsFieldIndex = i;
+                }
+            }
+        } else {
+            this.detailsFieldIndex = null;
+        }
         this.$Progress.finish()
       })
+    },
+  },
+  computed: {
+    detailsFieldLabel: function() {
+        if (this.detailsField) {
+            return this.detailsField[0];
+        }
+        return null;
+    },
+    detailsFieldParam: function() {
+        if (this.detailsField) {
+            return this.detailsField[1];
+        }
+        return null;
     }
   },
   methods: {
@@ -70,7 +100,11 @@ export default {
           this.parsedCSV = d3.csv.parseRows(data);
           this.$Progress.finish()
       })
-    }
+    },
+    download: function(value) {
+        const url = this.dataSource + '&details=true&' + this.detailsFieldParam + '=' + value;
+        window.location = url
+    },
   }
 }
 </script>

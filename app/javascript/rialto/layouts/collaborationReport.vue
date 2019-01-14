@@ -55,9 +55,10 @@
             and may be a very large file to download.</p>
     </div>
     <ul v-if="reportURL">
-      <li><a href="#" v-on:click="download">Download</a></li>
+      <li><a href="#" v-on:click="download(false)">Download summary</a></li>
+      <li v-if="selectedReportType != 'coauthors'"><a href="#" v-on:click="download(true)">Download details</a></li>
     </ul>
-    <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated"></ReportTable><br />
+    <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated" v-bind:detailsField="detailsField"></ReportTable><br />
     <div v-if="selectedReportType === 'coauthor-countries'">
       <Choropleth v-bind:reportURL="reportURL"/>
     </div>
@@ -127,12 +128,25 @@ export default {
             return true;
         }
         return false;
+    },
+    detailsField: function(){
+        if (this.selectedReportType == 'coauthor-countries') {
+            // Field label and parameter name
+            return ['Co-Author Country', 'country_label'];
+        } else if (this.selectedReportType == 'coauthor-institutions') {
+            return ['Co-Author Institution', 'institution_label']
+        }
+        return false;
     }
 
   },
   methods: {
-    download: function() {
-      window.location = this.reportURL
+    download: function(details) {
+      let url = this.reportURL
+      if (details) {
+          url += '&details=true'
+      }
+      window.location = url
     },
     loadDepartmentsUrl: function() {
       let url = '/departments'

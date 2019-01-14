@@ -3,6 +3,7 @@
 # Provides the various CSV reports
 class ReportsController < ApplicationController
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def show
     respond_to do |format|
       format.csv do
@@ -10,6 +11,8 @@ class ReportsController < ApplicationController
         self.response_body = Enumerator.new do |out|
           if params.key?(:count)
             generator.count(out, params.permit(:org_uri, :concept_uri, :start_year, :end_year))
+          elsif params.key?(:details)
+            generator.details(out, params.permit(:org_uri, :concept_uri, :start_year, :end_year, :country_label, :institution_label))
           else
             generator.generate(out, params.permit(:org_uri, :concept_uri, :start_year, :end_year, :offset, :limit))
           end
@@ -18,6 +21,7 @@ class ReportsController < ApplicationController
     end
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   private
 
