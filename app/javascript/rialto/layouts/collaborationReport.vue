@@ -40,13 +40,15 @@
             also download the results as a CSV file.</p>
     </div>
     <div v-if="selectedReportType == 'coauthors'" class="alert alert-light">
-        <p>This report includes data that can be used to perform further analysis of co-authors collaborations. The output
-            is one row per unique author/co-author pair per publication and may include multiple rows per paper, if the paper
-            has co-authors across multiple institutions. The number of collaborations column counts the number of times
-            that author/co-author have collaborated (i.e. the number of publications that include that collaboration). Also
-            note that authors can have multiple institutional affiliations, either through previous or current
-            co-affiliations, as determined by the publications being aggregated over. You can filter by school, department
-            and date of publication.</p>
+        <p>This report includes data that can be used to perform further analysis of co-authors collaborations. The
+            output is one row per unique author/co-author pair per publication and may include multiple rows per paper,
+            if the paper has multiple co-authors. The number of collaborations column counts the number of times that
+            author/co-author pair have collaborated (i.e. the number of publications that include that particular
+            collaboration between two authors). This means that any number bigger than 1 in this column indicates that
+            more than one paper is represented by that row. Also note that authors can have multiple institutional
+            affiliations, either through previous or current co-affiliations, as determined by the publications being
+            aggregated over. This would be shown as multiple countries and institutions for that collaboration in that
+            row. You can filter by school, department and date of publication.</p>
 
         <p>By design, this report will include a lot of data if you select a broad filtering, and only a limited result
             set is shown on screen. You may download the full result set as a CSV, but it may take some time to generate
