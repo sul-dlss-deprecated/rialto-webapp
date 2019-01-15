@@ -4,6 +4,7 @@ require 'set'
 
 # Generate a downloadable report consisting of publications counts by year for concepts
 # limited by organizations
+# rubocop:disable Metrics/ClassLength
 class ResearchTrendsReportGenerator < ReportGenerator
   # @param [Integer] org_uri the identifier of the org to generate
   #   the report for
@@ -18,12 +19,13 @@ class ResearchTrendsReportGenerator < ReportGenerator
   # @return [String] a csv report
   def generate
     CSV.generate do |csv|
-      years, concepts, concept_totals = extract_years_and_concepts(database_values)
-      unless years.empty?
-        csv << generate_headers(years)
+      years_totals, concepts, concept_totals = extract_years_and_concepts(database_values)
+      unless years_totals.empty?
+        csv << generate_headers(years_totals.keys)
         concept_totals.each do |concept, total|
-          csv << generate_crosstab_row(concept, concepts[concept], years, total)
+          csv << generate_crosstab_row(concept, concepts[concept], years_totals.keys, total)
         end
+        csv << generate_totals(years_totals)
       end
     end
   end
@@ -35,17 +37,18 @@ class ResearchTrendsReportGenerator < ReportGenerator
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def extract_years_and_concepts(database_values)
-    years = Set.new
+    years_totals = {}
     concepts = {}
     concept_totals = {}
     database_values.each do |row|
-      years << row['year'].to_i
+      years_totals[row['year'].to_i] ||= 0
+      years_totals[row['year'].to_i] += row['count']
       concepts[row['concept']] ||= {}
       concepts[row['concept']][row['year'].to_i] = row['count']
       concept_totals[row['concept']] ||= 0
       concept_totals[row['concept']] += row['count']
     end
-    [years, concepts, sort_concept_totals(concept_totals)]
+    [years_totals, concepts, sort_concept_totals(concept_totals)]
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
@@ -70,6 +73,17 @@ class ResearchTrendsReportGenerator < ReportGenerator
     end
     crosstab_row << total
     crosstab_row
+  end
+
+  def generate_totals(years_totals)
+    totals_row = ['TOTAL']
+    grand_total = 0
+    Range.new(years_totals.keys.min, years_totals.keys.max).each do |year|
+      totals_row << years_totals[year]
+      grand_total += years_totals[year]
+    end
+    totals_row << grand_total
+    totals_row
   end
 
   # @return [ActiveRecord::Result]
@@ -123,3 +137,4 @@ class ResearchTrendsReportGenerator < ReportGenerator
   end
   # rubocop:enable Metrics/MethodLength
 end
+# rubocop:enable Metrics/ClassLength
