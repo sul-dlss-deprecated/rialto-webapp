@@ -41,6 +41,11 @@ export default {
   },
   watch: {
     dataSource(newVal, oldVal) {
+      if (!newVal) {
+          this.count = null
+          this.parsedCSV = null
+          return
+      }
       this.$Progress.start()
       if (this.paginated) {
           d3.text(newVal + '&count=true', (data) => {

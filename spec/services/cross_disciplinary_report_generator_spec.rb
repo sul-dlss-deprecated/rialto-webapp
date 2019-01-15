@@ -3,12 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe CrossDisciplinaryReportGenerator do
-  subject(:report) { described_class.generate(concept_uri: concept.uri) }
+  subject(:report) { described_class.generate(concept_uri: concept_uri) }
 
-  let(:concept) do
-    Concept.create!(uri: 'http://example.com/concept1',
-                    name: 'Philosophy')
-  end
+  let(:concept_uri) { concept&.uri }
 
   context 'with some authors and publications' do
     before do
@@ -94,14 +91,35 @@ RSpec.describe CrossDisciplinaryReportGenerator do
                           })
     end
 
-    it 'is a report' do
-      # rubocop:disable Style/WordArray
-      expect(CSV.parse(report)).to eq [
-        ['Institute', '2016', '2017', '2018'],
-        ['Metaphysics Institute', '1', '3', '0'],
-        ['Wittgenstein Institute', '2', '0', '1']
-      ]
-      # rubocop:enable Style/WordArray
+    context 'when limiting by concept' do
+      let(:concept) do
+        Concept.create!(uri: 'http://example.com/concept1',
+                        name: 'Philosophy')
+      end
+
+      it 'is a report' do
+        # rubocop:disable Style/WordArray
+        expect(CSV.parse(report)).to eq [
+          ['Institute', '2016', '2017', '2018', 'Total'],
+          ['Metaphysics Institute', '1', '3', '0', '4'],
+          ['Wittgenstein Institute', '2', '0', '1', '3']
+        ]
+        # rubocop:enable Style/WordArray
+      end
+    end
+
+    context 'when all concepts' do
+      let(:concept) { nil }
+
+      it 'is a report' do
+        # rubocop:disable Style/WordArray
+        expect(CSV.parse(report)).to eq [
+          ['Institute', '2016', '2017', '2018', 'Total'],
+          ['Metaphysics Institute', '1', '4', '0', '5'],
+          ['Wittgenstein Institute', '2', '0', '1', '3']
+        ]
+        # rubocop:enable Style/WordArray
+      end
     end
   end
 end

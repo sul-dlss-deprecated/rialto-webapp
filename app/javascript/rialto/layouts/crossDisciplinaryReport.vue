@@ -1,11 +1,18 @@
 <template>
   <section class="container">
     <h1>Cross-Disciplinary Research Report</h1>
-    <div class="form-group row">
-      <label for="concept" class="col-form-label col-sm-2">Research Area: </label>
-      <select name="concept" class="col-sm-10" v-model="selectedConcept">
-        <option v-for="concept in concepts" :value="concept">{{ concept.label }}</option>
-      </select>
+    <div class="form-group">
+      <div class="row">
+          <input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />
+          <label for="concept" class="col-form-label col-sm-2">Research Area: </label>
+          <select name="concept" class="col-sm-10" v-model="selectedConcept">
+              <option v-for="concept in concepts" :value="concept">{{ concept.label }}</option>
+          </select>
+      </div>
+      <div class="row">
+          <input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />
+          <label class="form-check-label col-sm-2" for="all">All research areas</label>
+      </div>
     </div>
     <div class="alert alert-light">
         <p>This report aggregates publications for a given research area and then breaks them down by researchers
@@ -51,6 +58,7 @@ export default {
     return {
       selectedConcept: '',
       concepts: [],
+      picked: 'part'
     }
   },
   created() {
@@ -62,10 +70,15 @@ export default {
   },
   computed: {
     reportURL: function(){
-      if (!this.selectedConcept) {
-        return null
-      }
-      return `/reports/cross-disciplinary.csv?concept_uri=${this.selectedConcept.uri}`
+        let concept_qs = '';
+        if (this.picked === 'part') {
+            if (!this.selectedConcept) {
+                console.log('returning null')
+                return null
+            }
+            concept_qs = `?concept_uri=${this.selectedConcept.uri}`
+        }
+        return `/reports/cross-disciplinary.csv${concept_qs}`
     }
   },
   methods: {
