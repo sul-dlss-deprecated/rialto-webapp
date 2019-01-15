@@ -46,7 +46,9 @@ class AuthorsCoauthorCountriesReportGenerator < ReportGenerator
     'LEFT OUTER JOIN publications pub ON pp.publication_uri = pub.uri ' \
     'LEFT OUTER JOIN people_publications pp2 ON pub.uri = pp2.publication_uri ' \
     'LEFT OUTER JOIN (SELECT p2.uri, p2ia.value as country ' \
-    "FROM people p2, jsonb_array_elements_text(p2.metadata -> 'country_labels') p2ia) p2i ON pp2.person_uri = p2i.uri " \
+    'FROM people p2, jsonb_array_elements_text(' \
+    "CASE WHEN jsonb_array_length(p2.metadata -> 'country_labels') > 0 THEN p2.metadata -> 'country_labels' " \
+    "ELSE '[\"Unknown\"]' END) p2ia) p2i ON pp2.person_uri = p2i.uri " \
     'WHERE p2i.uri != p1.uri AND ' \
     "pub.metadata -> 'created_year' >= $1 AND " \
     "pub.metadata -> 'created_year' <= $2 "

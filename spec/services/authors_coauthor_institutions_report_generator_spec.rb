@@ -63,6 +63,12 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
                           schools: ['http://example.com/school2'],
                           institutions: ['http://example.com/institution4']
                         })
+    # No institution
+    p7 = Person.create!(uri: 'http://example.com/person7',
+                        name: 'Jane Lathrop',
+                        metadata: {
+                          institutions: []
+                        })
 
     # John Smith co-authored with Jane Okoye twice
     Publication.create!(uri: 'http://example.com/publication1',
@@ -112,6 +118,12 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
                           created_year: 2018
                         },
                         authors: [p6, p3])
+    # Peter Smith co-autored with Jane Lathrop
+    Publication.create!(uri: 'http://example.com/publication9',
+                        metadata: {
+                          created_year: 2018
+                        },
+                        authors: [p6, p7])
   end
 
   context 'when querying by department' do
@@ -182,7 +194,8 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
         ['Co-Author Institution', 'Number of Collaborations'],
         ['Harvard', '5'],
         ['Ghent', '3'],
-        ['Stanford', '2']
+        ['Stanford', '2'],
+        ['Unknown', '1']
       ]
       # rubocop:enable Style/WordArray
     end
