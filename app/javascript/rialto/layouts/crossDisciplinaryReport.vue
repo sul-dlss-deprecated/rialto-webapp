@@ -48,8 +48,10 @@
 <script>
 import ReportTable from 'rialto/reports/table'
 import SourceInfo from 'rialto/reports/sourceInfo'
+import HttpError from 'rialto/mixins/httpError'
 
 export default {
+  mixins: [HttpError],
   components: {
     ReportTable,
     SourceInfo
@@ -65,7 +67,7 @@ export default {
     var result = this.$http.get('/concepts').then(function(response){
         this.concepts = response.data
     }, function(error){
-        console.error(error.statusText);
+        this.handleHttpError(error);
     })
   },
   computed: {
@@ -73,7 +75,6 @@ export default {
         let concept_qs = '';
         if (this.picked === 'part') {
             if (!this.selectedConcept) {
-                console.log('returning null')
                 return null
             }
             concept_qs = `?concept_uri=${this.selectedConcept.uri}`

@@ -26,8 +26,10 @@
 <script>
 import d3 from 'd3'
 import Pagination from 'rialto/reports/pagination'
+import HttpError from 'rialto/mixins/httpError'
 
 export default {
+  mixins: [HttpError],
   components: {
       Pagination,
   },
@@ -48,12 +50,18 @@ export default {
       }
       this.$Progress.start()
       if (this.paginated) {
-          d3.text(newVal + '&count=true', (data) => {
+          d3.text(newVal + '&count=true', (error, data) => {
+              if (this.handleHttpError(error)) {
+                  return;
+              }
               this.count = d3.csv.parseRows(data)[1][0];
           });
           newVal += this.page_qs(0)
       }
-      d3.text(newVal, (data) => {
+      d3.text(newVal, (error, data) => {
+        if (this.handleHttpError(error)) {
+            return;
+        }
         this.parsedCSV = d3.csv.parseRows(data);
         this.$Progress.finish()
       })
@@ -66,7 +74,10 @@ export default {
     change_page: function(offset) {
       this.$Progress.start()
       const url = this.dataSource + this.page_qs(offset);
-      d3.text(url, (data) => {
+      d3.text(url, (error, data) => {
+          if (this.handleHttpError(error)) {
+              return;
+          }
           this.parsedCSV = d3.csv.parseRows(data);
           this.$Progress.finish()
       })

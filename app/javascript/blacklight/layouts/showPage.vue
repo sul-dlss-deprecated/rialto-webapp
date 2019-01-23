@@ -9,8 +9,10 @@
 <script>
 import Title from 'blacklight/result/title.vue'
 import PropertyList from 'blacklight/result/property_list.vue'
+import HttpError from 'blacklight/mixins/httpError'
 
 export default {
+  mixins: [HttpError],
   components: {
     Title,
     PropertyList
@@ -26,8 +28,7 @@ export default {
       this.$http.get(endpoint).then(function(response){
           this.item = response.data.data
       }, function(error){
-          console.error(error.statusText);
-          alert("There was an error retrieveing this record")
+          this.handleHttpError(error);
       })
     }
   },
