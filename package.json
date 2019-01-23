@@ -25,7 +25,7 @@
     "@vue/test-utils": "^1.0.0-beta.25",
     "jsdom": "^13.0.0",
     "jsdom-global": "^3.0.2",
-    "webpack-dev-server": "2.11.2"
+    "webpack-dev-server": "^3.1.14"
   },
   "scripts": {
     "test": "mocha-webpack --webpack-config config/webpack/test.js --require jsdom-global/register --require app/javascript/test/setup.js app/javascript/test/**/*.spec.js --recursive"
