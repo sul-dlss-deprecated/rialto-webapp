@@ -1,5 +1,3 @@
-require('jsdom-global')()
-
 function mockCanvas (window) {
     window.HTMLCanvasElement.prototype.getContext = function () {
         return {

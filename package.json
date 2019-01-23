@@ -28,6 +28,6 @@
     "webpack-dev-server": "2.11.2"
   },
   "scripts": {
-    "test": "mocha-webpack --webpack-config config/webpack/test.js --require app/javascript/test/setup.js app/javascript/test/**/*.spec.js --recursive"
+    "test": "mocha-webpack --webpack-config config/webpack/test.js --require jsdom-global/register --require app/javascript/test/setup.js app/javascript/test/**/*.spec.js --recursive"
   }
 }
