@@ -4,8 +4,8 @@
   "dependencies": {
     "@rails/webpacker": "https://github.com/rails/webpacker",
     "array.prototype.flatmap": "^1.2.1",
-    "blacklight-frontend": "^7.0.0-alpha.1",
     "bloodhound-js": "^1.2.2",
+    "bootstrap": "^4.2.1",
     "jquery": "^3.3.1",
     "plotly.js": "^1.39.3",
     "popper.js": "^1.14.3",
