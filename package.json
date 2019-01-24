@@ -2,6 +2,7 @@
   "name": "rialto-webapp",
   "private": true,
   "dependencies": {
+    "@rails/webpacker": "https://github.com/rails/webpacker",
     "array.prototype.flatmap": "^1.2.1",
     "blacklight-frontend": "^7.0.0-alpha.1",
     "bloodhound-js": "^1.2.2",
@@ -18,7 +19,6 @@
     "vue-template-compiler": "^2.5.22"
   },
   "devDependencies": {
-    "@rails/webpacker": "https://github.com/rails/webpacker",
     "@vue/test-utils": "^1.0.0-beta.25",
     "babel-jest": "^23.6.0",
     "chai": "^4.2.0",
