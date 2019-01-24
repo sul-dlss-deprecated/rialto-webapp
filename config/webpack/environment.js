@@ -2,6 +2,7 @@ const { environment } = require('@rails/webpacker')
 const { VueLoaderPlugin } = require('vue-loader')
 const vue =  require('./loaders/vue')
 const webpack = require('webpack')
+const path = require('path')
 
 environment.loaders.append('vue', vue)
 

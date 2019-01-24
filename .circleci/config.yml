@@ -94,9 +94,9 @@ jobs:
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      # Run mocha
+      # Run Javascript Unit tests
       - run:
-          name: Run mocha
+          name: Run javascript unit tests
           command: npm test
 
 
