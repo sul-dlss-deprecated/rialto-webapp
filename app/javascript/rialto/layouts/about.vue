@@ -20,7 +20,7 @@
       <li>only publications from authors currently at Stanford and published while at Stanford are included</li>
       <li>due to name ambiguities and the querying mechanism, there will be both false positive and false negative publication results in these aggregated counts</li>
       <li>research areas are determined at the level of a journal (so all publications in a given journal will have the same research areas)</li>
-      <li>data is updated monthly</li>
+      <li>data is updated monthly, except for grant data from SeRA, which is currently a one-time load from January 2019 (note: we expect to have automated up-to-date grant data in the future)</li>
     </ul>
     <p>More detailed information about the data sources may be found on our <a href="https://github.com/sul-dlss/rialto/wiki/Data-Sources-and-Issues-with-Data">project wiki page</a>.</p>
   </section>
