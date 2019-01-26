@@ -9,6 +9,9 @@ RUN chmod +x nodesource_setup.sh
 RUN ./nodesource_setup.sh
 # netcat is required by wait-for in invoke.sh
 RUN apt-get update && apt-get install -y build-essential postgresql-client tzdata git netcat nodejs
+
+ENV BUNDLER_VERSION 2.0.1
+
 RUN gem install bundler
 
 ENV RAILS_ENV development
