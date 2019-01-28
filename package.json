@@ -2,7 +2,7 @@
   "name": "rialto-webapp",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "https://github.com/rails/webpacker",
+    "@rails/webpacker": "^4.0.0-rc.7",
     "array.prototype.flatmap": "^1.2.1",
     "bloodhound-js": "^1.2.2",
     "bootstrap": "^4.2.1",
