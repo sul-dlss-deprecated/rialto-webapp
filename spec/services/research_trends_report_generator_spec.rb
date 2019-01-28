@@ -37,7 +37,7 @@ RSpec.describe ResearchTrendsReportGenerator do
     Publication.create!(uri: 'http://example.com/publication1',
                         metadata: {
                           concepts: ['http://example.com/concept1'],
-                          created_year: 2016
+                          created_year: 2015
                         },
                         authors: [p1])
     Publication.create!(uri: 'http://example.com/publication2',
@@ -49,13 +49,13 @@ RSpec.describe ResearchTrendsReportGenerator do
     Publication.create!(uri: 'http://example.com/publication3',
                         metadata: {
                           concepts: ['http://example.com/concept1'],
-                          created_year: 2016
+                          created_year: 2015
                         },
                         authors: [p2])
     Publication.create!(uri: 'http://example.com/publication4',
                         metadata: {
                           concepts: ['http://example.com/concept1'],
-                          created_year: 2016
+                          created_year: 2015
                         },
                         authors: [p3])
     Publication.create!(uri: 'http://example.com/publication5',
@@ -68,7 +68,7 @@ RSpec.describe ResearchTrendsReportGenerator do
     Publication.create!(uri: 'http://example.com/publication6',
                         metadata: {
                           concepts: [],
-                          created_year: 2016
+                          created_year: 2015
                         },
                         authors: [p1])
   end
@@ -83,11 +83,11 @@ RSpec.describe ResearchTrendsReportGenerator do
     it 'is a report' do
       # rubocop:disable Style/WordArray
       expect(CSV.parse(report)).to eq [
-        ['Concept', '2016', '2017', '2018', 'Total'],
-        ['Concept1', '2', '0', '1', '3'],
-        ['Concept2', '0', '1', '0', '1'],
-        ['No concept', '1', '0', '0', '1'],
-        ['TOTAL', '3', '1', '1', '5']
+        ['Concept', '2015', '2016', '2017', '2018', 'Total'],
+        ['Concept1', '2', '0', '0', '1', '3'],
+        ['Concept2', '0', '0', '1', '0', '1'],
+        ['No concept', '1', '0', '0', '0', '1'],
+        ['TOTAL', '3', '0', '1', '1', '5']
       ]
       # rubocop:enable Style/WordArray
     end
@@ -103,11 +103,11 @@ RSpec.describe ResearchTrendsReportGenerator do
     it 'is a report' do
       # rubocop:disable Style/WordArray
       expect(CSV.parse(report)).to eq [
-        ['Concept', '2016', '2017', '2018', 'Total'],
-        ['Concept1', '2', '0', '1', '3'],
-        ['Concept2', '0', '1', '0', '1'],
-        ['No concept', '1', '0', '0', '1'],
-        ['TOTAL', '3', '1', '1', '5']
+        ['Concept', '2015', '2016', '2017', '2018', 'Total'],
+        ['Concept1', '2', '0', '0', '1', '3'],
+        ['Concept2', '0', '0', '1', '0', '1'],
+        ['No concept', '1', '0', '0', '0', '1'],
+        ['TOTAL', '3', '0', '1', '1', '5']
       ]
       # rubocop:enable Style/WordArray
     end
@@ -134,11 +134,11 @@ RSpec.describe ResearchTrendsReportGenerator do
     it 'is a report' do
       # rubocop:disable Style/WordArray
       expect(CSV.parse(report)).to eq [
-        ['Concept', '2016', '2017', '2018', 'Total'],
-        ['Concept1', '3', '0', '1', '4'],
-        ['Concept2', '0', '1', '0', '1'],
-        ['No concept', '1', '0', '0', '1'],
-        ['TOTAL', '4', '1', '1', '6']
+        ['Concept', '2015', '2016', '2017', '2018', 'Total'],
+        ['Concept1', '3', '0', '0', '1', '4'],
+        ['Concept2', '0', '0', '1', '0', '1'],
+        ['No concept', '1', '0', '0', '0', '1'],
+        ['TOTAL', '4', '0', '1', '1', '6']
       ]
       # rubocop:enable Style/WordArray
     end
