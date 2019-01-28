@@ -16,6 +16,12 @@ export default {
       }
     }
   },
+  created: function () {
+      // This is necessary to force drawing when toggling visibility with v:if
+      if (this.reportURL) {
+          this.draw()
+      }
+  },
   methods: {
     draw: function () {
       Plotly.d3.csv(this.dataSource(), function(err, rows){
