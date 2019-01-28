@@ -79,8 +79,8 @@ class ResearchTrendsReportGenerator < ReportGenerator
     totals_row = ['TOTAL']
     grand_total = 0
     Range.new(years_totals.keys.min, years_totals.keys.max).each do |year|
-      totals_row << years_totals[year]
-      grand_total += years_totals[year]
+      totals_row << years_totals.fetch(year, 0)
+      grand_total += years_totals.fetch(year, 0)
     end
     totals_row << grand_total
     totals_row
