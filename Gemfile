@@ -16,7 +16,7 @@ gem 'puma', '~> 3.11'
 gem 'blacklight', '~> 7.0'
 gem 'honeybadger'
 gem 'lograge'
-
+gem 'okcomputer'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '4.0.0.rc.7'
 
