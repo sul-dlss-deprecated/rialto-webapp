@@ -13,6 +13,8 @@ EXPOSE 3000
 COPY Gemfile /opt
 COPY Gemfile.lock /opt
 
+ENV BUNDLER_VERSION 2.0.1
+
 RUN apk --no-cache add \
   libpq \
   tzdata
@@ -21,6 +23,7 @@ RUN apk --no-cache add \
 # Build argument for injecting native packages at build time via docker-compose
 RUN apk --no-cache add --virtual build-dependencies \
   build-base \
-  postgresql-dev \
-  && bundle install --without development test \
+  postgresql-dev && \
+  gem install bundler && \
+  bundle install --without development test \
   && apk del build-dependencies
