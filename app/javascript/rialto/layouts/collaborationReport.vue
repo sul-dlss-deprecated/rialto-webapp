@@ -58,10 +58,9 @@
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
     <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated"></ReportTable><br />
-    <div v-show="selectedReportType === 'coauthor-countries'">
+    <div v-if="selectedReportType === 'coauthor-countries'">
       <Choropleth v-bind:reportURL="reportURL"/>
     </div>
-
 
     <div class="alert alert-light">
       <p>Co-author data for these reports are pulled from publications in the Web of Science, a Clarivate product.
