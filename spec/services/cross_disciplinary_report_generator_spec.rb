@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe CrossDisciplinaryReportGenerator do
-  subject(:report) { described_class.generate(concept_uri: concept_uri) }
+  subject(:report) do
+    output = +''
+    described_class.generate(output, concept_uri: concept_uri, start_year: '2016', end_year: '2019')
+    output
+  end
 
   let(:concept_uri) { concept&.uri }
 
@@ -100,9 +104,9 @@ RSpec.describe CrossDisciplinaryReportGenerator do
       it 'is a report' do
         # rubocop:disable Style/WordArray
         expect(CSV.parse(report)).to eq [
-          ['Institute', '2016', '2017', '2018', 'Total'],
-          ['Metaphysics Institute', '1', '3', '0', '4'],
-          ['Wittgenstein Institute', '2', '0', '1', '3']
+          ['Institute', '2016', '2017', '2018', '2019', 'Total'],
+          ['Metaphysics Institute', '1', '3', '0', '0', '4'],
+          ['Wittgenstein Institute', '2', '0', '1', '0', '3']
         ]
         # rubocop:enable Style/WordArray
       end
@@ -114,9 +118,9 @@ RSpec.describe CrossDisciplinaryReportGenerator do
       it 'is a report' do
         # rubocop:disable Style/WordArray
         expect(CSV.parse(report)).to eq [
-          ['Institute', '2016', '2017', '2018', 'Total'],
-          ['Metaphysics Institute', '1', '4', '0', '5'],
-          ['Wittgenstein Institute', '2', '0', '1', '3']
+          ['Institute', '2016', '2017', '2018', '2019', 'Total'],
+          ['Metaphysics Institute', '1', '4', '0', '0', '5'],
+          ['Wittgenstein Institute', '2', '0', '1', '0', '3']
         ]
         # rubocop:enable Style/WordArray
       end

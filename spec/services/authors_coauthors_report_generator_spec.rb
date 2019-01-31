@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe AuthorsCoauthorsReportGenerator do
-  subject(:report) { described_class.generate(org_uri: organization_uri, start_year: start_year, end_year: end_year) }
+  subject(:report) do
+    output = +''
+    described_class.generate(output, org_uri: organization_uri, start_year: start_year, end_year: end_year)
+    output
+  end
 
   let(:start_year) { '2016' }
 
@@ -213,7 +217,11 @@ RSpec.describe AuthorsCoauthorsReportGenerator do
   end
 
   context 'when counting all Stanford' do
-    subject(:report) { described_class.count(org_uri: organization_uri, start_year: start_year, end_year: end_year) }
+    subject(:report) do
+      output = +''
+      described_class.count(output, org_uri: organization_uri, start_year: start_year, end_year: end_year)
+      output
+    end
 
     let(:organization) { nil }
 

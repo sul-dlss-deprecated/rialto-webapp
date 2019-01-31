@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe ResearchTrendsReportGenerator do
-  subject(:report) { described_class.generate(org_uri: organization_uri, start_year: 2000, end_year: 2099) }
+  subject(:report) do
+    output = +''
+    described_class.generate(output, org_uri: organization_uri, start_year: 2015, end_year: 2019)
+    output
+  end
 
   let(:organization_uri) { organization&.uri }
 
@@ -82,12 +86,13 @@ RSpec.describe ResearchTrendsReportGenerator do
 
     it 'is a report' do
       # rubocop:disable Style/WordArray
+      puts(report)
       expect(CSV.parse(report)).to eq [
-        ['Concept', '2015', '2016', '2017', '2018', 'Total'],
-        ['Concept1', '2', '0', '0', '1', '3'],
-        ['Concept2', '0', '0', '1', '0', '1'],
-        ['No concept', '1', '0', '0', '0', '1'],
-        ['TOTAL', '3', '0', '1', '1', '5']
+        ['Concept', '2015', '2016', '2017', '2018', '2019', 'Total'],
+        ['Concept1', '2', '0', '0', '1', '0', '3'],
+        ['Concept2', '0', '0', '1', '0', '0', '1'],
+        ['No concept', '1', '0', '0', '0', '0', '1'],
+        ['TOTAL', '3', '0', '1', '1', '0', '5']
       ]
       # rubocop:enable Style/WordArray
     end
@@ -103,17 +108,21 @@ RSpec.describe ResearchTrendsReportGenerator do
     it 'is a report' do
       # rubocop:disable Style/WordArray
       expect(CSV.parse(report)).to eq [
-        ['Concept', '2015', '2016', '2017', '2018', 'Total'],
-        ['Concept1', '2', '0', '0', '1', '3'],
-        ['Concept2', '0', '0', '1', '0', '1'],
-        ['No concept', '1', '0', '0', '0', '1'],
-        ['TOTAL', '3', '0', '1', '1', '5']
+        ['Concept', '2015', '2016', '2017', '2018', '2019', 'Total'],
+        ['Concept1', '2', '0', '0', '1', '0', '3'],
+        ['Concept2', '0', '0', '1', '0', '0', '1'],
+        ['No concept', '1', '0', '0', '0', '0', '1'],
+        ['TOTAL', '3', '0', '1', '1', '0', '5']
       ]
       # rubocop:enable Style/WordArray
     end
 
     context 'when date range is specified' do
-      subject(:report) { described_class.generate(org_uri: organization.uri, start_year: 2017, end_year: 2018) }
+      subject(:report) do
+        output = +''
+        described_class.generate(output, org_uri: organization.uri, start_year: 2017, end_year: 2018)
+        output
+      end
 
       it 'is a report' do
         # rubocop:disable Style/WordArray
@@ -128,17 +137,18 @@ RSpec.describe ResearchTrendsReportGenerator do
     end
   end
 
-  context 'when all Stqanford' do
+  context 'when all Stanford' do
     let(:organization) { nil }
 
     it 'is a report' do
       # rubocop:disable Style/WordArray
+      puts(report)
       expect(CSV.parse(report)).to eq [
-        ['Concept', '2015', '2016', '2017', '2018', 'Total'],
-        ['Concept1', '3', '0', '0', '1', '4'],
-        ['Concept2', '0', '0', '1', '0', '1'],
-        ['No concept', '1', '0', '0', '0', '1'],
-        ['TOTAL', '4', '0', '1', '1', '6']
+        ['Concept', '2015', '2016', '2017', '2018', '2019', 'Total'],
+        ['Concept1', '3', '0', '0', '1', '0', '4'],
+        ['Concept2', '0', '0', '1', '0', '0', '1'],
+        ['No concept', '1', '0', '0', '0', '0', '1'],
+        ['TOTAL', '4', '0', '1', '1', '0', '6']
       ]
       # rubocop:enable Style/WordArray
     end

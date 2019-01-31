@@ -3,11 +3,13 @@
 # Generate a downloadable report consisting of a list of institutions the
 # authors in that organization have collaborated with, along with number of collaborations
 class AuthorsCoauthorInstitutionsReportGenerator < ReportGenerator
+  # @param [Enumerator] output Enumerator to which to write the CSV.
   # @param [Integer] org_uri the identifier of the deparment to generate
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
   # @param [Integer] end_year the maximum publication year on the report
-  def initialize(org_uri: nil, start_year:, end_year:)
+  def initialize(output, org_uri: nil, start_year:, end_year:)
+    @csv = output
     @organization = Organization.find(org_uri) if org_uri
     @start_year = start_year
     @end_year = end_year
@@ -15,18 +17,16 @@ class AuthorsCoauthorInstitutionsReportGenerator < ReportGenerator
 
   # @return [String] a csv report
   def generate
-    CSV.generate do |csv|
-      csv << ['Co-Author Institution',
-              'Number of Collaborations']
-      database_values.each do |row|
-        csv << [row['name'], row['count']]
-      end
+    csv << CSV.generate_line(['Co-Author Institution',
+                              'Number of Collaborations'])
+    database_values.each do |row|
+      csv << CSV.generate_line([row['name'], row['count']])
     end
   end
 
   private
 
-  attr_reader :organization, :start_year, :end_year
+  attr_reader :organization, :start_year, :end_year, :csv
 
   # @return [ActiveRecord::Result]
   def database_values

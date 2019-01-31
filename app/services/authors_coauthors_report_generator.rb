@@ -3,43 +3,43 @@
 # Generate a downloadable report consisting of a list of authors the
 # authors in that organization have collaborated with, along with number of collaborations
 class AuthorsCoauthorsReportGenerator < ReportGenerator
+  # @param [Enumerator] output Enumerator to which to write the CSV.
   # @param [Integer] org_uri the identifier of the organization to generate
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
   # @param [Integer] end_year the maximum publication year on the report
-  def initialize(org_uri: nil, start_year:, end_year:, limit: nil, offset: nil)
+  # rubocop:disable Metrics/ParameterLists
+  def initialize(output, org_uri: nil, start_year:, end_year:, limit: nil, offset: nil)
+    @csv = output
     @organization = Organization.find(org_uri) if org_uri
     @start_year = start_year
     @end_year = end_year
     @offset = offset
     @limit = limit
   end
+  # rubocop:enable Metrics/ParameterLists
 
   # @return [String] a csv report
   def generate
-    CSV.generate do |csv|
-      csv << ['Author', 'Institution', 'Department', 'Co-Author',
-              'Co-Author Institution',
-              'Number of Collaborations', 'Co-Author Country']
-      database_values(sql).each do |row|
-        csv << expand_row(row)
-      end
+    csv << CSV.generate_line(['Author', 'Institution', 'Department', 'Co-Author',
+                              'Co-Author Institution',
+                              'Number of Collaborations', 'Co-Author Country'])
+    database_values(sql).each do |row|
+      csv << CSV.generate_line(expand_row(row))
     end
   end
 
   # @return [String] a csv report
   def count
-    CSV.generate do |csv|
-      csv << ['Count']
-      database_values("select count(*) from ( #{sql} ) sub").each do |row|
-        csv << [row['count']]
-      end
+    csv << CSV.generate_line(['Count'])
+    database_values("select count(*) from ( #{sql} ) sub").each do |row|
+      csv << CSV.generate_line([row['count']])
     end
   end
 
   private
 
-  attr_reader :organization, :start_year, :end_year, :offset, :limit
+  attr_reader :organization, :start_year, :end_year, :offset, :limit, :csv
 
   def expand_row(row)
     [row['name1'], join_list(row['institutions1']), join_list(row['departments1']),
