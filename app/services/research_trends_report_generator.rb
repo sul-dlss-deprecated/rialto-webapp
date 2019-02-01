@@ -6,33 +6,35 @@ require 'set'
 # limited by organizations
 # rubocop:disable Metrics/ClassLength
 class ResearchTrendsReportGenerator < ReportGenerator
+  # @param [Enumerator] output Enumerator to which to write the CSV.
   # @param [Integer] org_uri the identifier of the org to generate
   #   the report for
   # @param [Integer] start_year the minimum publication year on the report
   # @param [Integer] end_year the maximum publication year on the report
-  def initialize(org_uri: nil, start_year:, end_year:)
+  def initialize(output, org_uri: nil, start_year:, end_year:)
+    @csv = output
     @organization = Organization.find(org_uri) if org_uri
     @start_year = start_year
     @end_year = end_year
   end
 
   # @return [String] a csv report
+  # rubocop:disable Metrics/AbcSize
   def generate
-    CSV.generate do |csv|
-      years_totals, concepts, concept_totals = extract_years_and_concepts(database_values)
-      unless years_totals.empty?
-        csv << generate_headers(years_totals.keys)
-        concept_totals.each do |concept, total|
-          csv << generate_crosstab_row(concept, concepts[concept], years_totals.keys, total)
-        end
-        csv << generate_totals(years_totals)
-      end
+    years_totals, concepts, concept_totals = extract_years_and_concepts(database_values)
+    return if years_totals.empty?
+
+    csv << CSV.generate_line(generate_headers)
+    concept_totals.each do |concept, total|
+      csv << CSV.generate_line(generate_crosstab_row(concept, concepts[concept], total))
     end
+    csv << CSV.generate_line(generate_totals(years_totals))
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
-  attr_reader :organization, :start_year, :end_year
+  attr_reader :organization, :start_year, :end_year, :csv
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -57,19 +59,19 @@ class ResearchTrendsReportGenerator < ReportGenerator
     concept_totals.sort_by { |_concept, total| -total }.to_h
   end
 
-  def generate_headers(years)
+  def generate_headers
     headers = ['Concept']
-    Range.new(years.min, years.max).each do |year|
+    Range.new(start_year, end_year).each do |year|
       headers << year.to_s
     end
     headers << 'Total'
     headers
   end
 
-  def generate_crosstab_row(concept, concept_years, years, total)
+  def generate_crosstab_row(concept, concept_years, total)
     crosstab_row = [concept]
-    Range.new(years.min, years.max).each do |year|
-      crosstab_row << concept_years.fetch(year, 0)
+    Range.new(start_year, end_year).each do |year|
+      crosstab_row << concept_years.fetch(year.to_i, 0)
     end
     crosstab_row << total
     crosstab_row
@@ -78,7 +80,7 @@ class ResearchTrendsReportGenerator < ReportGenerator
   def generate_totals(years_totals)
     totals_row = ['TOTAL']
     grand_total = 0
-    Range.new(years_totals.keys.min, years_totals.keys.max).each do |year|
+    Range.new(start_year, end_year).each do |year|
       totals_row << years_totals.fetch(year, 0)
       grand_total += years_totals.fetch(year, 0)
     end

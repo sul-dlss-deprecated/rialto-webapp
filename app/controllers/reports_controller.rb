@@ -2,20 +2,32 @@
 
 # Provides the various CSV reports
 class ReportsController < ApplicationController
+  # rubocop:disable Metrics/MethodLength
   def show
-    data = if params.key?(:count)
-             generator.count(params.permit(:org_uri, :concept_uri, :start_year, :end_year))
-           else
-             generator.generate(params.permit(:org_uri, :concept_uri, :start_year, :end_year, :offset, :limit))
-           end
     respond_to do |format|
       format.csv do
-        send_data data, type: Mime[:csv], disposition: 'attachment; filename=report.csv'
+        add_headers
+        self.response_body = Enumerator.new do |out|
+          if params.key?(:count)
+            generator.count(out, params.permit(:org_uri, :concept_uri, :start_year, :end_year))
+          else
+            generator.generate(out, params.permit(:org_uri, :concept_uri, :start_year, :end_year, :offset, :limit))
+          end
+        end
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
+
+  def add_headers
+    headers['X-Accel-Buffering'] = 'no'
+    headers['Cache-Control'] = 'no-cache'
+    headers['Content-Type'] = 'text/csv; charset=utf-8'
+    headers['Content-Disposition'] = %(attachment; filename="report.csv")
+    headers['Last-Modified'] = Time.zone.now.ctime.to_s
+  end
 
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity
