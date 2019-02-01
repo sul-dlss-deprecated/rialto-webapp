@@ -1,7 +1,7 @@
 <template>
   <div class="form-group row">
     <label for="yearsRange" class="col-sm-2 col-form-label">Years: </label>
-    <vue-slider name="yearsRange" v-model="mutableRange" @input="onInput" :min=min :max=max class="col-sm-10"></vue-slider>
+    <vue-slider name="yearsRange" v-model="mutableRange" @input="onInput" :lazy=true :min=min :max=max class="col-sm-10"></vue-slider>
   </div>
 </template>
 
