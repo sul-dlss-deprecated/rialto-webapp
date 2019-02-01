@@ -11,7 +11,7 @@ class CrossDisciplinaryReportGenerator < ReportGenerator
   def initialize(output, concept_uri: nil, start_year: nil, end_year: nil)
     @csv = output
     @concept = Concept.find(concept_uri) if concept_uri
-    @end_year = end_year.to_i || Time.now.year
+    @end_year = end_year.nil? ? Time.now.year : end_year.to_i
     @start_year = start_year.nil? ? @end_year - 10 : start_year.to_i
   end
 

@@ -3,7 +3,7 @@
     <h1>Collaboration Report</h1>
     <div class="form-group">
       <div class="row">
-        <input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />
+        <!--<input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />-->
         <label for="school" class="col-form-label col-sm-2">School: </label>
         <select name="school" class="col-sm-10" v-model="selectedSchool" @change="loadDepartments">
           <option v-for="school in schools" :value="school">{{ school.label }}</option>
@@ -13,12 +13,12 @@
           <option v-for="department in departments" :value="department">{{ department.label }}</option>
         </select>
       </div>
-      <div class="row">
-        <input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />
-        <label class="form-check-label col-sm-2" for="all">All Stanford</label>
-      </div>
+      <!--<div class="row">-->
+        <!--<input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />-->
+        <!--<label class="form-check-label col-sm-2" for="all">All Stanford</label>-->
+      <!--</div>-->
     </div>
-    <YearSlider v-model="selectedYearsRange"></YearSlider>
+    <YearSlider v-model="selectedYearsRange" v-bind:maxRange="5"></YearSlider>
     <div class="form-group row">
       <label for="reportType" class="col-sm-2 col-form-label">Report type: </label>
       <select name="reportType" v-model="selectedReportType">
@@ -99,7 +99,7 @@ export default {
       selectedDepartment: '',
       departments: [],
       selectedReportType: 'coauthor-countries',
-      selectedYearsRange: [2000, (new Date()).getFullYear()],
+      selectedYearsRange: [(new Date()).getFullYear()-5, (new Date()).getFullYear()],
       picked: 'part'
     }
   },
