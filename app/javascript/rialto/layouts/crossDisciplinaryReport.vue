@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     download: function() {
-      window.location = this.reportURL()
+      window.location = this.reportURL
     }
   }
 }
