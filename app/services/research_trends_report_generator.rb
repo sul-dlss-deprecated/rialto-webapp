@@ -80,7 +80,7 @@ class ResearchTrendsReportGenerator < ReportGenerator
   def generate_totals(years_totals)
     totals_row = ['TOTAL']
     grand_total = 0
-    Range.new(start_year, end_year).each do |year|
+    Range.new(start_year.to_i, end_year.to_i).each do |year|
       totals_row << years_totals.fetch(year, 0)
       grand_total += years_totals.fetch(year, 0)
     end

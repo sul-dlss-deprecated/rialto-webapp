@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ResearchTrendsReportGenerator do
   subject(:report) do
     output = +''
-    described_class.generate(output, org_uri: organization_uri, start_year: 2015, end_year: 2019)
+    described_class.generate(output, org_uri: organization_uri, start_year: '2015', end_year: '2019')
     output
   end
 
