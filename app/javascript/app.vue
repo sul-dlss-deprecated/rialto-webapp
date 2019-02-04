@@ -6,10 +6,10 @@
       <a class="navbar-brand" href="/">Stanford Libraries</a>
     </nav>
     <header class="masthead row">
-      <div class="col-sm-2 col-md-2 col-xl-2 media">
-        <h1 class="site-title media-body">Rialto</h1><img class="media" src="beta.png">
+      <div class="col-sm-4 col-md-4 col-xl-4 media">
+        <h1 class="site-title media-body">Rialto <span class="badge badge-pill badge-light">BETA</span></h1>
       </div>
-      <div class="col-md-6 col-xl-7 d-none d-md-block">
+      <div class="col-md-4 col-xl-5 d-none d-md-block">
       </div>
       <div class="col-sm-4 col-md-3 col-xl-2 d-none d-md-block">
         <Types/>
@@ -72,6 +72,9 @@ export default {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
       font-weight: 200;
+      .badge {
+        font-family: 'Source Sans Pro', sans-serif;
+      }
     }
   }
 
