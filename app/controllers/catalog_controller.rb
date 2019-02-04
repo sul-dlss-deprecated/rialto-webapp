@@ -105,7 +105,7 @@ class CatalogController < ApplicationController
       pc.add_index_field 'department_label_ssim', label: 'Department'
       pc.add_index_field 'school_label_ssim', label: 'School'
       pc.add_index_field 'institute_label_ssim', label: 'Institute'
-      pc.add_index_field 'institution_label_ssim', label: 'University'
+      pc.add_index_field 'institution_label_ssim', label: 'Institution'
     end
 
     config.for_display_type 'Publication' do |pc|
@@ -141,7 +141,7 @@ class CatalogController < ApplicationController
       pc.add_show_field 'name_tsim', label: 'Name'
       pc.add_show_field 'department_label_ssim', label: 'Department'
       pc.add_show_field 'school_label_ssim', label: 'School'
-      pc.add_show_field 'institution_label_ssim', label: 'University'
+      pc.add_show_field 'institution_label_ssim', label: 'Institution'
       pc.add_show_field 'publications', accessor: :person_publications, unless: lambda { |_context, _field_config, document|
         document.person_publications.nil?
       }
