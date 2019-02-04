@@ -124,6 +124,7 @@ jobs:
       - run:
           name: Build Image & Register Task
           command: |
+            echo $MASTER_KEY > config/master.key
             ./bin/build
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push suldlss/rialto-webapp:latest
