@@ -24,8 +24,10 @@ import ResultList from 'blacklight/result/list'
 import FacetList from 'blacklight/facet/list'
 import Pagination from 'blacklight/search/pagination'
 import Filters from 'blacklight/search/filters'
+import HttpError from 'blacklight/mixins/httpError'
 
 export default {
+  mixins: [HttpError],
   components: {
     SearchControl,
     ResultList,
@@ -50,7 +52,7 @@ export default {
           this.result = new Result(response.data)
           this.$Progress.finish()
       }, function(error){
-          console.error(error.statusText);
+          this.handleHttpError(error);
       });
     },
     load: function(route) {

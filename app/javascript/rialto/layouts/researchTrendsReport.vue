@@ -50,8 +50,10 @@
 import ReportTable from 'rialto/reports/table'
 import YearSlider from 'rialto/reports/yearSlider'
 import SourceInfo from 'rialto/reports/sourceInfo'
+import HttpError from 'rialto/mixins/httpError'
 
 export default {
+  mixins: [HttpError],
   components: {
     ReportTable,
     YearSlider,
@@ -71,7 +73,7 @@ export default {
     var result = this.$http.get('/schools').then(function(response){
         this.schools = response.data
     }, function(error){
-        console.error(error.statusText);
+        this.handleHttpError(error);
     });
     this.loadDepartments();
   },
@@ -103,7 +105,7 @@ export default {
         var result = this.$http.get(this.loadDepartmentsUrl()).then(function(response){
             this.departments = response.data;
         }, function(error){
-            console.error(error.statusText);
+            this.handleHttpError(error);
         })
     }
 
