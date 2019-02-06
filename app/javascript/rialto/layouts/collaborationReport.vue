@@ -3,7 +3,7 @@
     <h1>Collaboration Report</h1>
     <div class="form-group">
       <div class="row">
-        <!--<input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />-->
+        <input type="radio" name="part" id="part" value="part" class="form-check-input" v-model="picked" />
         <label for="school" class="col-form-label col-sm-2">School: </label>
         <select name="school" class="col-sm-10" v-model="selectedSchool" @change="loadDepartments">
           <option v-for="school in schools" :value="school">{{ school.label }}</option>
@@ -13,12 +13,12 @@
           <option v-for="department in departments" :value="department">{{ department.label }}</option>
         </select>
       </div>
-      <!--<div class="row">-->
-        <!--<input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />-->
-        <!--<label class="form-check-label col-sm-2" for="all">All Stanford</label>-->
-      <!--</div>-->
+      <div class="row">
+        <input type="radio" name="all" id="all" value="all" class="form-check-input" v-model="picked" />
+        <label class="form-check-label col-sm-2" for="all">All Stanford</label>
+      </div>
     </div>
-    <YearSlider v-model="selectedYearsRange" v-bind:maxRange="5"></YearSlider>
+    <YearSlider v-model="selectedYearsRange"></YearSlider>
     <div class="form-group row">
       <label for="reportType" class="col-sm-2 col-form-label">Report type: </label>
       <select name="reportType" v-model="selectedReportType">
@@ -58,9 +58,9 @@
       <li><a href="#" v-on:click="download(false)">Download summary</a></li>
       <li v-if="selectedReportType != 'coauthors'"><a href="#" v-on:click="download(true)">Download details</a></li>
     </ul>
-    <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated" v-bind:detailsField="detailsField"></ReportTable><br />
+    <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated" v-bind:detailsField="detailsField" v-on:change-parsedCSV="parsedCSV = $event"></ReportTable><br />
     <div v-if="selectedReportType === 'coauthor-countries'">
-      <Choropleth v-bind:reportURL="reportURL"/>
+      <Choropleth v-bind:parsedCSV="parsedCSV"/>
     </div>
 
     <div class="alert alert-light">
@@ -101,7 +101,8 @@ export default {
       departments: [],
       selectedReportType: 'coauthor-countries',
       selectedYearsRange: [(new Date()).getFullYear()-5, (new Date()).getFullYear()],
-      picked: 'part'
+      picked: 'part',
+      parsedCSV: null
     }
   },
   created() {
