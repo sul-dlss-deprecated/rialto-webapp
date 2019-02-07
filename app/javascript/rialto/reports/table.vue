@@ -53,7 +53,7 @@ export default {
           this.parsedCSV = null
           return
       }
-      this.$Progress.start()
+      this.$root.$emit('progress-start')
       if (this.paginated) {
           d3.text(newVal + '&count=true', (data) => {
               this.count = d3.csv.parseRows(data)[1][0];
@@ -71,7 +71,7 @@ export default {
         } else {
             this.detailsFieldIndex = null;
         }
-        this.$Progress.finish()
+        this.$root.$emit('progress-stop')
       })
     },
   },
@@ -94,11 +94,11 @@ export default {
         return '&offset=' + offset + '&limit=' + this.rowsPerPage
     },
     change_page: function(offset) {
-      this.$Progress.start()
+      this.$root.$emit('progress-start')
       const url = this.dataSource + this.page_qs(offset);
       d3.text(url, (data) => {
           this.parsedCSV = d3.csv.parseRows(data);
-          this.$Progress.finish()
+          this.$root.$emit('progress-stop')
       })
     },
     download: function(value) {
