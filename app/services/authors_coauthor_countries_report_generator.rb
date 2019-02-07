@@ -92,7 +92,7 @@ class AuthorsCoauthorCountriesReportGenerator < ReportGenerator
                  " AND p1.metadata -> $#{holder += 1} ? $#{holder += 1} "
                else
                  # This makes sure that all people includes the same people as when filtering by school / dept.
-                 " AND (jsonb_array_length(p1.metadata -> 'schools') != 0 OR jsonb_array_length(p1.metadata -> 'departments') != 0)"
+                 " AND (jsonb_array_length(p1.metadata -> 'schools') != 0 OR jsonb_array_length(p1.metadata -> 'departments') != 0) "
                end
     sql_str << " AND p2i.country = $#{holder += 1} " if country_label
     sql_str << if detail

@@ -32,6 +32,7 @@
 <script>
 import d3 from 'd3'
 import Pagination from 'rialto/reports/pagination'
+import axios from 'axios';
 
 export default {
   components: {
@@ -55,25 +56,30 @@ export default {
       }
       this.$root.$emit('progress-start')
       if (this.paginated) {
-          d3.text(newVal + '&count=true', (data) => {
-              this.count = d3.csv.parseRows(data)[1][0];
-          });
+          axios.get(newVal + '&count=true', {responseType: 'text', timeout: 0})
+              .then(response => {
+                  this.count = d3.csv.parseRows(response.data)[1][0];
+              })
           newVal += this.page_qs(0)
       }
-      d3.text(newVal, (data) => {
-        this.parsedCSV = d3.csv.parseRows(data);
-        if (this.detailsFieldLabel) {
-            for (let i = 0; i < this.parsedCSV[0].length; i++) {
-                if (this.parsedCSV[0][i] == this.detailsFieldLabel) {
-                    this.detailsFieldIndex = i;
-                }
-            }
-        } else {
-            this.detailsFieldIndex = null;
-        }
-        this.$root.$emit('progress-stop')
-      })
+      axios.get(newVal, {responseType: 'text', timeout: 0})
+          .then(response => {
+              this.parsedCSV = d3.csv.parseRows(response.data)
+              if (this.detailsFieldLabel) {
+                  for (let i = 0; i < this.parsedCSV[0].length; i++) {
+                      if (this.parsedCSV[0][i] == this.detailsFieldLabel) {
+                          this.detailsFieldIndex = i;
+                      }
+                  }
+              } else {
+                  this.detailsFieldIndex = null;
+              }
+              this.$root.$emit('progress-stop')
+          })
     },
+    parsedCSV(newVal, oldVal) {
+        this.$emit('change-parsedCSV', newVal);
+    }
   },
   computed: {
     detailsFieldLabel: function() {
@@ -96,10 +102,11 @@ export default {
     change_page: function(offset) {
       this.$root.$emit('progress-start')
       const url = this.dataSource + this.page_qs(offset);
-      d3.text(url, (data) => {
-          this.parsedCSV = d3.csv.parseRows(data);
-          this.$root.$emit('progress-stop')
-      })
+      axios.get(url, {responseType: 'text', timeout: 0})
+          .then(response => {
+              this.parsedCSV = d3.csv.parseRows(response.data)
+              this.$root.$emit('progress-stop')
+          })
     },
     download: function(value) {
         const url = this.dataSource + '&details=true&' + this.detailsFieldParam + '=' + value;

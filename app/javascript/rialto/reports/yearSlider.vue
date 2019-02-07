@@ -1,7 +1,7 @@
 <template>
   <div class="form-group row">
     <label for="yearsRange" class="col-sm-2 col-form-label">Years: </label>
-    <vue-slider name="yearsRange" v-model="mutableRange" @input="onInput" :max-range=maxRange :processDragable=true :lazy=true :min=min :max=max class="col-sm-10"></vue-slider>
+    <vue-slider name="yearsRange" v-model="mutableRange" @input="onInput" :processDragable=true :lazy=true :min=min :max=max class="col-sm-10"></vue-slider>
   </div>
 </template>
 
@@ -21,11 +21,7 @@ export default {
     min: {
       type: Number,
       default: 2000
-    },
-    maxRange: {
-      type: Number,
-      default: null
-    },
+    }
   },
   data: function () {
       return {

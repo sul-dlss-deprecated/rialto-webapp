@@ -19,7 +19,7 @@
         <label class="form-check-label col-sm-2" for="all">All Stanford</label>
       </div>
     </div>
-    <YearSlider v-model="selectedYearsRange" v-bind:maxRange="10"></YearSlider>
+    <YearSlider v-model="selectedYearsRange"></YearSlider>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download">Download</a></li>
     </ul>
@@ -63,7 +63,7 @@ export default {
       schools: [],
       selectedDepartment: '',
       departments: [],
-      selectedYearsRange: [(new Date()).getFullYear()-10, (new Date()).getFullYear()],
+      selectedYearsRange: [(new Date()).getFullYear()-5, (new Date()).getFullYear()],
       picked: 'part'
     }
   },
