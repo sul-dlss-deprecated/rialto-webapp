@@ -15,4 +15,9 @@ class ReportGenerator
   def self.count(output, params)
     new(output, params.to_h.symbolize_keys).count
   end
+
+  # @param params [ActionController::Parameters]
+  def self.details(output, params)
+    new(output, params.to_h.symbolize_keys).details
+  end
 end
