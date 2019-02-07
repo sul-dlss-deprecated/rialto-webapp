@@ -1,7 +1,9 @@
 <template>
 
   <div id="app">
-    <vue-progress-bar></vue-progress-bar>
+    <div class="progress" v-show="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Working ...</div>
+    </div>
     <nav class="navbar navbar-expand-md" role="navigation">
       <a class="navbar-brand" href="/">Stanford Libraries</a>
     </nav>
@@ -37,7 +39,21 @@ import Types from 'rialto/types'
 export default {
   components: {
     Types
-  }
+  },
+   data: function () {
+        return {
+            progress: false
+        }
+    },
+    created: function () {
+        this.$root.$on('progress-start', () => {
+            this.progress = true
+        })
+
+        this.$root.$on('progress-stop', () => {
+            this.progress = false
+        })
+    },
 }
 </script>
 

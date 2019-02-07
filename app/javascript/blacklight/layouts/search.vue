@@ -45,10 +45,10 @@ export default {
       return '/catalog/' + solrUrl.split('?', 2)[1]
     },
     retrieveResults: function(url) {
-      this.$Progress.start()
+      this.$root.$emit('progress-start')
       this.$http.get(url).then(function(response){
           this.result = new Result(response.data)
-          this.$Progress.finish()
+          this.$root.$emit('progress-stop')
       }, function(error){
           console.error(error.statusText);
       });
