@@ -32,7 +32,7 @@ export default {
             }
             function unpack(rows, key) {
                 return rows.map(function(row) {
-                    if (row['Co-Author Country'] != 'United States') {
+                    if (row['Co-Author Country'] != 'United States of America') {
                         return row[key];
                     }
                 });
