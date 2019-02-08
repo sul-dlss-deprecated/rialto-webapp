@@ -230,7 +230,7 @@ RSpec.describe AuthorsCoauthorInstitutionsReportGenerator do
 
       it 'is a report' do
         expect(CSV.parse(report)).to eq [
-          ['Collab Institution', 'Collab Name', 'Name', 'Title', 'Year'],
+          ['Co-author Institution', 'Co-Author', 'Stanford Author', 'Publication Title', 'Publication Year'],
           ['Ghent', 'Patrick Hoch', 'John Smith', 'Publication 3', '2016'],
           ['Ghent', 'Patrick Hoch', 'John Smith', 'Publication 4', '2018'],
           ['Ghent', 'Patricia Koch', 'Jane Smith', 'Publication 6', '2018']

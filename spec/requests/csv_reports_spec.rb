@@ -11,7 +11,7 @@ RSpec.describe 'CSV reports', type: :request do
   context 'when the coauthors report is requested' do
     it 'returns CSV data' do
       get '/reports/coauthors.csv?org_uri=http://example.com/institution1&start_year=2005&end_year=2015'
-      expect(response.body).to eq "Author,Institution,Department,Co-Author,Co-Author Institution,Number of Collaborations,Co-Author Country\n"
+      expect(response.body).to eq "Author,Institution,Department,Co-Author,Co-Author Institution,Co-Author Country,Number of Collaborations\n"
       expect(response.content_type).to eq 'text/csv'
     end
   end

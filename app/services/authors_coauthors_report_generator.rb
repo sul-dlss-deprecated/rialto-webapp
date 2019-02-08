@@ -22,8 +22,8 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
   # @return [String] a csv report
   def generate
     csv << CSV.generate_line(['Author', 'Institution', 'Department', 'Co-Author',
-                              'Co-Author Institution',
-                              'Number of Collaborations', 'Co-Author Country'])
+                              'Co-Author Institution', 'Co-Author Country',
+                              'Number of Collaborations'])
     database_values(sql).each do |row|
       csv << CSV.generate_line(expand_row(row))
     end
@@ -44,7 +44,7 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
   def expand_row(row)
     [row['name1'], join_list(row['institutions1']), join_list(row['departments1']),
      row['name2'], join_list(row['institutions2']),
-     row['count'], join_list(row['countries2'])]
+     join_list(row['countries2']), row['count']]
   end
 
   def join_list(list)

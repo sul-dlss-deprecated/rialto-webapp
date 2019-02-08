@@ -30,7 +30,7 @@ class AuthorsCoauthorInstitutionsReportGenerator < ReportGenerator
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def details
-    csv << CSV.generate_line(['Collab Institution', 'Collab Name', 'Name', 'Title', 'Year'])
+    csv << CSV.generate_line(['Co-author Institution', 'Co-Author', 'Stanford Author', 'Publication Title', 'Publication Year'])
 
     offset = 0
     limit_size = 10_000
