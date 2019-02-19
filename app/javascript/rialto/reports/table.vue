@@ -60,7 +60,7 @@ export default {
               .then(response => {
                   this.count = d3.csv.parseRows(response.data)[1][0];
               }).catch(error => {
-                  alert('An error occurred retrieving the data.');
+                  alert('The report could not be produced, perhaps due to the size of the data requested.  You can try again, reducing the scope of the data requested.');
               })
           newVal += this.page_qs(0)
       }
@@ -79,7 +79,7 @@ export default {
               this.$root.$emit('progress-stop');
           }).catch(error => {
               this.$root.$emit('progress-stop');
-              alert('An error occurred retrieving the data.');
+              alert('The report could not be produced, perhaps due to the size of the data requested.  You can try again, reducing the scope of the data requested.');
           });
     },
     parsedCSV(newVal, oldVal) {
@@ -113,7 +113,7 @@ export default {
               this.$root.$emit('progress-stop')
           }).catch(error => {
               this.$root.$emit('progress-stop');
-              alert('An error occurred retrieving the data.');
+              alert('The report could not be produced, perhaps due to the size of the data requested.  You can try again, reducing the scope of the data requested.');
           });
     },
     download: function(value) {
