@@ -59,6 +59,8 @@ export default {
           axios.get(newVal + '&count=true', {responseType: 'text', timeout: 0})
               .then(response => {
                   this.count = d3.csv.parseRows(response.data)[1][0];
+              }).catch(error => {
+                  alert('An error occurred retrieving the data.');
               })
           newVal += this.page_qs(0)
       }
@@ -74,8 +76,11 @@ export default {
               } else {
                   this.detailsFieldIndex = null;
               }
-              this.$root.$emit('progress-stop')
-          })
+              this.$root.$emit('progress-stop');
+          }).catch(error => {
+              this.$root.$emit('progress-stop');
+              alert('An error occurred retrieving the data.');
+          });
     },
     parsedCSV(newVal, oldVal) {
         this.$emit('change-parsedCSV', newVal);
@@ -106,7 +111,10 @@ export default {
           .then(response => {
               this.parsedCSV = d3.csv.parseRows(response.data)
               this.$root.$emit('progress-stop')
-          })
+          }).catch(error => {
+              this.$root.$emit('progress-stop');
+              alert('An error occurred retrieving the data.');
+          });
     },
     download: function(value) {
         const url = this.dataSource + '&details=true&' + this.detailsFieldParam + '=' + value;
