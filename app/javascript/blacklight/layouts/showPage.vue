@@ -27,7 +27,7 @@ export default {
           this.item = response.data.data
       }, function(error){
           console.error(error.statusText);
-          alert("There was an error retrieveing this record")
+          alert("There was an error retrieving this record.")
       })
     }
   },
