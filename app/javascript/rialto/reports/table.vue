@@ -55,6 +55,7 @@ export default {
           return
       }
       this.$root.$emit('progress-start')
+      this.parsedCSV = null
       if (this.paginated) {
           axios.get(newVal + '&count=true', {responseType: 'text', timeout: 0})
               .then(response => {

@@ -65,7 +65,7 @@
       <li v-if="selectedReportType != 'coauthors'"><a href="#" v-on:click="download(true)">Download details</a></li>
     </ul>
     <ReportTable v-bind:data-source="reportURL" v-bind:paginated="isPaginated" v-bind:detailsField="detailsField" v-on:change-parsedCSV="parsedCSV = $event"></ReportTable><br />
-    <div v-if="selectedReportType === 'coauthor-countries'">
+    <div v-if="selectedReportType === 'coauthor-countries'" v-show="parsedCSV">
       <Choropleth v-bind:parsedCSV="parsedCSV"/>
     </div>
 
