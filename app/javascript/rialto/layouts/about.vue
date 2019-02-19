@@ -22,6 +22,14 @@
       <li>research areas are determined at the level of a journal (so all publications in a given journal will have the same research areas)</li>
       <li>data is updated monthly, except for grant data from SeRA, which is currently a one-time load from January 2019 (note: we expect to have automated up-to-date grant data in the future)</li>
     </ul>
+
+    <p>Note that this application is in Beta and has a number of known issues, including but not limited to those below:</p>
+
+    <ul>
+       <li>Performance issues - the application may behave slowly at times, particularly if multiple users are running reports at the same time.</li>
+       <li>Timing out - large queries, such as as for the whole university or over more than a few years will casue "time-out" errors preventing the report from completing.</li>
+    </ul>
+
     <p>More detailed information about the data sources may be found on our <a href="https://github.com/sul-dlss/rialto/wiki/Data-Sources-and-Issues-with-Data">project wiki page</a>.</p>
   </section>
 </template>
