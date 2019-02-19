@@ -106,7 +106,7 @@ export default {
       selectedDepartment: '',
       departments: [],
       selectedReportType: 'coauthor-countries',
-      selectedYearsRange: [(new Date()).getFullYear()-5, (new Date()).getFullYear()],
+      selectedYearsRange: [(new Date()).getFullYear()-3, (new Date()).getFullYear()],
       picked: 'part',
       parsedCSV: null
     }
