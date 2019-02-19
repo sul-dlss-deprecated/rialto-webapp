@@ -31,13 +31,17 @@
         <p>This report aggregates and counts the number of co-authors at each institution for papers authored by Stanford
             researchers. You can filter by school, department and date of publication. Note that it includes Stanford
             co-authors, so Stanford University will often be the top result, which indicates Stanford authors often
-            collaborate with other Stanford authors. You may also download the results as a CSV file.</p>
+            collaborate with other Stanford authors. You may also download the results as a CSV file.  Note that selecting
+            more than several years of data may cause the report to time-out with an error message.  We are aware of the
+            current limitations - please contact us if you would like more data to discuss.</p>
     </div>
     <div v-if="selectedReportType == 'coauthor-countries'" class="alert alert-light">
         <p>This report aggregates and counts the number of co-authors in each country for papers authored by Stanford
             researchers. You can filter by school, department and date of publication. Note that it includes Stanford
             co-authors, so the count of the USA will include many instances of inter-Stanford collaborations. You may
-            also download the results as a CSV file.</p>
+            also download the results as a CSV file.  Note that selecting more than several years of data may cause the
+            report to time-out with an error message.  We are aware of the current limitations -
+            please contact us if you would like more data to discuss.</p>
     </div>
     <div v-if="selectedReportType == 'coauthors'" class="alert alert-light">
         <p>This report includes data that can be used to perform further analysis of co-authors collaborations. The
@@ -52,7 +56,9 @@
 
         <p>By design, this report will include a lot of data if you select a broad filtering, and only a limited result
             set is shown on screen. You may download the full result set as a CSV, but it may take some time to generate
-            and may be a very large file to download.</p>
+            and may be a very large file to download. Note that selecting more than several years of data may cause the report
+            to time-out with an error message.  We are aware of the current limitations -
+            please contact us if you would like more data to discuss.</p>
     </div>
     <ul v-if="reportURL">
       <li><a href="#" v-on:click="download(false)">Download summary</a></li>
