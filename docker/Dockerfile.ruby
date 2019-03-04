@@ -1,7 +1,6 @@
-FROM ruby:2.5-alpine3.8
+FROM ruby:2.5-alpine3.9
 
 # Create and set the working directory as /opt
-RUN mkdir /opt
 WORKDIR /opt
 
 # Expose port 3000
@@ -23,7 +22,11 @@ RUN apk --no-cache add \
 # Build argument for injecting native packages at build time via docker-compose
 RUN apk --no-cache add --virtual build-dependencies \
   build-base \
+  libxml2-dev \
+  libxslt-dev \
+  gmp-dev \
   postgresql-dev && \
   gem install bundler && \
+  bundle config build.nokogiri --use-system-libraries && \
   bundle install --without development test \
   && apk del build-dependencies
