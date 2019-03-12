@@ -23,9 +23,9 @@ RUN apk --no-cache add \
 RUN apk --no-cache add --virtual build-dependencies \
   build-base \
   libxml2-dev \
-  libxslt-dev \
   gmp-dev \
   postgresql-dev && \
+  apk --no-cache add libxslt-dev && \
   gem install bundler && \
   bundle config build.nokogiri --use-system-libraries && \
   bundle install --without development test \
