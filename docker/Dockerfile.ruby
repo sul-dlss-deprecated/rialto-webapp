@@ -16,7 +16,8 @@ ENV BUNDLER_VERSION 2.0.1
 
 RUN apk --no-cache add \
   libpq \
-  tzdata
+  tzdata \
+  libxslt-dev
 
 
 # Build argument for injecting native packages at build time via docker-compose
@@ -25,7 +26,6 @@ RUN apk --no-cache add --virtual build-dependencies \
   libxml2-dev \
   gmp-dev \
   postgresql-dev && \
-  apk --no-cache add libxslt-dev && \
   gem install bundler && \
   bundle config build.nokogiri --use-system-libraries && \
   bundle install --without development test \
