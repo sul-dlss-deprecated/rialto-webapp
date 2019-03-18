@@ -107,7 +107,7 @@ jobs:
 
   register_image:
     docker:
-      - image: circleci/ruby:2.5.3-stretch-node
+      - image: circleci/ruby:2.5.4-stretch-node
         environment:
           RAILS_ENV=production
     steps:
