@@ -49,6 +49,7 @@ class AuthorsCoauthorsReportGenerator < ReportGenerator
 
   def join_list(list)
     return '' if !list || list == 'null'
+
     JSON.parse(list).sort.join('; ')
   end
 

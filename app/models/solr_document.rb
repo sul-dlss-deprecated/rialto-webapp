@@ -26,6 +26,7 @@ class SolrDocument
   def linked_dois
     dois = fetch('doi_ssim', [])
     return '' if dois.empty?
+
     dois.map do |doi|
       "<a href=\"#{doi}\">#{doi.remove(DOI_HTTP_PREFIX)}</a>"
     end.to_sentence.html_safe
@@ -66,6 +67,7 @@ class SolrDocument
   # rubocop:disable Metrics/MethodLength
   def person_grants
     return @grants || nil unless @grants.nil?
+
     search_service = Blacklight::SearchService.new(config: blacklight_config,
                                                    user_params: { pi: id },
                                                    search_builder_class: GrantSearchBuilder)
@@ -92,6 +94,7 @@ class SolrDocument
   # rubocop:disable Metrics/MethodLength
   def linked_publications(params)
     return @publications || nil unless @publications.nil?
+
     search_service = Blacklight::SearchService.new(config: blacklight_config,
                                                    user_params: params,
                                                    search_builder_class: PublicationSearchBuilder)

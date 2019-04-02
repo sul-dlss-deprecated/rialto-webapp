@@ -17,6 +17,7 @@ class PublicationSearchBuilder < ::SearchBuilder
   def type_filter
     return "authors_ssim:\"#{blacklight_params.fetch(:author)}\"" if blacklight_params.key?(:author)
     return "grants_ssim:\"#{blacklight_params.fetch(:grant)}\"" if blacklight_params.key?(:grant)
+
     raise ArgumentError, "No valid parameters were provided: #{params}"
   end
 end

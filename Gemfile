@@ -51,7 +51,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
-  gem 'rubocop', '~> 0.58.2'
+  gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
