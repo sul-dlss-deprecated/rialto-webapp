@@ -43,7 +43,12 @@ Backend:
 rake spec
 ```
 
-To bring up a test database in a docker container:
+To bring up a test database in a Docker container:
 ```
-docker run --rm --name rialto_test_db -e POSTGRES_DB=rialto_test -p "5432:5432" -e POSTGRES_USER=$USER -d postgres:9.6.2-alpine
+docker run --rm --name rialto_test_db -e POSTGRES_DB=rialto_test -p 5432:5432 -e POSTGRES_USER=$USER -d postgres:9.6.2-alpine
+```
+
+To bring up a test Solr in a Docker container:
+```
+docker run -d -p 8983:8983 -v $PWD/solr/conf:/myconfig solr:7 solr-create -c blacklight-core -d /myconfig
 ```
