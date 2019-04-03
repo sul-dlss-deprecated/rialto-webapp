@@ -1,6 +1,15 @@
-version: 2
+version: 2.1
+executors:
+  docker-publisher:
+    environment:
+      IMAGE_NAME: suldlss/rialto-webapp
+    docker:
+    - image: circleci/ruby:2.5.4-stretch-node
+      environment:
+        RAILS_ENV=production
+
 jobs:
-  build:
+  test:
     parallelism: 3
     docker:
       - image: circleci/ruby:2.5.4-stretch-node
@@ -19,39 +28,39 @@ jobs:
       - image: solr:7
         command: bin/solr -cloud -noprompt -f -p 8983
     steps:
-      - checkout
+    - checkout
 
-      # Upgrade bundler
-      - run:
-          name: Install Bundler
-          command: gem install bundler
+    # Upgrade bundler
+    - run:
+        name: Install Bundler
+        command: gem install bundler
 
-      # Which version of bundler?
-      - run:
-          name: Which bundler?
-          command: bundle -v
+    # Which version of bundler?
+    - run:
+        name: Which bundler?
+        command: bundle -v
 
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
-            - rails-demo-bundle-v2-
+    # Restore bundle cache
+    - restore_cache:
+        keys:
+        - app-bundle-v2-{{ checksum "Gemfile.lock" }}
+        - app-bundle-v2-
 
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
+    - run:
+        name: Bundle Install
+        command: bundle check || bundle install
 
-      # Store bundle cache
-      - save_cache:
-          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+    # Store bundle cache
+    - save_cache:
+        key: app-bundle-v2-{{ checksum "Gemfile.lock" }}
+        paths:
+        - vendor/bundle
 
       # Only necessary if app uses webpacker or yarn in some other way
       - restore_cache:
           keys:
-            - rails-demo-yarn-{{ checksum "yarn.lock" }}
-            - rails-demo-yarn-
+            - app-yarn-{{ checksum "yarn.lock" }}
+            - app-yarn-
 
       - run:
           name: Yarn Install
@@ -59,7 +68,7 @@ jobs:
 
       # Store yarn / webpacker cache
       - save_cache:
-          key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+          key: app-yarn-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
@@ -80,66 +89,119 @@ jobs:
             curl -H "Content-type:application/octet-stream" --data-binary @solr_config.zip "http://localhost:8983/solr/admin/configs?action=UPLOAD&name=blacklight-core"
             curl -H 'Content-type: application/json' http://localhost:8983/api/collections/ -d '{create: {name: blacklight-core, config: blacklight-core, numShards: 1}}'
 
-      - run:
-          name: Check styles using rubocop
-          command: bundle exec rubocop
+    - run:
+        name: Check styles using rubocop
+        command: bundle exec rubocop
 
-      # Run rspec in parallel
-      - run:
-          name: Run rspec in parallel
-          command: |
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+    # Run rspec in parallel
+    - run:
+        name: Run rspec in parallel
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out test_results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      # Run Javascript Unit tests
-      - run:
-          name: Run javascript unit tests
-          command: npm test
+    # Run Javascript Unit tests
+    - run:
+        name: Run javascript unit tests
+        command: npm test
+    
+    # Save test results for timing analysis
+    - store_test_results:
+        path: test_results
 
-
-
-      # Save test results for timing analysis
-      - store_test_results:
-          path: test_results
-
-  register_image:
-    docker:
-      - image: circleci/ruby:2.5.4-stretch-node
-        environment:
-          RAILS_ENV=production
+  build-image:
+    executor: docker-publisher
     steps:
-      - setup_remote_docker:
-          version: 18.05.0-ce
-      - checkout
-      # Upgrade bundler
-      - run:
-          name: Install Bundler
-          command: gem install bundler
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-      - run:
-          name: Build Image & Register Task
-          command: |
-            echo $MASTER_KEY > config/master.key
-            ./bin/build
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push suldlss/rialto-webapp:latest
+    - checkout
+    - setup_remote_docker
+    - run:
+        name: Build Docker image
+        command: |
+          ./bin/build
+
+    - run:
+        name: Archive Docker image
+        command: |
+          docker save -o image.tar $IMAGE_NAME
+
+    - persist_to_workspace:
+        root: .
+        paths:
+        - ./image.tar
+  publish-latest:
+    executor: docker-publisher
+    steps:
+    - attach_workspace:
+        at: /tmp/workspace
+    - setup_remote_docker
+    - run:
+        name: Load archived Docker image
+        command: |
+          docker load -i /tmp/workspace/image.tar
+
+    - run:
+        name: Publish Docker Image to Docker Hub
+        command: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+          docker push $IMAGE_NAME:latest
+
+  publish-tag:
+    executor: docker-publisher
+    steps:
+    - attach_workspace:
+        at: /tmp/workspace
+    - setup_remote_docker
+    - run:
+        name: Load archived Docker image
+        command: |
+          docker load -i /tmp/workspace/image.tar
+
+    - run:
+        name: Publish Docker Image to Docker Hub
+        command: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+          docker tag $IMAGE_NAME:latest $IMAGE_NAME:$CIRCLE_TAG
+          docker push $IMAGE_NAME:$CIRCLE_TAG
 
 workflows:
   version: 2
 
+  test:
+    jobs:
+    - test:
+        filters:
+          branches:
+            ignore: master
   build:
     jobs:
-      - build:
-          filters:
-            branches:
-              ignore: master
-      - register_image:
-          requires:
-          filters:
-            branches:
-              only: master
+    - build-image:
+        filters:
+          branches:
+            # only: master
+            only: circleci
+    - publish-latest:
+        requires:
+        - build-image
+        filters:
+          branches:
+            # only: master
+            only: circleci
+  build-tags:
+    jobs:
+    - build-image:
+        filters:
+          tags:
+            only: /^[0-9]+\.[0-9]+\.[0-9]+/
+          branches:
+            ignore: /.*/
+    - publish-tag:
+        requires:
+        - build-image
+        filters:
+          tags:
+            only: /^[0-9]+\.[0-9]+\.[0-9]+/
+          branches:
+            ignore: /.*/
