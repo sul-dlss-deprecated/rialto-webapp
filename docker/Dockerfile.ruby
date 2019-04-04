@@ -1,4 +1,4 @@
-FROM ruby:2.5-alpine3.9
+FROM ruby:2.6-alpine3.9
 
 # Create and set the working directory as /opt
 WORKDIR /opt

@@ -15,6 +15,7 @@ class GrantSearchBuilder < ::SearchBuilder
 
   def type_filter
     return "pi_ssim:\"#{blacklight_params.fetch(:pi)}\"" if blacklight_params.key?(:pi)
+
     raise ArgumentError, "No valid parameters were provided: #{params}"
   end
 end
