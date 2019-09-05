@@ -66,7 +66,7 @@ Once the new image has been successfully pushed, the container definitions for t
 
 Note that a member of the **Operations team** must approve and merge this PR, but the PR does not need to be merged before beginning the next section.
 
-Ops folks will typically trigger a production deployment upon merging the PR. In your terraform-aws PR, you may request that the person who approves and merges it deploy the changes to other environments (such as staging). In that case, you can consider your work done at this point. If on the other hand you prefer to handle the staging deployment yourself (e.g., iff you'd like to do extra testing), check out the next [two](https://github.com/sul-dlss/rialto-webapp#deploy-to-staging-environment) [sections](https://github.com/sul-dlss/rialto-webapp#deploy-to-production-environment) for the rest of the process.
+Ops folks will typically trigger a production deployment upon merging the PR. In your terraform-aws PR, you may request that the person who approves and merges it deploy the changes to other environments (such as staging). In that case, you can consider your work done at this point. If on the other hand you prefer to handle the staging deployment yourself (e.g., if you'd like to do extra testing), check out the next [two](https://github.com/sul-dlss/rialto-webapp#deploy-to-staging-environment) [sections](https://github.com/sul-dlss/rialto-webapp#deploy-to-production-environment) for the rest of the process.
 
 ### Deploy to staging environment
 
