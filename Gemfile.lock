@@ -45,12 +45,11 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     bigdecimal (1.4.4)
-    blacklight (7.0.1)
+    blacklight (7.1.0)
       deprecation
       globalid
       jbuilder (~> 2.7)
       kaminari (>= 0.15)
-      nokogiri (~> 1.6)
       rails (~> 5.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
@@ -114,7 +113,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     okcomputer (1.17.4)
     parallel (1.17.0)
-    parser (2.6.4.0)
+    parser (2.6.4.1)
       ast (~> 2.4.0)
     pg (1.1.4)
     psych (3.1.0)
