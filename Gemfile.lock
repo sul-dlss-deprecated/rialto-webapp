@@ -45,7 +45,7 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     bigdecimal (1.4.4)
-    blacklight (7.3.0)
+    blacklight (7.4.0)
       deprecation
       globalid
       jbuilder (~> 2.7)
