@@ -1,4 +1,5 @@
 # Rialto Webapp
+[![CircleCI](https://circleci.com/gh/sul-dlss/rialto-webapp/tree/master.svg?style=svg)](https://circleci.com/gh/sul-dlss/rialto-webapp/tree/master)
 [![](https://images.microbadger.com/badges/image/suldlss/rialto-webapp.svg)](https://microbadger.com/images/suldlss/rialto-webapp "Get your own image badge on microbadger.com")
 
 This is the Blacklight frontend for Rialto.
