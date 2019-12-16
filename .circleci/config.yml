@@ -106,7 +106,7 @@ jobs:
     - run:
         name: Run javascript unit tests
         command: npm test
-    
+
     # Save test results for timing analysis
     - store_test_results:
         path: test_results
