@@ -10,6 +10,6 @@
 # echo $IMAGE_NAME
 
 # We explicitly build them individually because we don't use 'depends_on'
-rake assets:precompile \
+bundle exec rake assets:precompile \
 && docker-compose build ruby \
 && docker-compose build app
