@@ -16,7 +16,7 @@ gem 'honeybadger'
 gem 'lograge'
 gem 'okcomputer'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '4.0.0.rc.7'
+gem 'webpacker', '~> 4.2'
 
 gem 'bigdecimal', '~> 1.3'
 gem 'json', '~> 2.1'
