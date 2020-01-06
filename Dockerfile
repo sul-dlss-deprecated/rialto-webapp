@@ -11,4 +11,4 @@ ENV RAILS_SERVE_STATIC_FILES=true
 COPY . /opt
 
 # Start the server by default, listening for all connections
-CMD puma -C config/puma.rb
+CMD bundle exec puma -C config/puma.rb
