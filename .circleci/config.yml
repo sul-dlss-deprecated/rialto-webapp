@@ -29,52 +29,43 @@ jobs:
     steps:
     - checkout
 
-    # Upgrade bundler
     - run:
-        name: Install Bundler
+        name: Install/Upgrade Bundler
         command: gem install bundler
-
-    # Which version of bundler?
     - run:
-        name: Which bundler?
+        name: Which version of bundler?
         command: bundle -v
-
-    # Restore bundle cache
     - restore_cache:
         keys:
         - app-bundle-v2-{{ checksum "Gemfile.lock" }}
         - app-bundle-v2-
-
     - run:
         name: Bundle Install
         command: bundle check || bundle install
-
-    # Store bundle cache
     - save_cache:
         key: app-bundle-v2-{{ checksum "Gemfile.lock" }}
         paths:
         - vendor/bundle
 
-    # Only necessary if app uses webpacker or yarn in some other way
     - restore_cache:
         keys:
           - app-yarn-{{ checksum "yarn.lock" }}
           - app-yarn-
-
     - run:
         name: Yarn Install
         command: yarn install --cache-folder ~/.cache/yarn
-
-    # Store yarn / webpacker cache
     - save_cache:
         key: app-yarn-{{ checksum "yarn.lock" }}
         paths:
           - ~/.cache/yarn
 
     - run:
+        name: Check styles using rubocop
+        command: bundle exec rubocop
+
+    - run:
         name: Wait for DB
         command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
     - run:
         name: Database setup
         command: bin/rails db:schema:load --trace
@@ -89,24 +80,20 @@ jobs:
           curl -H 'Content-type: application/json' http://localhost:8983/api/collections/ -d '{create: {name: blacklight-core, config: blacklight-core, numShards: 1}}'
 
     - run:
-        name: Check styles using rubocop
-        command: bundle exec rubocop
-
-    # Run rspec in parallel
-    - run:
-        name: Run rspec in parallel
+        name: Setup Code Climate test-reporter
         command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
-    # Run Javascript Unit tests
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+    - run:
+        name: Run rspec tests
+        command: bundle exec rspec
     - run:
         name: Run javascript unit tests
         command: npm test
-
+    - run:
+        name: upload test coverage report to Code Climate
+        command: ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
     # Save test results for timing analysis
     - store_test_results:
         path: test_results
@@ -185,10 +172,8 @@ workflows:
 
   test:
     jobs:
-    - test:
-        filters:
-          branches:
-            ignore: master
+    - test
+
   build:
     jobs:
     - build-image:
