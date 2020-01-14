@@ -51,6 +51,7 @@ group :development do
   gem 'rspec_junit_formatter'
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec'
+  gem 'simplecov'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end

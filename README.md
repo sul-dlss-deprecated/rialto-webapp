@@ -1,5 +1,7 @@
 # Rialto Webapp
 [![CircleCI](https://circleci.com/gh/sul-dlss/rialto-webapp/tree/master.svg?style=svg)](https://circleci.com/gh/sul-dlss/rialto-webapp/tree/master)
+[![Ruby Test Coverage](https://api.codeclimate.com/v1/badges/4cbc00acb15a14969620/test_coverage)](https://codeclimate.com/github/sul-dlss/rialto-webapp/test_coverage)
+[![Ruby Maintainability](https://api.codeclimate.com/v1/badges/4cbc00acb15a14969620/maintainability)](https://codeclimate.com/github/sul-dlss/rialto-webapp/maintainability)
 [![](https://images.microbadger.com/badges/image/suldlss/rialto-webapp.svg)](https://microbadger.com/images/suldlss/rialto-webapp "Get your own image badge on microbadger.com")
 
 This is the Blacklight frontend for Rialto.
