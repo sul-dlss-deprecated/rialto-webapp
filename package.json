@@ -50,6 +50,14 @@
     ],
     "setupFiles": [
       "./app/javascript/test/setup.js"
-    ]
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{js,vue}",
+      "!**/app/javascript/test/**",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ],
+    "coverageDirectory": "coverage"
   }
 }

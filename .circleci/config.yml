@@ -7,96 +7,150 @@ executors:
     - image: circleci/ruby:2.6.2-stretch-node
       environment:
         RAILS_ENV=production
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/ruby:2.6.2-stretch-node
+      environment:
+        BUNDLE_JOBS: 3
+        BUNDLE_RETRY: 3
+        BUNDLE_PATH: vendor/bundle
+        PGHOST: 127.0.0.1
+        PGUSER: circleci-demo-ruby
+        RAILS_ENV: test
+    - image: circleci/postgres:9.5-alpine
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: rialto_test
+        POSTGRES_PASSWORD: ""
+    - image: solr:7
+      command: bin/solr -cloud -noprompt -f -p 8983
 jobs:
-  test:
-    parallelism: 3
-    docker:
-      - image: circleci/ruby:2.6.2-stretch-node
-        environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
-          BUNDLE_PATH: vendor/bundle
-          PGHOST: 127.0.0.1
-          PGUSER: circleci-demo-ruby
-          RAILS_ENV: test
-      - image: circleci/postgres:9.5-alpine
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: rialto_test
-          POSTGRES_PASSWORD: ""
-      - image: solr:7
-        command: bin/solr -cloud -noprompt -f -p 8983
+  build:
+    <<: *defaults
     steps:
-    - checkout
+      - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
 
-    - run:
-        name: Install/Upgrade Bundler
-        command: gem install bundler
-    - run:
-        name: Which version of bundler?
-        command: bundle -v
-    - restore_cache:
-        keys:
-        - app-bundle-v2-{{ checksum "Gemfile.lock" }}
-        - app-bundle-v2-
-    - run:
-        name: Bundle Install
-        command: bundle check || bundle install
-    - save_cache:
-        key: app-bundle-v2-{{ checksum "Gemfile.lock" }}
-        paths:
-        - vendor/bundle
+      - run:
+          name: Install/Upgrade Bundler
+          command: gem install bundler
+      - run:
+          name: Which version of bundler?
+          command: bundle -v
+      - restore_cache:
+          keys:
+          - app-bundle-v2-{{ checksum "Gemfile.lock" }}
+          - app-bundle-v2-
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - save_cache:
+          key: app-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+          - vendor/bundle
 
-    - restore_cache:
-        keys:
-          - app-yarn-{{ checksum "yarn.lock" }}
-          - app-yarn-
-    - run:
-        name: Yarn Install
-        command: yarn install --cache-folder ~/.cache/yarn
-    - save_cache:
-        key: app-yarn-{{ checksum "yarn.lock" }}
-        paths:
-          - ~/.cache/yarn
+  prepare-coverage:
+    <<: *defaults
+    steps:
+      - run:
+          name:  Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
 
-    - run:
-        name: Check styles using rubocop
-        command: bundle exec rubocop
+  backend-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
 
-    - run:
-        name: Wait for DB
-        command: dockerize -wait tcp://localhost:5432 -timeout 1m
-    - run:
-        name: Database setup
-        command: bin/rails db:schema:load --trace
+      - run:
+          name: Install/Upgrade Bundler
+          command: gem install bundler
+      - restore_cache:
+          keys:
+          - app-bundle-v2-{{ checksum "Gemfile.lock" }}
+          - app-bundle-v2-
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
 
-    # Create a Solr collection
-    - run:
-        name: Load config into SolrCloud
-        command: |
-          cd solr/conf
-          zip -1 -r solr_config.zip ./*
-          curl -H "Content-type:application/octet-stream" --data-binary @solr_config.zip "http://localhost:8983/solr/admin/configs?action=UPLOAD&name=blacklight-core"
-          curl -H 'Content-type: application/json' http://localhost:8983/api/collections/ -d '{create: {name: blacklight-core, config: blacklight-core, numShards: 1}}'
+      - run:
+          name: Check styles using rubocop
+          command: bundle exec rubocop
 
-    - run:
-        name: Setup Code Climate test-reporter
-        command: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-    - run:
-        name: Run rspec tests
-        command: bundle exec rspec
-    - run:
-        name: Run javascript unit tests
-        command: npm test
-    - run:
-        name: upload test coverage report to Code Climate
-        command: ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
-    # Save test results for timing analysis
-    - store_test_results:
-        path: test_results
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --trace
+
+      # Create a Solr collection
+      - run:
+          name: Load config into SolrCloud
+          command: |
+            cd solr/conf
+            zip -1 -r solr_config.zip ./*
+            curl -H "Content-type:application/octet-stream" --data-binary @solr_config.zip "http://localhost:8983/solr/admin/configs?action=UPLOAD&name=blacklight-core"
+            curl -H 'Content-type: application/json' http://localhost:8983/api/collections/ -d '{create: {name: blacklight-core, config: blacklight-core, numShards: 1}}'
+      - run:
+          name: Run backend tests
+          command: |
+            bundle exec rspec -f j
+            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.backend.json coverage/.resultset.json
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.backend.json
+
+  frontend-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
+
+      - restore_cache:
+          keys:
+            - app-yarn-{{ checksum "yarn.lock" }}
+            - app-yarn-
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: app-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: Run frontend tests
+          command: |
+            npm test
+            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.frontend.json coverage/jest/lcov.info
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.frontend.json
+
+  upload-coverage:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo/tmp
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
 
   build-image:
     executor: docker-publisher
@@ -172,9 +226,21 @@ workflows:
 
   test:
     jobs:
-    - test
-
-  build:
+    - build
+    - prepare-coverage:
+        requires:
+          - build
+    - backend-tests:
+        requires:
+          - prepare-coverage
+    - frontend-tests:
+        requires:
+           - prepare-coverage
+    - upload-coverage:
+        requires:
+           - backend-tests
+           - frontend-tests
+  publish-latest-image:
     jobs:
     - build-image:
         filters:
