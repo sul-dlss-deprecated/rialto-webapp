@@ -54,7 +54,7 @@ GEM
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     builder (3.2.4)
-    byebug (11.1.0)
+    byebug (11.1.1)
     concurrent-ruby (1.1.5)
     crass (1.0.6)
     deprecation (1.0.0)
