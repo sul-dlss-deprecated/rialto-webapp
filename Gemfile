@@ -51,7 +51,8 @@ group :development do
   gem 'rspec_junit_formatter'
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec'
-  gem 'simplecov'
+  # Codeclimate is not compatible with 0.18+. See https://github.com/codeclimate/test-reporter/issues/413
+  gem 'simplecov', '~> 0.17.1'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
