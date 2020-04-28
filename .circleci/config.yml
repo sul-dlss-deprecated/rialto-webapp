@@ -4,13 +4,13 @@ executors:
     environment:
       IMAGE_NAME: suldlss/rialto-webapp
     docker:
-    - image: circleci/ruby:2.6.2-stretch-node
+    - image: circleci/ruby:2.7.1-buster-node
       environment:
         RAILS_ENV=production
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/ruby:2.6.2-stretch-node
+    - image: circleci/ruby:2.7.1-buster-node
       environment:
         BUNDLE_JOBS: 3
         BUNDLE_RETRY: 3
