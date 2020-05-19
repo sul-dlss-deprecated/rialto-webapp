@@ -1,16 +1,36 @@
-version: '3'
+version: '3.6'
 
 services:
-  app:
-    build:
-      context: ./
-    environment:
-      - RAILS_LOG_TO_STDOUT=true
-    image: 'suldlss/rialto-webapp:latest'
+  web:
+    build: .
+    volumes:
+      - ./:/app
+    working_dir: /app
     ports:
-      - "3000"
-  ruby:
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile.ruby
-    image: 'suldlss/rialto-webapp:ruby-latest'
+      - 3000:3000
+    environment:
+      NODE_ENV: development
+      RDS_PASSWORD: sekret
+      RDS_HOSTNAME: db
+      SOLR_URL: http://solr:8983/solr/rialto
+    depends_on:
+      - db
+      - solr
+  db:
+    image: postgres:11
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: rialto_development
+      POSTGRES_PASSWORD: sekret
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  solr:
+    image: solr:7
+    volumes:
+      - ./solr/conf/:/myconfig
+    command: solr-create -c rialto -d /myconfig
+    ports:
+      - 8983:8983
+volumes:
+  postgres-data:

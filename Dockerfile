@@ -1,14 +1,29 @@
-# This image's actual base image
-FROM suldlss/rialto-webapp:ruby-latest
+FROM ruby:2.7.1-alpine
 
-LABEL maintainer="Justin Coyne <jcoyne@justincoyne.com>"
-# Set default RAILS environment
-ENV RAILS_ENV=production
-ENV RAILS_SERVE_STATIC_FILES=true
+LABEL maintainer="Aaron Collier <aaron.collier@stanford.edu>"
 
-# Copy the application's source into the image.
-# See .dockerignore for the files in the local directory not being copied.
-COPY . /opt
+RUN apk add --update --no-cache \
+  build-base \
+  libxml2-dev \
+  libxslt-dev \
+  postgresql-dev \
+  postgresql-client \
+  tzdata \
+  yarn
 
-# Start the server by default, listening for all connections
-CMD bundle exec puma -C config/puma.rb
+WORKDIR /app
+
+RUN gem update --system && \
+  gem install bundler
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle config build.nokogiri --use-system-libraries && \
+  bundle config set without 'production' && \
+  bundle install
+
+COPY package.json yarn.lock ./
+RUN yarn install
+
+COPY . .
+
+CMD ["bin/puma", "-C", "config/puma.rb", "config.ru"]
