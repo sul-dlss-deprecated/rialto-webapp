@@ -63,9 +63,18 @@ docker push suldlss/rialto-webapp:latest
 
 In practice, though, merging any commits into the `master` branch -- e.g., regular dependency updates -- will trigger a CI build which automates building, pushing, and tagging a new image. You can check the [Docker Hub UI](https://hub.docker.com/r/suldlss/rialto-webapp) to see when the image was last updated.
 
+#### Version tagged images (for production & stage)
+
+In both the staging and production environments, a version tagged image is used to provide easier rollback points and make it clear what state the environment is in.
+
+1. https://github.com/sul-dlss/rialto-webapp/releases
+2. Draft new release: https://github.com/sul-dlss/rialto-webapp/releases/new
+3. Numeric only version tags are required to trigger the CI build and publish (i.e. 1.3.0 NOT v1.3.0).
+
+
 ### Update container definitions in Terraform
 
-Once the new image has been successfully pushed, the container definitions for the RIALTO web app in Terraform must be updated. Create a pull request in the [terraform-aws](https://github.com/sul-dlss/terraform-aws) repo that bumps the value of the `DEPLOYED` environment variable for RIALTO web app in both `staging` and `production` environments. Our practice is to bump the date portion of the value, which specifies when changes last flowed into `master`;  the value must change for the new container to be pulled into the RIALTO web app. See this [pull request](https://github.com/sul-dlss/terraform-aws/pull/471/files) as an example.
+Once the new image has been successfully pushed, the container definitions for the RIALTO web app in Terraform must be updated. Create a pull request in the [terraform-aws](https://github.com/sul-dlss/terraform-aws) repo that bumps the docker image version for RIALTO web app in both `staging` and `production` environments;  the value must change for the new container to be pulled into the RIALTO web app. See this [pull request](https://github.com/sul-dlss/terraform-aws/pull/603/files) as an example.
 
 Note that a member of the **Operations team** must approve and merge this PR, but the PR does not need to be merged before beginning the next section.
 
