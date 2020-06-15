@@ -43,7 +43,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
-    ast (2.4.0)
+    ast (2.4.1)
     bigdecimal (1.4.4)
     blacklight (7.3.0)
       deprecation
@@ -64,7 +64,7 @@ GEM
     erubi (1.9.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.13.0)
+    ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     honeybadger (4.7.0)
